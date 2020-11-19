@@ -1,0 +1,13 @@
+type AddCartResponse {
+  ok: Boolean!
+  error: String
+  cart: Cart
+}
+
+type Mutation {
+  AddCart(
+    item_id: ID!
+    count: Int!
+    price: Int!
+  ): AddCartResponse!
+}

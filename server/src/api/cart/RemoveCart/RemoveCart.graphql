@@ -1,0 +1,8 @@
+type RemoveCartResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveCart: RemoveCartResponse!
+}

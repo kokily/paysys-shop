@@ -1,0 +1,9 @@
+type ViewCartResponse {
+  ok: Boolean!
+  error: String
+  cart: Cart
+}
+
+type Query {
+  ViewCart: ViewCartResponse!
+}

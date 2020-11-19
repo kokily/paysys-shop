@@ -1,0 +1,11 @@
+type RegisterUserResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RegisterUser(
+    username: String!
+    password: String!
+  ): RegisterUserResponse!
+}

@@ -1,0 +1,15 @@
+type Me {
+  id: ID!
+  username: String!
+  admin: Boolean!
+}
+
+type CheckMeResponse {
+  ok: Boolean!
+  error: String
+  user: Me
+}
+
+type Query {
+  CheckMe: CheckMeResponse!
+}

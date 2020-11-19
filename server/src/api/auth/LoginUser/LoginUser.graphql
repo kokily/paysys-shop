@@ -1,0 +1,12 @@
+type LoginUserResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  LoginUser(
+    username: String!
+    password: String!
+  ): LoginUserResponse!
+}

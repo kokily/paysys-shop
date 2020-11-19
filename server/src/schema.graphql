@@ -1,3 +1,42 @@
+type Me {
+  id: ID!
+  username: String!
+  admin: Boolean!
+}
+
+type CheckMeResponse {
+  ok: Boolean!
+  error: String
+  user: Me
+}
+
+type Query {
+  CheckMe: CheckMeResponse!
+  hello: String!
+}
+
+type LoginUserResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  LoginUser(username: String!, password: String!): LoginUserResponse!
+  LogoutUser: LogoutUserResponse!
+  RegisterUser(username: String!, password: String!): RegisterUserResponse!
+}
+
+type LogoutUserResponse {
+  ok: Boolean!
+  error: String
+}
+
+type RegisterUserResponse {
+  ok: Boolean!
+  error: String
+}
+
 type Bill {
   id: ID!
   title: String!
@@ -54,10 +93,6 @@ type User {
   token_version: Int!
   created_at: Date!
   updated_at: Date
-}
-
-type Query {
-  hello: String!
 }
 
 type Wedding {

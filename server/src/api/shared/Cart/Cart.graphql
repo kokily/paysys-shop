@@ -1,0 +1,19 @@
+type InputItem {
+  id: ID!
+  name: String!
+  divide: String!
+  native: String!
+  unit: String!
+  price: Int!
+  count: Int!
+  amount: Int!
+}
+
+type Cart {
+  id: ID!
+  user_id: String!
+  bill_id: String
+  completed: Boolean!
+  deleted: Boolean!
+  items: [InputItem]
+}

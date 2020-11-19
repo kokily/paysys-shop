@@ -1,0 +1,13 @@
+type Bill {
+  id: ID!
+  title: String!
+  hall: String!
+  etc: String!
+  total_amount: Int!
+  items: [InputItem]
+  reserve: Int
+  username: String!
+  user_id: String!
+  cart_id: String!
+  created_at: Date!
+}

@@ -1,0 +1,15 @@
+scalar Date
+
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  admin: Boolean!
+  token_version: Int!
+  created_at: Date!
+  updated_at: Date
+}
+
+type Query {
+  hello: String!
+}

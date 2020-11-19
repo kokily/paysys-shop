@@ -1,0 +1,11 @@
+type Item {
+  id: ID!
+  num: Int!
+  name: String!
+  divide: String!
+  native: String!
+  unit: String!
+  price: Int!
+  created_at: Date!
+  updated_at: Date
+}

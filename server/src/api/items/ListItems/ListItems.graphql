@@ -1,0 +1,14 @@
+type ListItemsResponse {
+  ok: Boolean!
+  error: String
+  items: [Item]
+}
+
+type Query {
+  ListItems(
+    cursor: ID
+    name: String
+    divide: String
+    native: String
+  ): ListItemsResponse!
+}

@@ -1,0 +1,11 @@
+type ReadItemResponse {
+  ok: Boolean!
+  error: String
+  item: Item
+}
+
+type Query {
+  ReadItem(
+    id: ID!
+  ): ReadItemResponse!
+}

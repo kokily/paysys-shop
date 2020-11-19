@@ -1,0 +1,15 @@
+type UpdateItemResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  UpdateItem(
+    id: ID!
+    name: String
+    divide: String
+    native: String
+    unit: String
+    price: String
+  ): UpdateItemResponse!
+}

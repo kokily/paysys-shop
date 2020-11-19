@@ -1,0 +1,14 @@
+type AddItemResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AddItem(
+    name: String!
+    divide: String!
+    native: String!
+    unit: String!
+    price: Int!
+  ): AddItemResponse!
+}

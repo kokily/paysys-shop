@@ -12,6 +12,8 @@ type CheckMeResponse {
 
 type Query {
   CheckMe: CheckMeResponse!
+  ListItems(cursor: ID, name: String, divide: String, native: String): ListItemsResponse!
+  ReadItem(id: ID!): ReadItemResponse!
   hello: String!
 }
 
@@ -25,6 +27,9 @@ type Mutation {
   LoginUser(username: String!, password: String!): LoginUserResponse!
   LogoutUser: LogoutUserResponse!
   RegisterUser(username: String!, password: String!): RegisterUserResponse!
+  AddItem(name: String!, divide: String!, native: String!, unit: String!, price: Int!): AddItemResponse!
+  RemoveItem(id: ID!): RemoveItemResponse!
+  UpdateItem(id: ID!, name: String, divide: String, native: String, unit: String, price: String): UpdateItemResponse!
 }
 
 type LogoutUserResponse {
@@ -33,6 +38,33 @@ type LogoutUserResponse {
 }
 
 type RegisterUserResponse {
+  ok: Boolean!
+  error: String
+}
+
+type AddItemResponse {
+  ok: Boolean!
+  error: String
+}
+
+type ListItemsResponse {
+  ok: Boolean!
+  error: String
+  items: [Item]
+}
+
+type ReadItemResponse {
+  ok: Boolean!
+  error: String
+  item: Item
+}
+
+type RemoveItemResponse {
+  ok: Boolean!
+  error: String
+}
+
+type UpdateItemResponse {
   ok: Boolean!
   error: String
 }

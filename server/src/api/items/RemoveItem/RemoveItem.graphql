@@ -1,0 +1,10 @@
+type RemoveItemResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveItem(
+    id: ID!
+  ): RemoveItemResponse!
+}

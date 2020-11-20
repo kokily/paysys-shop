@@ -1,0 +1,10 @@
+type RemoveReserveResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveReserve(
+    id: ID!
+  ): RemoveReserveResponse!
+}

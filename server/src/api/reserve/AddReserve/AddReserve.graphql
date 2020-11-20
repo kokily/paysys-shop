@@ -1,0 +1,11 @@
+type AddReserveResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AddReserve(
+    bill_id: ID!
+    reserve: Int!
+  ): AddReserveResponse!
+}

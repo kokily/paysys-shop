@@ -14,6 +14,7 @@ import ListMenuPage from 'pages/home/ListMenuPage';
 import DetailMenuPage from 'pages/home/DetailMenuPage';
 import CartPage from 'pages/cart/CartPage';
 import ListFrontsPage from 'pages/front/ListFrontsPage';
+import ReadFrontPage from 'pages/front/ReadFrontPage';
 
 const Routes: React.FC = () => {
   const { data, loading } = useQuery(CHECK_ME);
@@ -44,6 +45,7 @@ const LogInRoutes = ({ user }) => (
     <Route path="/menu/:menuId" component={DetailMenuPage} />
     <Route path="/cart" component={CartPage} />
     <Route path="/fronts" component={ListFrontsPage} />
+    <Route path="/front/:frontId" component={ReadFrontPage} />
     <Redirect from="*" to="/soldier" />
   </Switch>
 );

@@ -1,0 +1,10 @@
+type SetEmployeeResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  SetEmployee(
+    id: ID!
+  ): SetEmployeeResponse!
+}

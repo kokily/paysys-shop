@@ -1,0 +1,11 @@
+type ReadUserResponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type Query {
+  ReadUser(
+    id: ID!
+  ): ReadUserResponse!
+}

@@ -1,0 +1,12 @@
+type ListUsersResponse {
+  ok: Boolean!
+  error: String
+  users: [User]
+}
+
+type Query {
+  ListUsers(
+    cursor: ID
+    username: String
+  ): ListUsersResponse!
+}

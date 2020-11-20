@@ -1,0 +1,10 @@
+type SetAdminResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  SetAdmin(
+    id: ID!
+  ): SetAdminResponse!
+}

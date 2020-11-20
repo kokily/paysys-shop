@@ -20,6 +20,8 @@ type Query {
   hello: String!
   ListUsers(cursor: ID, username: String): ListUsersResponse!
   ReadUser(id: ID!): ReadUserResponse!
+  ListWeddings(date: String, cursor: ID): ListWeddingsResponse!
+  ReadWedding(id: ID!): ReadWeddingResponse!
 }
 
 type LoginUserResponse {
@@ -46,6 +48,9 @@ type Mutation {
   RemoveUser(id: ID!): RemoveUserResponse!
   SetAdmin(id: ID!): SetAdminResponse!
   SetEmployee(id: ID!): SetEmployeeResponse!
+  AddWedding(husband: String!, bride: String!, reserve_pay: Int!, husband_rental: Int!, bride_rental: Int!, sum_rental: Int!, husband_company: Int!, bride_company: Int!, sum_company: Int!, husband_add: Int!, bride_add: Int!, sum_add: Int!, husband_today: Int!, bride_today: Int!, sum_today: Int!, husband_bouquet: Int!, bride_bouquet: Int!, sum_bouquet: Int!, husband_ceremony: Int!, bride_ceremony: Int!, sum_ceremony: Int!, husband_hanbok: Int!, bride_hanbok: Int!, sum_hanbok: Int!, husband_play: Int!, bride_play: Int!, sum_play: Int!, husband_anthem: Int!, bride_anthem: Int!, sum_anthem: Int!, husband_moderator: Int!, bride_moderator: Int!, sum_moderator: Int!, husband_officiate: Int!, bride_officiate: Int!, sum_officiate: Int!, husband_etc: Int!, bride_etc: Int!, sum_etc: Int!, husband_conv: Int!, bride_conv: Int!, sum_conv: Int!, husband_wedding: Int!, bride_wedding: Int!, sum_wedding: Int!, meals_price: Int!, husband_num: Int!, bride_num: Int!, sum_num: Int!, husband_meal: Int!, bride_meal: Int!, sum_meal: Int!, present_price: Int!, husband_present_num: Int!, bride_present_num: Int!, sum_present_num: Int!, husband_present: Int!, bride_present: Int!, sum_present: Int!, meal: String!, reserve: String!, present: String!, husband_reserve: Int!, bride_reserve: Int!, wedding_at: String!, event_at: String!): AddWeddingResponse!
+  RemoveWedding(id: ID!): RemoveWeddingResponse!
+  UpdateWedding(id: ID!, husband: String, bride: String, reserve_pay: Int, husband_rental: Int, bride_rental: Int, sum_rental: Int, husband_company: Int, bride_company: Int, sum_company: Int, husband_add: Int, bride_add: Int, sum_add: Int, husband_today: Int, bride_today: Int, sum_today: Int, husband_bouquet: Int, bride_bouquet: Int, sum_bouquet: Int, husband_ceremony: Int, bride_ceremony: Int, sum_ceremony: Int, husband_hanbok: Int, bride_hanbok: Int, sum_hanbok: Int, husband_play: Int, bride_play: Int, sum_play: Int, husband_anthem: Int, bride_anthem: Int, sum_anthem: Int, husband_moderator: Int, bride_moderator: Int, sum_moderator: Int, husband_officiate: Int, bride_officiate: Int, sum_officiate: Int, husband_etc: Int, bride_etc: Int, sum_etc: Int, husband_conv: Int, bride_conv: Int, sum_conv: Int, husband_wedding: Int, bride_wedding: Int, sum_wedding: Int, meals_price: Int, husband_num: Int, bride_num: Int, sum_num: Int, husband_meal: Int, bride_meal: Int, sum_meal: Int, present_price: Int, husband_present_num: Int, bride_present_num: Int, sum_present_num: Int, husband_present: Int, bride_present: Int, sum_present: Int, meal: String, reserve: String, present: String, husband_reserve: Int, bride_reserve: Int, wedding_at: String, event_at: String): UpdateWeddingResponse!
 }
 
 type LogoutUserResponse {
@@ -300,4 +305,32 @@ type SetAdminResponse {
 type SetEmployeeResponse {
   ok: Boolean!
   error: String
+}
+
+type AddWeddingResponse {
+  ok: Boolean!
+  error: String
+}
+
+type ListWeddingsResponse {
+  ok: Boolean!
+  error: String
+  weddings: [Wedding]
+}
+
+type ReadWeddingResponse {
+  ok: Boolean!
+  error: String
+  wedding: Wedding
+}
+
+type RemoveWeddingResponse {
+  ok: Boolean!
+  error: String
+}
+
+type UpdateWeddingResponse {
+  ok: Boolean!
+  error: String
+  wedding: Wedding
 }

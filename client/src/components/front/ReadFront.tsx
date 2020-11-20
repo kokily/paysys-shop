@@ -191,16 +191,6 @@ const ReadFrontBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  ${media.large} {
-    width: 1200px;
-  }
-  ${media.medium} {
-    width: 100%;
-  }
-  ${media.xsmall} {
-    width: 100%;
-  }
 `;
 
 const WhiteBoard = styled.div`

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import oc from 'open-color';
 import { BillType, UserType } from 'libs/types';
 import shadow from 'styles/shadow';
+import { media } from 'styles/media';
 
 interface ButtonProps {
   remove?: boolean;
@@ -68,6 +69,11 @@ export default ReadButton;
 const ButtonBox = styled.div`
   margin-top: 1rem;
   display: inline-flex;
+
+  ${media.xsmall} {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const Button = styled.button<ButtonProps>`
@@ -79,6 +85,10 @@ const Button = styled.button<ButtonProps>`
   padding-bottom: 0.4rem;
   cursor: pointer;
   transition: 0.2s all;
+
+  ${media.xsmall} {
+    padding: 0.5rem 0.2rem 0.4rem 0.2rem;
+  }
 
   ${(props) =>
     props.remove &&

@@ -20,7 +20,6 @@ const reducer = (state: StateProps, action: any) => {
 };
 
 const LoginPage = () => {
-  const history = useHistory();
   const [state, dispatch] = useReducer(reducer, {
     username: '',
     password: '',
@@ -54,7 +53,7 @@ const LoginPage = () => {
       setAccessToken(response.data.LoginUser.token);
       await client?.clearStore();
 
-      history.push('/soldier');
+      window.location.href = '/soldier';
     } catch (err) {
       toast.error(err);
     }

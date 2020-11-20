@@ -1,24 +1,12 @@
 import { ApolloClient } from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink, Observable, Operation, concat } from 'apollo-link';
+import { ApolloLink, Observable, Operation } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import jwtDecode from 'jwt-decode';
-import cookie from 'react-cookies';
 import { ENV, dev_server, prod_server } from './constants';
 import { getAccessToken, setAccessToken } from './accessToken';
-
-const getToken = () => {
-  const token = cookie.load('paysys_token');
-
-  if (token) {
-    console.log(token);
-    return token;
-  } else {
-    return '';
-  }
-};
 
 const cache = new InMemoryCache();
 

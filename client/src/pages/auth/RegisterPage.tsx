@@ -27,7 +27,7 @@ const RegisterPage = () => {
     password_confirm: '',
   });
   const { username, password, password_confirm } = state;
-  const [RegisterUser, { client }] = useMutation(REGISTER_USER);
+  const [RegisterUser] = useMutation(REGISTER_USER);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(e.target);

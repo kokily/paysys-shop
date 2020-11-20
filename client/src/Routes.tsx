@@ -18,7 +18,11 @@ const Routes: React.FC = () => {
     <>
       <GlobalStyle />
 
-      {!loading && data.CheckMe.user ? <LogInRoutes user={data.CheckMe.user} /> : <LogOutRoutes />}
+      {!loading && data && data.CheckMe.user ? (
+        <LogInRoutes user={data.CheckMe.user} />
+      ) : (
+        <LogOutRoutes />
+      )}
 
       <ToastContainer position="bottom-right" draggable={false} />
     </>

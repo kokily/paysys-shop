@@ -1,0 +1,11 @@
+type ReadBillResponse {
+  ok: Boolean!
+  error: String
+  bill: Bill
+}
+
+type Query {
+  ReadBill(
+    id: ID!
+  ): ReadBillResponse!
+}

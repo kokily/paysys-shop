@@ -12,6 +12,8 @@ type CheckMeResponse {
 
 type Query {
   CheckMe: CheckMeResponse!
+  ListBills(cursor: ID, user_id: ID, title: String, hall: String): ListBillsResponse!
+  ReadBill(id: ID!): ReadBillResponse!
   ViewCart: ViewCartResponse!
   ListItems(cursor: ID, name: String, divide: String, native: String): ListItemsResponse!
   ReadItem(id: ID!): ReadItemResponse!
@@ -28,6 +30,9 @@ type Mutation {
   LoginUser(username: String!, password: String!): LoginUserResponse!
   LogoutUser: LogoutUserResponse!
   RegisterUser(username: String!, password: String!): RegisterUserResponse!
+  AddBill(title: String!, hall: String!, etc: String!): AddBillResponse!
+  RemoveBill(id: ID!): RemoveBillResponse!
+  RestoreBill(id: ID!): RestoreBillResponse!
   AddCart(item_id: ID!, count: Int!, price: Int!): AddCartResponse!
   RemoveCart: RemoveCartResponse!
   RemoveOne(item_id: ID!): RemoveOneResponse!
@@ -42,6 +47,33 @@ type LogoutUserResponse {
 }
 
 type RegisterUserResponse {
+  ok: Boolean!
+  error: String
+}
+
+type AddBillResponse {
+  ok: Boolean!
+  error: String
+}
+
+type ListBillsResponse {
+  ok: Boolean!
+  error: String
+  bills: [Bill]
+}
+
+type ReadBillResponse {
+  ok: Boolean!
+  error: String
+  bill: Bill
+}
+
+type RemoveBillResponse {
+  ok: Boolean!
+  error: String
+}
+
+type RestoreBillResponse {
   ok: Boolean!
   error: String
 }

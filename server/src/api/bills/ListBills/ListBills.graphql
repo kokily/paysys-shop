@@ -1,0 +1,14 @@
+type ListBillsResponse {
+  ok: Boolean!
+  error: String
+  bills: [Bill]
+}
+
+type Query {
+  ListBills(
+    cursor: ID
+    user_id: ID
+    title: String
+    hall: String
+  ): ListBillsResponse!
+}

@@ -1,0 +1,10 @@
+type RestoreBillResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RestoreBill(
+    id: ID!
+  ): RestoreBillResponse!
+}

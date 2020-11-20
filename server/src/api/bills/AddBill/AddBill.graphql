@@ -1,0 +1,12 @@
+type AddBillResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AddBill(
+    title: String!
+    hall: String!
+    etc: String!
+  ): AddBillResponse!
+}

@@ -1,0 +1,10 @@
+type RemoveBillResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveBill(
+    id: ID!
+  ): RemoveBillResponse!
+}

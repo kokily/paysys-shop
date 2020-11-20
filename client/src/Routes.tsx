@@ -8,6 +8,10 @@ import GlobalStyle from 'styles';
 import LoginPage from 'pages/auth/LoginPage';
 import RegisterPage from 'pages/auth/RegisterPage';
 import SoldierPage from 'pages/home/SoldierPage';
+import ReservePage from 'pages/home/ReservePage';
+import GeneralPage from 'pages/home/GeneralPage';
+import ListMenuPage from 'pages/home/ListMenuPage';
+import DetailMenuPage from 'pages/home/DetailMenuPage';
 
 const Routes: React.FC = () => {
   const { data, loading } = useQuery(CHECK_ME);
@@ -32,6 +36,10 @@ const Routes: React.FC = () => {
 const LogInRoutes = ({ user }) => (
   <Switch>
     <Route path="/soldier" component={SoldierPage} />
+    <Route path="/reserve" component={ReservePage} />
+    <Route path="/general" component={GeneralPage} />
+    <Route exact path="/menu" component={ListMenuPage} />
+    <Route path="/menu/:menuId" component={DetailMenuPage} />
     <Redirect from="*" to="/soldier" />
   </Switch>
 );

@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
   );
 
   return (
-    <HeaderContainer>
+    <HeaderBox>
       <Layout>
         <Content>
           <Logo to="/soldier">행사전표시스템</Logo>
@@ -44,14 +44,14 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
           </>
         </Content>
       </Layout>
-    </HeaderContainer>
+    </HeaderBox>
   );
 };
 
 export default Header;
 
 // Styles
-const HeaderContainer = styled.div`
+const HeaderBox = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;

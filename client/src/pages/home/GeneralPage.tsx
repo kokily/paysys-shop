@@ -2,7 +2,7 @@ import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
 import HomeContainer from 'containers/home/HomeContainer';
 
-const SoldierPage = () => {
+const GeneralPage = () => {
   return (
     <PageTemplate>
       <HomeContainer />
@@ -10,4 +10,4 @@ const SoldierPage = () => {
   );
 };
 
-export default SoldierPage;
+export default GeneralPage;

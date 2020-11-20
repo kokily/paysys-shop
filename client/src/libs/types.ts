@@ -32,3 +32,17 @@ export interface CartType {
   bill_id: string;
   items: ItemType[] | null;
 }
+
+export interface BillType {
+  id: string;
+  title: string;
+  hall: string;
+  etc: string;
+  total_amount: number;
+  items: ItemType[];
+  reserve?: number;
+  username: string;
+  user_id: string;
+  cart_id: string;
+  created_at: string;
+}

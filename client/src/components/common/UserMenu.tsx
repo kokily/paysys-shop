@@ -19,7 +19,7 @@ const UserMenu = () => (
       <NavLink to="/cart" className="link" activeClassName="active">
         <i className="material-icons">shopping_cart</i>전표확인
       </NavLink>
-      <NavLink to="/front" className="link" activeClassName="active">
+      <NavLink to="/fronts" className="link" activeClassName="active">
         <i className="material-icons">receipt_long</i>빌지록록
       </NavLink>
     </MenuContent>

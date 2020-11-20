@@ -17,6 +17,24 @@ const resolvers: Resolvers = {
             .orderBy('bill.created_at', 'DESC')
             .addOrderBy('bill.id', 'DESC');
 
+          if (user_id) {
+            query.andWhere('bill.user_id = :user_id', {
+              user_id,
+            });
+          }
+
+          if (title) {
+            query.andWhere('bill.title like :title', {
+              title: `%${title}%`,
+            });
+          }
+
+          if (hall) {
+            query.andWhere('bill.hall = :hall', {
+              hall,
+            });
+          }
+
           if (cursor) {
             const bill = await getRepository(Bill).findOne({ id: cursor });
 
@@ -35,24 +53,6 @@ const resolvers: Resolvers = {
             query.orWhere('bill.created_at = :date AND bill.id < :id', {
               date: bill.created_at,
               id: bill.id,
-            });
-          }
-
-          if (user_id) {
-            query.andWhere('bill.user_id = :user_id', {
-              user_id,
-            });
-          }
-
-          if (title) {
-            query.andWhere('bill.title like :title', {
-              title: `%${title}%`,
-            });
-          }
-
-          if (hall) {
-            query.andWhere('bill.hall = :hall', {
-              hall,
             });
           }
 

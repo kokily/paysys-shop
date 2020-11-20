@@ -2,14 +2,14 @@ import React, { useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
-import { LOGIN_USER } from 'graphql/auth';
-import { setAccessToken } from 'libs/accessToken';
+import { REGISTER_USER } from 'graphql/auth';
 import AuthTemplate from 'components/auth/AuthTemplate';
 import AuthForm from 'components/auth/AuthForm';
 
 interface StateProps {
   username: string;
   password: string;
+  password_confirm: string;
 }
 
 const reducer = (state: StateProps, action: any) => {
@@ -19,14 +19,15 @@ const reducer = (state: StateProps, action: any) => {
   };
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const history = useHistory();
   const [state, dispatch] = useReducer(reducer, {
     username: '',
     password: '',
+    password_confirm: '',
   });
-  const { username, password } = state;
-  const [LoginUser, { client }] = useMutation(LOGIN_USER);
+  const { username, password, password_confirm } = state;
+  const [RegisterUser, { client }] = useMutation(REGISTER_USER);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(e.target);
@@ -35,37 +36,32 @@ const LoginPage = () => {
   const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if ([username, password].includes('')) {
-      toast.error('빈 칸을 모두 입력하세요!');
+    if ([username, password, password_confirm].includes('')) {
+      toast.error('빈 칸 없이 입력해주세요!');
       return;
     }
 
     try {
-      const response = await LoginUser({
+      const response = await RegisterUser({
         variables: { username, password },
       });
 
       if (!response || !response.data) return;
-      if (response.data.LoginUser.error) {
-        toast.error(response.data.LoginUser.error);
-        return;
-      }
 
-      setAccessToken(response.data.LoginUser.token);
-      await client?.clearStore();
-
-      history.push('/soldier');
+      toast.error('사원등록 성공');
+      history.push('/');
     } catch (err) {
       toast.error(err);
     }
   };
 
   return (
-    <AuthTemplate mode="login">
+    <AuthTemplate mode="register">
       <AuthForm
-        mode="login"
+        mode="register"
         username={username}
         password={password}
+        password_confirm={password_confirm}
         onChange={onChange}
         onSubmit={onSubmit}
       />
@@ -73,4 +69,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

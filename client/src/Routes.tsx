@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import GlobalStyle from 'styles';
 
 import LoginPage from 'pages/auth/LoginPage';
+import RegisterPage from 'pages/auth/RegisterPage';
 import SoldierPage from 'pages/home/SoldierPage';
 
 const Routes: React.FC = () => {
@@ -34,6 +35,7 @@ const LogInRoutes = ({ user }) => (
 const LogOutRoutes = () => (
   <Switch>
     <Route exact path="/" component={LoginPage} />
+    <Route path="/register" component={RegisterPage} />
     <Redirect from="*" to="/" />
   </Switch>
 );

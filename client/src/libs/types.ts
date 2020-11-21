@@ -2,6 +2,8 @@ export interface UserType {
   id: string;
   username: string;
   admin: boolean;
+  token_version: number;
+  created_at: string;
 }
 
 export interface MenuType {

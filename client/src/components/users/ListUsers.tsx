@@ -109,5 +109,11 @@ const UsersBox = styled.div`
   th {
     background: ${oc.cyan[6]};
     color: white;
+
+    ${media.medium} {
+      &:first-child {
+        width: 45%;
+      }
+    }
   }
 `;

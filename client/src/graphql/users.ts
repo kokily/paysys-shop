@@ -43,3 +43,23 @@ export const REMOVE_USER = gql`
     }
   }
 `;
+
+// Set Admin User API
+export const SET_ADMIN = gql`
+  mutation SetAdmin($id: ID!) {
+    SetAdmin(id: $id) {
+      ok
+      error
+    }
+  }
+`;
+
+// Set Employee User API
+export const SET_EMPLOYEE = gql`
+  mutation SetEmployee($id: ID!) {
+    SetEmployee(id: $id) {
+      ok
+      error
+    }
+  }
+`;

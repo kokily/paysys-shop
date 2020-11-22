@@ -37,6 +37,16 @@ class User extends BaseEntity {
   @UpdateDateColumn()
   updated_at!: Date;
 
+  // Relations
+  @OneToMany((type) => Cart, (cart) => cart.user_id)
+  carts!: [Cart];
+
+  @OneToMany((type) => Bill, (bill) => bill.user_id)
+  bills!: [Bill];
+
+  @OneToMany((type) => Wedding, (wedding) => wedding.user_id)
+  weddings!: [Wedding];
+
   private hashPassword = async (password: string): Promise<string> => {
     return await bcrypt.hash(password, 10);
   };
@@ -48,16 +58,6 @@ class User extends BaseEntity {
   public validPassword = async (password: string): Promise<boolean> => {
     return await bcrypt.compare(password, this.password);
   };
-
-  // Relations
-  @OneToMany((type) => Cart, (cart) => cart.user_id)
-  carts!: [Cart];
-
-  @OneToMany((type) => Bill, (bill) => bill.user_id)
-  bills!: [Bill];
-
-  @OneToMany((type) => Wedding, (wedding) => wedding.user_id)
-  weddings!: [Wedding];
 }
 
 export default User;

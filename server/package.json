@@ -28,8 +28,8 @@
     "koa-send": "^5.0.1",
     "koa-static": "^5.0.0",
     "merge-graphql-schemas": "^1.7.8",
-    "pg": "^8.5.1",
-    "typeorm": "^0.2.29"
+    "pg": "^8.3.0",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

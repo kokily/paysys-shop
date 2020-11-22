@@ -11,7 +11,7 @@ const resolvers: Resolvers = {
         const { id } = args;
 
         try {
-          const user = await getRepository(User).findOne(id);
+          const user = await getRepository(User).findOne({ id });
 
           if (!user) {
             return {
@@ -20,7 +20,9 @@ const resolvers: Resolvers = {
             };
           }
 
-          await getRepository(User).update({ id }, { ...user, admin: true });
+          console.log(user);
+
+          await getRepository(User).update({ id }, { admin: true });
 
           return {
             ok: true,

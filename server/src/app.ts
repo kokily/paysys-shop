@@ -66,6 +66,8 @@ router.post('/refresh_token', async (ctx: Context) => {
     try {
       payload = jwt.verify(token, ENV.REFRESH_SECRET!);
 
+      console.log(payload)
+
       // token 이 일치하면 access_token 재 전송
       const user = await getRepository(User).findOne({ id: payload.user_id });
 

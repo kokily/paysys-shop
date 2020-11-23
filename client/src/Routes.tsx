@@ -19,6 +19,7 @@ import ListUsersPage from 'pages/users/ListUsersPage';
 import ReadUserPage from 'pages/users/ReadUserPage';
 import ListItemsPage from 'pages/items/ListItemsPage';
 import ReadItemPage from 'pages/items/ReadItemPage';
+import AddItemPage from 'pages/items/AddItemPage';
 
 const Routes: React.FC = () => {
   const { data, loading } = useQuery(CHECK_ME);
@@ -50,6 +51,7 @@ const LogInRoutes = ({ user }) => (
     <Route path="/cart" component={CartPage} />
     <Route path="/fronts" component={ListFrontsPage} />
     <Route path="/front/:frontId" component={ReadFrontPage} />
+    <Redirect exact from="/" to="/soldier" />
 
     {user && user.admin && (
       <>
@@ -57,9 +59,10 @@ const LogInRoutes = ({ user }) => (
         <Route path="/user/:userId" component={ReadUserPage} />
         <Route exact path="/items" component={ListItemsPage} />
         <Route path="/item/:itemId" component={ReadItemPage} />
+        <Route path="/add" component={AddItemPage} />
       </>
     )}
-    <Redirect from="*" to="/soldier" />
+    
   </Switch>
 );
 

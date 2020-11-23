@@ -1,12 +1,10 @@
 import { Context } from 'koa';
 import { getRepository } from 'typeorm';
-import {
-  AddWeddingMutationArgs,
-  AddWeddingResponse,
-} from '../../../types/graph';
+import { AddWeddingMutationArgs, AddWeddingResponse } from '../../../types/graph';
 import { Resolvers } from '../../../types/resolvers';
 import { adminResolver } from '../../../libs/authenticate';
 import Wedding from '../../../entities/Wedding';
+import { masking } from '../../../libs/utils';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -21,6 +19,8 @@ const resolvers: Resolvers = {
         try {
           const wedding = await getRepository(Wedding).create({
             ...args,
+            husband: masking(args.husband),
+            bride: masking(args.bride),
             user_id,
           });
 

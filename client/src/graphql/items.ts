@@ -76,22 +76,11 @@ export const UPDATE_ITEM = gql`
     $divide: String
     $native: String
     $unit: String
-    $price: String
+    $price: Int
   ) {
     UpdateItem(id: $id, name: $name, divide: $divide, native: $native, unit: $unit, price: $price) {
       ok
       error
-      item {
-        id
-        num
-        name
-        divide
-        native
-        unit
-        price
-        created_at
-        updated_at
-      }
     }
   }
 `;

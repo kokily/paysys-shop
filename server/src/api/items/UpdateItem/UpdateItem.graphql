@@ -10,6 +10,6 @@ type Mutation {
     divide: String
     native: String
     unit: String
-    price: String
+    price: Int
   ): UpdateItemResponse!
 }

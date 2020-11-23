@@ -17,27 +17,6 @@ const resolvers: Resolvers = {
             .orderBy('item.num', 'DESC')
             .addOrderBy('item.id', 'DESC');
 
-          if (cursor) {
-            const item = await getRepository(Item).findOne({ id: cursor });
-
-            if (!item) {
-              return {
-                ok: false,
-                error: '잘못된 요청',
-                items: null,
-              };
-            }
-
-            query.andWhere('item.created_at < :date', {
-              date: item.created_at,
-            });
-
-            query.orWhere('item.created_at = :date AND item.id < id', {
-              date: item.created_at,
-              id: item.id,
-            });
-          }
-
           if (name) {
             query.andWhere('item.name like :name', { name: `%${name}%` });
           }
@@ -51,6 +30,22 @@ const resolvers: Resolvers = {
           if (native) {
             query.andWhere('item.native like :native', {
               native: `%${native}%`,
+            });
+          }
+
+          if (cursor) {
+            const item = await getRepository(Item).findOne({ id: cursor });
+
+            if (!item) {
+              return {
+                ok: false,
+                error: '잘못된 요청',
+                items: null,
+              };
+            }
+
+            query.andWhere('item.id < :id', {
+              id: item.id,
             });
           }
 

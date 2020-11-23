@@ -36,6 +36,38 @@ const ListItems: React.FC<ListItemsProps> = ({
       />
 
       <AddButton to="/add">추가하기</AddButton>
+
+      <table className="table">
+        <thead>
+          <tr>
+            <th>분류</th>
+            <th>구분</th>
+            <th>상품명</th>
+            <th>단위</th>
+            <th>단가</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {items === null || items.length === 0 ? (
+            <tr>
+              <td colSpan={5}>데이터가 없습니다.</td>
+            </tr>
+          ) : (
+            <>
+              {items?.map((item, i) => (
+                <tr key={i} style={{ cursor: 'pointer' }} onClick={() => onDetail(item.id)}>
+                  <td>{item.divide}</td>
+                  <td>{item.native}</td>
+                  <td>{item.name}</td>
+                  <td>{item.unit}</td>
+                  <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</td>
+                </tr>
+              ))}
+            </>
+          )}
+        </tbody>
+      </table>
     </ListItemsBox>
   );
 };

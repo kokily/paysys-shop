@@ -76,6 +76,8 @@ router.post('/refresh_token', async (ctx: Context) => {
         };
       } else {
         if (user.token_version !== payload.token_version) {
+          ctx.cookies.set('paysys_token');
+
           ctx.body = {
             ok: false,
             access_token: '',

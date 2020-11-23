@@ -301,7 +301,6 @@ export const READ_WEDDING = gql`
         updated_at
         wedding_at
         event_at
-        user_id
       }
     }
   }

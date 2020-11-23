@@ -22,6 +22,7 @@ import ReadItemPage from 'pages/items/ReadItemPage';
 import AddItemPage from 'pages/items/AddItemPage';
 import UpdateItemPage from 'pages/items/UpdateItemPage';
 import ListWeddingsPage from 'pages/weddings/ListWeddingsPage';
+import ReadWeddingPage from 'pages/weddings/ReadWeddingPage';
 
 const Routes: React.FC = () => {
   const { data, loading } = useQuery(CHECK_ME);
@@ -64,6 +65,7 @@ const LogInRoutes = ({ user }) => (
         <Route path="/add" component={AddItemPage} />
         <Route path="/item/update/:itemId" component={UpdateItemPage} />
         <Route exact path="/weddings" component={ListWeddingsPage} />
+        <Route path="/wedding/:weddingId" component={ReadWeddingPage} />
       </>
     )}
   </Switch>

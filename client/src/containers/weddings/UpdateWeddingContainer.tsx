@@ -1,12 +1,13 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import UpdateWedding from 'components/weddings/UpdateWedding';
 import { READ_WEDDING, UPDATE_WEDDING } from 'graphql/weddings';
-import { SavingWedding } from 'libs/types';
+import client from 'libs/client';
+import { UpdateType } from 'libs/types';
 import React, { useReducer, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const reducer = (state: SavingWedding, action: any) => {
+const reducer = (state: UpdateType, action: any) => {
   return {
     ...state,
     [action.name]: action.value,
@@ -21,46 +22,86 @@ const UpdateWeddingContainer = () => {
   });
   const [UpdateWeddingResolver] = useMutation(UPDATE_WEDDING);
   const [state, dispatch] = useReducer(reducer, {
-    husband: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband,
-    bride: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride,
-    reserve_pay: data?.ReadWedding?.ok && data.ReadWedding.wedding.reserve_pay,
-    husband_rental: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_rental,
-    bride_rental: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_rental,
-    husband_company: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_company,
-    bride_company: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_company,
-    husband_add: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_add,
-    bride_add: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_add,
-    husband_today: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_today,
-    bride_today: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_today,
-    husband_bouquet: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_bouquet,
-    bride_bouquet: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_bouquet,
-    husband_ceremony: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_ceremony,
-    bride_ceremony: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_ceremony,
-    husband_hanbok: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_hanbok,
-    bride_hanbok: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_hanbok,
-    husband_play: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_play,
-    bride_play: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_play,
-    husband_anthem: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_anthem,
-    bride_anthem: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_anthem,
-    husband_moderator: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_moderator,
-    bride_moderator: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_moderator,
-    husband_officiate: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_officiate,
-    bride_officiate: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_officiate,
-    husband_etc: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_etc,
-    bride_etc: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_etc,
-    husband_conv: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_conv,
-    bride_conv: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_conv,
-    meals_price: data?.ReadWedding?.ok && data.ReadWedding.wedding.meals_price,
-    husband_num: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_num,
-    bride_num: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_num,
-    present_price: data?.ReadWedding?.ok && data.ReadWedding.wedding.present_price,
-    husband_present_num: data?.ReadWedding?.ok && data.ReadWedding.wedding.husband_present_num,
-    bride_present_num: data?.ReadWedding?.ok && data.ReadWedding.wedding.bride_present_num,
-    meal: data?.ReadWedding?.ok && data.ReadWedding.wedding.meal,
-    reserve: data?.ReadWedding?.ok && data.ReadWedding.wedding.reserve,
-    present: data?.ReadWedding?.ok && data.ReadWedding.wedding.present,
-    wedding_at: data?.ReadWedding?.ok && data.ReadWedding.wedding.wedding_at,
-    event_at: data?.ReadWedding?.ok && data.ReadWedding.wedding.event_at,
+    husband: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband,
+    bride: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride,
+    reserve_pay: data?.ReadWedding?.wedding && data.ReadWedding.wedding.reserve_pay.toString(),
+    husband_rental:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_rental.toString(),
+    bride_rental: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_rental.toString(),
+    sum_rental: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_rental.toString(),
+    husband_company:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_company.toString(),
+    bride_company: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_company.toString(),
+    sum_company: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_company.toString(),
+    husband_add: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_add.toString(),
+    bride_add: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_add.toString(),
+    sum_add: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_add.toString(),
+    husband_today: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_today.toString(),
+    bride_today: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_today.toString(),
+    sum_today: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_today.toString(),
+    husband_bouquet:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_bouquet.toString(),
+    bride_bouquet: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_bouquet.toString(),
+    sum_bouquet: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_bouquet.toString(),
+    husband_ceremony:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_ceremony.toString(),
+    bride_ceremony:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_ceremony.toString(),
+    sum_ceremony: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_ceremony.toString(),
+    husband_hanbok:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_hanbok.toString(),
+    bride_hanbok: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_hanbok.toString(),
+    sum_hanbok: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_hanbok.toString(),
+    husband_play: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_play.toString(),
+    bride_play: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_play.toString(),
+    sum_play: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_play.toString(),
+    husband_anthem:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_anthem.toString(),
+    bride_anthem: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_anthem.toString(),
+    sum_anthem: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_anthem.toString(),
+    husband_moderator:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_moderator.toString(),
+    bride_moderator:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_moderator.toString(),
+    sum_moderator: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_moderator.toString(),
+    husband_officiate:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_officiate.toString(),
+    bride_officiate:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_officiate.toString(),
+    sum_officiate: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_officiate.toString(),
+    husband_etc: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_etc.toString(),
+    bride_etc: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_etc.toString(),
+    sum_etc: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_etc.toString(),
+    husband_conv: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_conv.toString(),
+    bride_conv: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_conv.toString(),
+    sum_conv: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_conv.toString(),
+    husband_wedding:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_wedding.toString(),
+    bride_wedding: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_wedding.toString(),
+    sum_wedding: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_wedding.toString(),
+    meals_price: data?.ReadWedding?.wedding && data.ReadWedding.wedding.meals_price.toString(),
+    husband_num: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_num.toString(),
+    bride_num: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_num.toString(),
+    sum_num: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_num.toString(),
+    husband_meal: data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_meal.toString(),
+    bride_meal: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_meal.toString(),
+    sum_meal: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_meal.toString(),
+    present_price: data?.ReadWedding?.wedding && data.ReadWedding.wedding.present_price.toString(),
+    husband_present_num:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_present_num.toString(),
+    bride_present_num:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_present_num.toString(),
+    sum_present_num:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_present_num.toString(),
+    husband_present:
+      data?.ReadWedding?.wedding && data.ReadWedding.wedding.husband_present.toString(),
+    bride_present: data?.ReadWedding?.wedding && data.ReadWedding.wedding.bride_present.toString(),
+    sum_present: data?.ReadWedding?.wedding && data.ReadWedding.wedding.sum_present.toString(),
+    meal: data?.ReadWedding?.wedding && data.ReadWedding.wedding.meal,
+    reserve: data?.ReadWedding?.wedding && data.ReadWedding.wedding.reserve,
+    present: data?.ReadWedding?.wedding && data.ReadWedding.wedding.present,
+    wedding_at: data?.ReadWedding?.wedding && data.ReadWedding.wedding.wedding_at,
+    event_at: data?.ReadWedding?.wedding && data.ReadWedding.wedding.event_at,
   });
   const {
     husband,
@@ -168,14 +209,14 @@ const UpdateWeddingContainer = () => {
       let bride_reserve = 0;
 
       if (reserve === 'half') {
-        husband_reserve = reserve_pay / 2;
-        bride_reserve = reserve_pay / 2;
+        husband_reserve = parseInt(reserve_pay) / 2;
+        bride_reserve = parseInt(reserve_pay) / 2;
       } else if (reserve === 'husband') {
-        husband_reserve = reserve_pay;
+        husband_reserve = parseInt(reserve_pay);
         bride_reserve = 0;
       } else {
         husband_reserve = 0;
-        bride_reserve = reserve_pay;
+        bride_reserve = parseInt(reserve_pay);
       }
 
       const response = await UpdateWeddingResolver({
@@ -183,109 +224,111 @@ const UpdateWeddingContainer = () => {
           id: weddingId,
           husband,
           bride,
-          reserve_pay,
-          husband_rental,
-          bride_rental,
-          sum_rental: husband_rental + bride_rental,
-          husband_company,
-          bride_company,
-          sum_company: husband_company + bride_company,
-          husband_add,
-          bride_add,
-          sum_add: husband_add + bride_add,
-          husband_today,
-          bride_today,
-          sum_today: husband_today + bride_today,
-          husband_bouquet,
-          bride_bouquet,
-          sum_bouquet: husband_bouquet + bride_bouquet,
-          husband_ceremony,
-          bride_ceremony,
-          sum_ceremony: husband_ceremony + bride_ceremony,
-          husband_hanbok,
-          bride_hanbok,
-          sum_hanbok: husband_hanbok + bride_hanbok,
-          husband_play,
-          bride_play,
-          sum_play: husband_play + bride_play,
-          husband_anthem,
-          bride_anthem,
-          sum_anthem: husband_anthem + bride_anthem,
-          husband_moderator,
-          bride_moderator,
-          sum_moderator: husband_moderator + bride_moderator,
-          husband_officiate,
-          bride_officiate,
-          sum_officiate: husband_officiate + bride_officiate,
-          husband_etc,
-          bride_etc,
-          sum_etc: husband_etc + bride_etc,
-          husband_conv,
-          bride_conv,
-          sum_conv: husband_conv + bride_conv,
+          reserve_pay: parseInt(reserve_pay),
+          husband_rental: parseInt(husband_rental),
+          bride_rental: parseInt(bride_rental),
+          sum_rental: parseInt(husband_rental) + parseInt(bride_rental),
+          husband_company: parseInt(husband_company),
+          bride_company: parseInt(bride_company),
+          sum_company: parseInt(husband_company) + parseInt(bride_company),
+          husband_add: parseInt(husband_add),
+          bride_add: parseInt(bride_add),
+          sum_add: parseInt(husband_add) + parseInt(bride_add),
+          husband_today: parseInt(husband_today),
+          bride_today: parseInt(bride_today),
+          sum_today: parseInt(husband_today) + parseInt(bride_today),
+          husband_bouquet: parseInt(husband_bouquet),
+          bride_bouquet: parseInt(bride_bouquet),
+          sum_bouquet: parseInt(husband_bouquet) + parseInt(bride_bouquet),
+          husband_ceremony: parseInt(husband_ceremony),
+          bride_ceremony: parseInt(bride_ceremony),
+          sum_ceremony: parseInt(husband_ceremony) + parseInt(bride_ceremony),
+          husband_hanbok: parseInt(husband_hanbok),
+          bride_hanbok: parseInt(bride_hanbok),
+          sum_hanbok: parseInt(husband_hanbok) + parseInt(bride_hanbok),
+          husband_play: parseInt(husband_play),
+          bride_play: parseInt(bride_play),
+          sum_play: parseInt(husband_play) + parseInt(bride_play),
+          husband_anthem: parseInt(husband_anthem),
+          bride_anthem: parseInt(bride_anthem),
+          sum_anthem: parseInt(husband_anthem) + parseInt(bride_anthem),
+          husband_moderator: parseInt(husband_moderator),
+          bride_moderator: parseInt(bride_moderator),
+          sum_moderator: parseInt(husband_moderator) + parseInt(bride_moderator),
+          husband_officiate: parseInt(husband_officiate),
+          bride_officiate: parseInt(bride_officiate),
+          sum_officiate: parseInt(husband_officiate) + parseInt(bride_officiate),
+          husband_etc: parseInt(husband_etc),
+          bride_etc: parseInt(bride_etc),
+          sum_etc: parseInt(husband_etc) + parseInt(bride_etc),
+          husband_conv: parseInt(husband_conv),
+          bride_conv: parseInt(bride_conv),
+          sum_conv: parseInt(husband_conv) + parseInt(bride_conv),
           husband_wedding:
-            husband_rental +
-            husband_company +
-            husband_add +
-            husband_today +
-            husband_bouquet +
-            husband_ceremony +
-            husband_hanbok +
-            husband_play +
-            husband_anthem +
-            husband_moderator +
-            husband_officiate +
-            husband_etc +
-            husband_conv,
+            parseInt(husband_rental) +
+            parseInt(husband_company) +
+            parseInt(husband_add) +
+            parseInt(husband_today) +
+            parseInt(husband_bouquet) +
+            parseInt(husband_ceremony) +
+            parseInt(husband_hanbok) +
+            parseInt(husband_play) +
+            parseInt(husband_anthem) +
+            parseInt(husband_moderator) +
+            parseInt(husband_officiate) +
+            parseInt(husband_etc) +
+            parseInt(husband_conv),
           bride_wedding:
-            bride_rental +
-            bride_company +
-            bride_add +
-            bride_today +
-            bride_bouquet +
-            bride_ceremony +
-            bride_hanbok +
-            bride_play +
-            bride_anthem +
-            bride_moderator +
-            bride_officiate +
-            bride_etc +
-            bride_conv,
+            parseInt(bride_rental) +
+            parseInt(bride_company) +
+            parseInt(bride_add) +
+            parseInt(bride_today) +
+            parseInt(bride_bouquet) +
+            parseInt(bride_ceremony) +
+            parseInt(bride_hanbok) +
+            parseInt(bride_play) +
+            parseInt(bride_anthem) +
+            parseInt(bride_moderator) +
+            parseInt(bride_officiate) +
+            parseInt(bride_etc) +
+            parseInt(bride_conv),
           sum_wedding:
-            husband_rental +
-            husband_company +
-            husband_add +
-            husband_today +
-            husband_bouquet +
-            husband_ceremony +
-            husband_hanbok +
-            husband_play +
-            husband_anthem +
-            husband_moderator +
-            husband_officiate +
-            husband_etc +
-            husband_conv +
-            bride_rental +
-            bride_company +
-            bride_add +
-            bride_today +
-            bride_bouquet +
-            bride_ceremony +
-            bride_hanbok +
-            bride_play +
-            bride_anthem +
-            bride_moderator +
-            bride_officiate +
-            bride_etc +
-            bride_conv,
-          meals_price,
-          husband_num,
-          bride_num,
-          sum_num: husband_num + bride_num,
-          present_price,
-          husband_present_num,
-          bride_present_num,
-          sum_num: husband_num + bride_num,
+            parseInt(husband_rental) +
+            parseInt(husband_company) +
+            parseInt(husband_add) +
+            parseInt(husband_today) +
+            parseInt(husband_bouquet) +
+            parseInt(husband_ceremony) +
+            parseInt(husband_hanbok) +
+            parseInt(husband_play) +
+            parseInt(husband_anthem) +
+            parseInt(husband_moderator) +
+            parseInt(husband_officiate) +
+            parseInt(husband_etc) +
+            parseInt(husband_conv) +
+            parseInt(bride_rental) +
+            parseInt(bride_company) +
+            parseInt(bride_add) +
+            parseInt(bride_today) +
+            parseInt(bride_bouquet) +
+            parseInt(bride_ceremony) +
+            parseInt(bride_hanbok) +
+            parseInt(bride_play) +
+            parseInt(bride_anthem) +
+            parseInt(bride_moderator) +
+            parseInt(bride_officiate) +
+            parseInt(bride_etc) +
+            parseInt(bride_conv),
+          meals_price: parseInt(meals_price),
+          husband_num: parseInt(husband_num),
+          bride_num: parseInt(bride_num),
+          sum_num: parseInt(husband_num) + parseInt(bride_num),
+          present_price: parseInt(present_price),
+          husband_present_num: parseInt(husband_present_num),
+          bride_present_num: parseInt(bride_present_num),
+          sum_present: parseInt(husband_num) + parseInt(bride_num),
+          husband_reserve,
+          bride_reserve,
           meal,
           reserve,
           present,
@@ -293,6 +336,13 @@ const UpdateWeddingContainer = () => {
           event_at,
         },
       });
+
+      if (!response || !response.data) return;
+
+      await client.clearStore();
+
+      toast.success('웨딩 수정 완료');
+      history.push(`/wedding/${weddingId}`);
     } catch (err) {
       toast.error(err);
     }
@@ -309,43 +359,43 @@ const UpdateWeddingContainer = () => {
     <UpdateWedding
       husband={husband}
       bride={bride}
-      reserve_pay={reserve_pay}
-      husband_rental={husband_rental}
-      bride_rental={bride_rental}
-      husband_company={husband_company}
-      bride_company={bride_company}
-      husband_add={husband_add}
-      bride_add={bride_add}
-      husband_today={husband_today}
-      bride_today={bride_today}
-      husband_bouquet={husband_bouquet}
-      bride_bouquet={bride_bouquet}
-      husband_ceremony={husband_ceremony}
-      bride_ceremony={bride_ceremony}
-      husband_hanbok={husband_hanbok}
-      bride_hanbok={bride_hanbok}
-      husband_play={husband_play}
-      bride_play={bride_play}
-      husband_anthem={husband_anthem}
-      bride_anthem={bride_anthem}
-      husband_moderator={husband_moderator}
-      bride_moderator={bride_moderator}
-      husband_officiate={husband_officiate}
-      bride_officiate={bride_officiate}
-      husband_etc={husband_etc}
-      bride_etc={bride_etc}
-      husband_conv={husband_conv}
-      bride_conv={bride_conv}
-      meals_price={meals_price}
-      husband_num={husband_num}
-      bride_num={bride_num}
-      present_price={present_price}
-      husband_present_num={husband_present_num}
-      bride_present_num={bride_present_num}
+      reserve_pay={parseInt(reserve_pay)}
+      husband_rental={parseInt(husband_rental)}
+      bride_rental={parseInt(bride_rental)}
+      husband_company={parseInt(husband_company)}
+      bride_company={parseInt(bride_company)}
+      husband_add={parseInt(husband_add)}
+      bride_add={parseInt(bride_add)}
+      husband_today={parseInt(husband_today)}
+      bride_today={parseInt(bride_today)}
+      husband_bouquet={parseInt(husband_bouquet)}
+      bride_bouquet={parseInt(bride_bouquet)}
+      husband_ceremony={parseInt(husband_ceremony)}
+      bride_ceremony={parseInt(bride_ceremony)}
+      husband_hanbok={parseInt(husband_hanbok)}
+      bride_hanbok={parseInt(bride_hanbok)}
+      husband_play={parseInt(husband_play)}
+      bride_play={parseInt(bride_play)}
+      husband_anthem={parseInt(husband_anthem)}
+      bride_anthem={parseInt(bride_anthem)}
+      husband_moderator={parseInt(husband_moderator)}
+      bride_moderator={parseInt(bride_moderator)}
+      husband_officiate={parseInt(husband_officiate)}
+      bride_officiate={parseInt(bride_officiate)}
+      husband_etc={parseInt(husband_etc)}
+      bride_etc={parseInt(bride_etc)}
+      husband_conv={parseInt(husband_conv)}
+      bride_conv={parseInt(bride_conv)}
+      meals_price={parseInt(meals_price)}
+      husband_num={parseInt(husband_num)}
+      bride_num={parseInt(bride_num)}
+      present_price={parseInt(present_price)}
+      husband_present_num={parseInt(husband_present_num)}
+      bride_present_num={parseInt(bride_present_num)}
       meal={meal}
       reserve={reserve}
       present={present}
-      wedding_at={wedding_at}
+      wedding_at={startDate}
       event_at={event_at}
       setStartDate={setStartDate}
       onChange={onChange}

@@ -39,7 +39,7 @@ const ListItemsContainer = () => {
 
   return (
     <ListItems
-      items={data.ListItems.items}
+      items={data?.ListItems.items || []}
       search={search}
       onChange={onChange}
       onSearch={onSearch}

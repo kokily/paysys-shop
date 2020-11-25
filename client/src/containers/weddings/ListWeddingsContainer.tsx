@@ -9,7 +9,7 @@ const ListWeddingsContainer = () => {
   const [search, setSearch] = useState('');
   const { data, loading, error } = useListWeddings(date);
 
-  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
@@ -39,7 +39,7 @@ const ListWeddingsContainer = () => {
 
   return (
     <ListWeddings
-      weddings={data.ListWeddings.weddings}
+      weddings={data?.ListWeddings.weddings || []}
       search={search}
       onChange={onChange}
       onSearch={onSearch}

@@ -7,7 +7,7 @@ import { WeddingType } from 'libs/types';
 interface ListWeddingsProps {
   weddings: WeddingType[] | null;
   search: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: (e: React.MouseEvent) => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onDetail: (id: string) => void;

@@ -1,8 +1,5 @@
 import { getManager, getRepository } from 'typeorm';
-import {
-  ListWeddingsQueryArgs,
-  ListWeddingsResponse,
-} from '../../../types/graph';
+import { ListWeddingsQueryArgs, ListWeddingsResponse } from '../../../types/graph';
 import { Resolvers } from '../../../types/resolvers';
 import { adminResolver } from '../../../libs/authenticate';
 import Wedding from '../../../entities/Wedding';
@@ -21,7 +18,7 @@ const resolvers: Resolvers = {
             .addOrderBy('wedding.id', 'DESC');
 
           if (date) {
-            query.andWhere('wedding.created_at like :date', {
+            query.andWhere('wedding.wedding_at like :date', {
               date: `%${date}%`,
             });
           }

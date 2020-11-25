@@ -1,15 +1,14 @@
-import { useState, useCallback } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { LIST_BILLS } from 'graphql/bills';
+import { BillType } from 'libs/types';
+import { useCallback, useState } from 'react';
 import useScroll from './useScroll';
 
 const useListBills = (title?: string, user_id?: string, hall?: string) => {
-  const { data, loading, error, fetchMore, refetch } = useQuery(LIST_BILLS, {
-    variables: {
-      title,
-      user_id,
-      hall,
-    },
+  const { data, loading, error, fetchMore, refetch } = useQuery<{
+    ListBills: { bills: BillType[] };
+  }>(LIST_BILLS, {
+    variables: { title, user_id, hall },
   });
   const [isFinished, setIsFinished] = useState(false);
 
@@ -20,7 +19,6 @@ const useListBills = (title?: string, user_id?: string, hall?: string) => {
           title,
           user_id,
           hall,
-          // @ts-ignore
           cursor,
         },
         updateQuery: (prev, { fetchMoreResult }) => {

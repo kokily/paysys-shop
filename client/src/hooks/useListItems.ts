@@ -2,9 +2,12 @@ import { useQuery } from '@apollo/react-hooks';
 import { useState, useCallback } from 'react';
 import { LIST_ITEMS } from 'graphql/items';
 import useScroll from './useScroll';
+import { ItemType } from 'libs/types';
 
 const useListItems = (name?: string) => {
-  const { data, loading, error, fetchMore } = useQuery(LIST_ITEMS, {
+  const { data, loading, error, fetchMore } = useQuery<{
+    ListItems: { items: ItemType[] };
+  }>(LIST_ITEMS, {
     variables: { name },
   });
   const [isFinished, setIsFinished] = useState(false);
@@ -14,7 +17,6 @@ const useListItems = (name?: string) => {
       fetchMore({
         variables: {
           name,
-          // @ts-ignore
           cursor,
         },
         updateQuery: (prev, { fetchMoreResult }) => {

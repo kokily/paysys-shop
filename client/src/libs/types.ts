@@ -188,6 +188,73 @@ export interface ExpenseType {
   event_at: string;
 }
 
+export interface UpdateType {
+  husband: string;
+  bride: string;
+  reserve_pay: string;
+  husband_rental: string;
+  bride_rental: string;
+  sum_rental: string;
+  husband_company: string;
+  bride_company: string;
+  sum_company: string;
+  husband_add: string;
+  bride_add: string;
+  sum_add: string;
+  husband_today: string;
+  bride_today: string;
+  sum_today: string;
+  husband_bouquet: string;
+  bride_bouquet: string;
+  sum_bouquet: string;
+  husband_ceremony: string;
+  bride_ceremony: string;
+  sum_ceremony: string;
+  husband_hanbok: string;
+  bride_hanbok: string;
+  sum_hanbok: string;
+  husband_play: string;
+  bride_play: string;
+  sum_play: string;
+  husband_anthem: string;
+  bride_anthem: string;
+  sum_anthem: string;
+  husband_moderator: string;
+  bride_moderator: string;
+  sum_moderator: string;
+  husband_officiate: string;
+  bride_officiate: string;
+  sum_officiate: string;
+  husband_etc: string;
+  bride_etc: string;
+  sum_etc: string;
+  husband_conv: string;
+  bride_conv: string;
+  sum_conv: string;
+  husband_wedding: string;
+  bride_wedding: string;
+  sum_wedding: string;
+  meals_price: string;
+  husband_num: string;
+  bride_num: string;
+  sum_num: string;
+  husband_meal: string;
+  bride_meal: string;
+  sum_meal: string;
+  present_price: string;
+  husband_present_num: string;
+  bride_present_num: string;
+  sum_present_num: string;
+  husband_present: string;
+  bride_present: string;
+  sum_present: string;
+  meal: string;
+  reserve: string;
+  present: string;
+  wedding_at: Date;
+  event_at: string;
+}
+
 export interface SavingWedding {
   husband: string;
   bride: string;

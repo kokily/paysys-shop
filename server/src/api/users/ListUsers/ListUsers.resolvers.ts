@@ -17,6 +17,12 @@ const resolvers: Resolvers = {
             .orderBy('user.created_at', 'DESC')
             .addOrderBy('user.id', 'DESC');
 
+          if (username) {
+            query.andWhere('user.username like :username', {
+              username: `%${username}%`,
+            });
+          }
+
           if (cursor) {
             const user = await getRepository(User).findOne({ id: cursor });
 
@@ -35,12 +41,6 @@ const resolvers: Resolvers = {
             query.orWhere('user.created_at = :date AND user.id < :id', {
               date: user.created_at,
               id: user.id,
-            });
-          }
-
-          if (username) {
-            query.andWhere('user.username like :username', {
-              username: `%${username}%`,
             });
           }
 

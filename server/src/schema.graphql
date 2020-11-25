@@ -42,7 +42,7 @@ type Mutation {
   RemoveOne(item_id: ID!): RemoveOneResponse!
   AddItem(name: String!, divide: String!, native: String!, unit: String!, price: Int!): AddItemResponse!
   RemoveItem(id: ID!): RemoveItemResponse!
-  UpdateItem(id: ID!, name: String, divide: String, native: String, unit: String, price: String): UpdateItemResponse!
+  UpdateItem(id: ID!, name: String, divide: String, native: String, unit: String, price: Int): UpdateItemResponse!
   AddReserve(bill_id: ID!, reserve: Int!): AddReserveResponse!
   RemoveReserve(id: ID!): RemoveReserveResponse!
   RemoveUser(id: ID!): RemoveUserResponse!

@@ -891,7 +891,7 @@ const WeddingBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 6rem;
   ${shadow(1)};
   animation: 0.3s ease-out 0s 1 fadeIn;
 

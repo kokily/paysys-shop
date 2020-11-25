@@ -1,10 +1,13 @@
 import { useQuery } from '@apollo/react-hooks';
 import { LIST_WEDDINGS } from 'graphql/weddings';
+import { WeddingType } from 'libs/types';
 import { useState, useCallback } from 'react';
 import useScroll from './useScroll';
 
 const useListWeddings = (date?: string) => {
-  const { data, loading, error, fetchMore } = useQuery(LIST_WEDDINGS, {
+  const { data, loading, error, fetchMore } = useQuery<{
+    ListWeddings: { weddings: WeddingType[] };
+  }>(LIST_WEDDINGS, {
     variables: { date },
   });
   const [isFinished, setIsFinished] = useState(false);
@@ -14,7 +17,6 @@ const useListWeddings = (date?: string) => {
       fetchMore({
         variables: {
           date,
-          // @ts-ignore,
           cursor,
         },
         updateQuery: (prev, { fetchMoreResult }) => {

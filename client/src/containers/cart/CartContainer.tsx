@@ -57,7 +57,7 @@ const CartContainer = () => {
       toast.success('전표 전송 성공');
 
       await RemoveCart();
-      history.push('/front');
+      history.push('/fronts');
     } catch (err) {
       toast.error(err);
     }

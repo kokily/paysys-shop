@@ -7,6 +7,7 @@ const ConnectionOptions: ConnectionOptions = {
   host: 'localhost',
   port: 5432,
   synchronize: true,
+  logging: true,
   entities,
   database: ENV.DB_DATABASE,
   username: ENV.DB_USERNAME,

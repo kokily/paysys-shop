@@ -41,7 +41,7 @@ const Routes: React.FC = () => {
         <LogOutRoutes />
       )}
 
-      <ToastContainer position="bottom-right" draggable={false} />
+      <ToastContainer position="top-center" draggable={false} />
     </>
   );
 };
@@ -56,7 +56,7 @@ const LogInRoutes = ({ user }) => (
     <Route path="/cart" component={CartPage} />
     <Route path="/fronts" component={ListFrontsPage} />
     <Route path="/front/:frontId" component={ReadFrontPage} />
-    <Redirect exact from="/" to="/soldier" />
+    <Redirect exact from="*" to="/soldier" />
 
     {user && user.admin && (
       <>

@@ -41,8 +41,11 @@ const DropList: React.FC<DropListProps> = ({ user, onClose, onLogout, visible })
           <OutsideClickHandler key={key} onOutsideClick={onClose}>
             <ListBox onClick={onClose} style={props}>
               <div className="menu-wrapper">
+                <DropItem to={'/password'}>비밀번호 변경</DropItem>
                 {user.admin && (
                   <>
+                    <Split />
+
                     <DropItem to={'/weddings'}>웨딩빌지</DropItem>
                     <DropItem to={'/items'}>품목리스트</DropItem>
 

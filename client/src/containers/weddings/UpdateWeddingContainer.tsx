@@ -326,7 +326,11 @@ const UpdateWeddingContainer = () => {
           present_price: parseInt(present_price),
           husband_present_num: parseInt(husband_present_num),
           bride_present_num: parseInt(bride_present_num),
-          sum_present: parseInt(husband_num) + parseInt(bride_num),
+          sum_present_num: parseInt(husband_present_num) + parseInt(bride_present_num),
+          husband_present: parseInt(husband_present_num) * parseInt(present_price),
+          bride_present: parseInt(bride_present_num) * parseInt(present_price),
+          sum_present:
+            (parseInt(husband_present_num) + parseInt(bride_present_num)) * parseInt(present_price),
           husband_reserve,
           bride_reserve,
           meal,

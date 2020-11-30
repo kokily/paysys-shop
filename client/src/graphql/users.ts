@@ -63,3 +63,12 @@ export const SET_EMPLOYEE = gql`
     }
   }
 `;
+
+export const INIT_PASSWORD = gql`
+  mutation InitPassword($id: ID!) {
+    InitPassword(id: $id) {
+      ok
+      error
+    }
+  }
+`;

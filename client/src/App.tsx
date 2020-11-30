@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { dev_server, ENV, prod_server } from 'libs/constants';
 import { setAccessToken } from 'libs/accessToken';
 import Routes from 'Routes';
+import Loading from 'components/common/Loading';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ const App = () => {
     });
   }, []);
 
-  if (loading) return <div>Loading</div>;
+  if (loading) return <Loading />;
 
   return <Routes />;
 };

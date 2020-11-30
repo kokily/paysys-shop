@@ -25,6 +25,7 @@ import ListWeddingsPage from 'pages/weddings/ListWeddingsPage';
 import ReadWeddingPage from 'pages/weddings/ReadWeddingPage';
 import ExpenseWeddingPage from 'pages/weddings/ExpenseWeddingPage';
 import UpdateWeddingPage from 'pages/weddings/UpdateWeddingPage';
+import PasswordPage from 'pages/auth/PasswordPage';
 
 const Routes: React.FC = () => {
   const { data, loading } = useQuery(CHECK_ME);
@@ -48,15 +49,16 @@ const Routes: React.FC = () => {
 
 const LogInRoutes = ({ user }) => (
   <Switch>
-    <Route path="/soldier" component={SoldierPage} />
-    <Route path="/reserve" component={ReservePage} />
-    <Route path="/general" component={GeneralPage} />
+    <Route exact path="/" component={SoldierPage} />
+    <Route exact path="/soldier" component={SoldierPage} />
+    <Route exact path="/reserve" component={ReservePage} />
+    <Route exact path="/general" component={GeneralPage} />
     <Route exact path="/menu" component={ListMenuPage} />
     <Route path="/menu/:menuId" component={DetailMenuPage} />
-    <Route path="/cart" component={CartPage} />
-    <Route path="/fronts" component={ListFrontsPage} />
+    <Route exact path="/cart" component={CartPage} />
+    <Route exact path="/fronts" component={ListFrontsPage} />
     <Route path="/front/:frontId" component={ReadFrontPage} />
-    <Redirect exact from="*" to="/soldier" />
+    <Route exact path="/password" component={PasswordPage} />
 
     {user && user.admin && (
       <>
@@ -72,6 +74,8 @@ const LogInRoutes = ({ user }) => (
         <Route path="/wedding/update/:weddingId" component={UpdateWeddingPage} />
       </>
     )}
+
+    <Redirect from={'*'} to={'/soldier'} />
   </Switch>
 );
 

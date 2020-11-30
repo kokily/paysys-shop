@@ -12,6 +12,7 @@ interface ReadUserProps {
   onRemoveUser: () => void;
   onSetAdmin: () => void;
   onSetEmployee: () => void;
+  onInitPassword: () => void;
 }
 
 const ReadUser: React.FC<ReadUserProps> = ({
@@ -20,6 +21,7 @@ const ReadUser: React.FC<ReadUserProps> = ({
   onRemoveUser,
   onSetAdmin,
   onSetEmployee,
+  onInitPassword,
 }) => {
   return (
     <UserBox>
@@ -31,10 +33,12 @@ const ReadUser: React.FC<ReadUserProps> = ({
         <DownBorder />
 
         <ReadButton
+          user={user}
           onBack={onBack}
           onRemove={onRemoveUser}
           onAdmin={onSetAdmin}
           onEmployee={onSetEmployee}
+          onInitPassword={onInitPassword}
         />
 
         <Content>

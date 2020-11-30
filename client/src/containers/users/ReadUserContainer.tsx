@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useApolloClient, useMutation, useQuery } from '@apollo/react-hooks';
-import { READ_USER, REMOVE_USER, SET_ADMIN, SET_EMPLOYEE } from 'graphql/users';
+import { INIT_PASSWORD, READ_USER, REMOVE_USER, SET_ADMIN, SET_EMPLOYEE } from 'graphql/users';
 import { toast } from 'react-toastify';
 import ReadUser from 'components/users/ReadUser';
 
@@ -15,6 +15,7 @@ const ReadUserContainer = () => {
   const [RemoveUser] = useMutation(REMOVE_USER);
   const [SetAdmin] = useMutation(SET_ADMIN);
   const [SetEmployee] = useMutation(SET_EMPLOYEE);
+  const [InitPassword] = useMutation(INIT_PASSWORD);
 
   const onBack = () => {
     history.push('/users');
@@ -71,6 +72,23 @@ const ReadUserContainer = () => {
     }
   };
 
+  const onInitPassword = async () => {
+    try {
+      const response = await InitPassword({
+        variables: { id: userId },
+      });
+
+      if (!response || !response.data) return;
+
+      await client.clearStore();
+
+      toast.success('비밀번호가 초기화되었습니다.');
+      history.push('/users');
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   if (loading) return null;
   if (error) return null;
 
@@ -81,6 +99,7 @@ const ReadUserContainer = () => {
       onRemoveUser={onRemoveUser}
       onSetAdmin={onSetAdmin}
       onSetEmployee={onSetEmployee}
+      onInitPassword={onInitPassword}
     />
   );
 };

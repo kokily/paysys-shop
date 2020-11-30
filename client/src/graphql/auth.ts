@@ -45,3 +45,13 @@ export const CHECK_ME = gql`
     }
   }
 `;
+
+// Change Password API
+export const CHANGE_PASSWORD = gql`
+  mutation ChangePassword($password: String!) {
+    ChangePassword(password: $password) {
+      ok
+      error
+    }
+  }
+`;

@@ -4,22 +4,33 @@ import oc from 'open-color';
 import { media } from 'styles/media';
 import shadow from 'styles/shadow';
 import RemoveModal from 'components/common/RemoveModal';
+import { UserType } from 'libs/types';
 
 interface ButtonProps {
   menu?: boolean;
   remove?: boolean;
   admin?: boolean;
   employee?: boolean;
+  password?: boolean;
 }
 
 interface UserButtonProps {
+  user: UserType | null;
   onBack: () => void;
   onRemove: () => void;
   onAdmin: () => void;
   onEmployee: () => void;
+  onInitPassword: () => void;
 }
 
-const UserButton: React.FC<UserButtonProps> = ({ onBack, onRemove, onAdmin, onEmployee }) => {
+const UserButton: React.FC<UserButtonProps> = ({
+  user,
+  onBack,
+  onRemove,
+  onAdmin,
+  onEmployee,
+  onInitPassword,
+}) => {
   const [modal, setModal] = useState(false);
 
   const onRemoveClick = () => {
@@ -44,11 +55,17 @@ const UserButton: React.FC<UserButtonProps> = ({ onBack, onRemove, onAdmin, onEm
         <Button remove onClick={onRemoveClick}>
           삭제하기
         </Button>
-        <Button admin onClick={onAdmin}>
-          관리자 승급
-        </Button>
-        <Button employee onClick={onEmployee}>
-          일반 강등
+        {user && user.admin ? (
+          <Button employee onClick={onEmployee}>
+            일반 강등
+          </Button>
+        ) : (
+          <Button admin onClick={onAdmin}>
+            관리자 승급
+          </Button>
+        )}
+        <Button password onClick={onInitPassword}>
+          비번 초기화
         </Button>
       </Container>
       <RemoveModal visible={modal} onConfirm={onConfirm} onCancel={onCancel} />
@@ -129,6 +146,20 @@ const Button = styled.button<ButtonProps>`
 
       &:hover {
         background: ${oc.yellow[6]};
+        color: white;
+        ${shadow(1)};
+      }
+    `}
+
+    ${(props) =>
+    props.password &&
+    css`
+      border: 1px solid ${oc.pink[6]};
+      background: white;
+      color: ${oc.pink[6]};
+
+      &:hover {
+        background: ${oc.pink[6]};
         color: white;
         ${shadow(1)};
       }

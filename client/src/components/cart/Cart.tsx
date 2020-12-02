@@ -143,6 +143,7 @@ const CartBox = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  margin-bottom: 6rem;
 
   ${media.xsmall} {
     width: 100%;

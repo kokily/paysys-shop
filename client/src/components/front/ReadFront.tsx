@@ -187,7 +187,7 @@ export default ReadFront;
 // Styles
 const ReadFrontBox = styled.div`
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -9,7 +9,7 @@ import ConnectionOptions from './ormConfig';
 
 // SSL Config
 const configurations = {
-  production: { ssl: true, port: 443, hostname: 'paysys.shop' },
+  production: { ssl: true, port: 443, hostname: 'dnkdream.com' },
   development: { ssl: false, port: 4000, hostname: 'localhost' },
 };
 

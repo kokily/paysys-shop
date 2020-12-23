@@ -19,7 +19,7 @@ const rootDir = path.resolve(process.cwd(), './../client/build');
 
 app.use(
   cors({
-    origin: PROD_MODE ? 'https://paysys.shop' : 'http://localhost:3000',
+    origin: PROD_MODE ? 'https://dnkdream.com' : 'http://localhost:3000',
     credentials: true,
   })
 );

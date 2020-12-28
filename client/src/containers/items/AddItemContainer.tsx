@@ -24,8 +24,8 @@ const AddItemContainer = () => {
   const history = useHistory();
   const [state, dispatch] = useReducer(reducer, {
     name: '',
-    divide: '',
-    native: '',
+    divide: '식사(뷔페)',
+    native: '현역',
     unit: '',
     price: '',
   });

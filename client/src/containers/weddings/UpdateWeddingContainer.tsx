@@ -200,7 +200,7 @@ const UpdateWeddingContainer = () => {
         event_at,
       ].includes('')
     ) {
-      toast.error('빈 칸을 모두 채우세요!');
+      toast.error('빈 칸을 모두 채우세요!!!');
       return;
     }
 
@@ -323,6 +323,9 @@ const UpdateWeddingContainer = () => {
           husband_num: parseInt(husband_num),
           bride_num: parseInt(bride_num),
           sum_num: parseInt(husband_num) + parseInt(bride_num),
+          husband_meal: parseInt(meals_price) * parseInt(husband_num),
+          bride_meal: parseInt(meals_price) * parseInt(bride_num),
+          sum_meal: parseInt(meals_price) * (parseInt(husband_num) + parseInt(bride_num)),
           present_price: parseInt(present_price),
           husband_present_num: parseInt(husband_present_num),
           bride_present_num: parseInt(bride_present_num),

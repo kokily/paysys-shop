@@ -237,7 +237,7 @@ const ReadWeddingMobile: React.FC<ReadWeddingProps> = ({
 
           <hr style={{ width: '90%' }} />
 
-          <h3>담례품 비용</h3>
+          <h3>답례품 비용</h3>
           <table>
             <tbody>
               <tr>

@@ -1,0 +1,98 @@
+@import '@/helpers/styles/utils.scss';
+
+.button {
+  font-size: 1rem;
+  font-weight: bold;
+  width: 90px;
+  border-radius: 6px;
+  padding: 0.5rem;
+  padding-bottom: 0.4rem;
+  cursor: pointer;
+  transition: 0.2s all;
+
+  &:active {
+    transform: translateY(3px);
+  }
+
+  &+& {
+    margin-left: 1rem;
+  }
+
+  &.submit {
+    border: 1px solid $submit;
+    background-color: white;
+    color: $submit;
+
+    &:hover {
+      background-color: $submit;
+      color: white;
+
+      @include shadow;
+    }
+  }
+
+  &.cancel {
+    border: 1px solid $cancel;
+    background-color: white;
+    color: $cancel;
+
+    &:hover {
+      background-color: $cancel;
+      color: white;
+
+      @include shadow;
+    }
+  }
+
+  &.edit {
+    border: 1px solid $edit;
+    background-color: white;
+    color: $edit;
+
+    &:hover {
+      background-color: $edit;
+      color: white;
+
+      @include shadow;
+    }
+  }
+
+  &.restore {
+    border: 1px solid $restore;
+    background-color: white;
+    color: $restore;
+
+    &:hover {
+      background-color: $restore;
+      color: white;
+
+      @include shadow;
+    }
+  }
+
+  &.menu {
+    border: 1px solid $menu;
+    background-color: white;
+    color: $menu;
+
+    &:hover {
+      background-color: $menu;
+      color: white;
+
+      @include shadow;
+    }
+  }
+
+  &.employee {
+    border: 1px solid $employee;
+    background-color: white;
+    color: $employee;
+
+    &:hover {
+      background-color: $employee;
+      color: white;
+
+      @include shadow;
+    }
+  }
+}

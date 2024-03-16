@@ -1,0 +1,72 @@
+// Media Query
+@mixin isLarge {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin isMedium {
+  @media (max-width: 992px) {
+    @content;
+  }
+}
+
+@mixin isSmall {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin isXsmall {
+  @media (max-width: 376px) {
+    @content;
+  }
+}
+
+// Mixins Utils
+@mixin shadow {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFromBottom {
+  0% {
+    transform: translateY(70%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+$submit: #7950f2;
+$cancel: #fa5252;
+$edit: #fab005;
+$restore: #15aabf;
+$menu: #4c6ef5;
+$employee: #4c6ef5;
+$logo: #22b8cf;
+$input: #0c8599;

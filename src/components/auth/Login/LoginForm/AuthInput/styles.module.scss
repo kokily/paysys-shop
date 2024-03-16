@@ -1,0 +1,56 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.input {
+  border: none;
+  border-bottom: 1px solid #15aabf;
+  padding: 10px;
+  display: block;
+  width: 92%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus~label,
+  &:valid~label {
+    top: -10px;
+    font-size: 14px;
+    color: #12b886;
+  }
+
+  &:focus~.bar:before {
+    left: 0;
+    right: 0;
+  }
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    background: $input;
+    height: 3px;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    transition: left 0.2s ease-out, right 0.2s ease-out;
+  }
+}
+
+.label {
+  position: absolute;
+  color: #212529;
+  top: 12px;
+  left: 0;
+  transition: 0.2s ease all;
+}

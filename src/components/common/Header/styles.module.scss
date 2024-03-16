@@ -1,0 +1,46 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  z-index: 20;
+
+  @include shadow;
+
+  @media print {
+    display: none;
+  }
+}
+
+.layout {
+  background: white;
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+.contents {
+  width: 1200px;
+  height: 55px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include isLarge {
+    width: 992px;
+  }
+
+  @include isMedium {
+    width: 100%;
+  }
+}
+
+.spacer {
+  flex-grow: 1;
+}

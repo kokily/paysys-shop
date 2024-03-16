@@ -1,0 +1,38 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.22rem;
+  right: 0;
+  transition: 0.16s transform;
+  animation-duration: 300ms;
+
+  @include shadow;
+
+  &.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &.unvisible {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.contents {
+  position: relative;
+  z-index: 5;
+  width: 12rem;
+  background: white;
+
+  @include shadow;
+}
+
+.split {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  height: 2px;
+  background: linear-gradient(to right, #36ac71, #398eb6);
+}

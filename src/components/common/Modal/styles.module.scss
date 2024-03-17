@@ -1,0 +1,38 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contents {
+  width: 320px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+  animation: 0.3s ease-out 0s 1 slideUpFromBottom;
+
+  @include shadow;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 3rem;
+  }
+}
+
+.buttons_box {
+  display: flex;
+  justify-content: flex-end;
+}

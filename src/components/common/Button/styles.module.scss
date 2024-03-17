@@ -95,4 +95,8 @@
       @include shadow;
     }
   }
+
+  &.thin {
+    width: auto;
+  }
 }

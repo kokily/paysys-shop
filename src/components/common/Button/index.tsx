@@ -13,6 +13,7 @@ interface Props extends PropsWithChildren {
   $employee?: boolean;
   $admin?: boolean;
   $fullSize?: boolean;
+  $thin?: boolean;
   onClick?: (e: any) => void;
 }
 
@@ -26,6 +27,7 @@ export function Button(props: Props) {
         [styles.restore]: props.$restore,
         [styles.menu]: props.$menu,
         [styles.employee]: props.$employee,
+        [styles.thin]: props.$thin,
       })}
       {...props}
       onClick={(e) => {

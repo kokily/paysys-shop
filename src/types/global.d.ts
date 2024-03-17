@@ -28,4 +28,11 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   }
+
+  interface ModalType {
+    modal: boolean;
+    onModalClick: () => void;
+    onConfirm: () => void;
+    onCancel: () => void;
+  }
 }

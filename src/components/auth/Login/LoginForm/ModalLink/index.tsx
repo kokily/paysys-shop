@@ -25,7 +25,7 @@ export function ModalLink() {
             <p>계정등록은 관리자에게 문의바랍니다.</p>
 
             <div className={styles.buttons_box}>
-              <Button submit onClick={onClose}>
+              <Button $submit={true} onClick={onClose}>
                 닫 기
               </Button>
             </div>

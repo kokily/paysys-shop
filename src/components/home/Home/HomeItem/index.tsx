@@ -15,6 +15,7 @@ export function HomeItem({ link, divide, onMenu }: Props) {
         [styles.reserve]: link === 'reserve',
         [styles.general]: link === 'general',
       })}
+      onClick={() => onMenu(divide)}
     >
       {divide}
     </div>

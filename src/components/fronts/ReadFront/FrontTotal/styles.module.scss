@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  margin-top: 2rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.pane {
+  margin-bottom: 0.75rem;
+  transition: 0.2s all;
+}
+
+.reserve {
+  color: red;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #ffa8a8;
+  }
+}

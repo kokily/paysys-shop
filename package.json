@@ -23,7 +23,8 @@
     "react-icons": "^5.0.1",
     "react-toastify": "^10.0.5",
     "sass": "^1.72.0",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "use-local-storage": "^3.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

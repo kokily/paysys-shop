@@ -21,7 +21,7 @@ export function useViewCart() {
   const { title, hall, etc, totalAmount } = payload;
 
   // Data Fetching
-  const { data: cart } = useQuery({
+  const { data: cart, refetch } = useQuery({
     queryKey: ['cart'],
     queryFn: () => viewCartAPI(),
     enabled: true,
@@ -59,7 +59,7 @@ export function useViewCart() {
       },
       {
         onSuccess: (data) => {
-          onRemoveAllCart();
+          onRemoveAllCart(e);
           queryClient.invalidateQueries({ queryKey: ['fronts', 'cart'] });
           router.replace(`/fronts/${data.id}`);
         },
@@ -70,12 +70,15 @@ export function useViewCart() {
     );
   };
 
-  const onRemoveAllCart = async () => {
+  const onRemoveAllCart = async (e: SyntheticEvent) => {
+    e.preventDefault();
+
     await removeCartMutate.mutateAsync(undefined, {
       onSuccess: () => {
         setPayload({ title: '', hall: '', etc: '', totalAmount: 0 });
         queryClient.invalidateQueries({ queryKey: ['cart'] });
         toast.success('카트 삭제');
+        router.refresh();
       },
       onError: (err: any) => {
         toast.error(err.error);
@@ -95,6 +98,8 @@ export function useViewCart() {
           } else {
             toast.success(`카트 삭제`);
           }
+
+          refetch();
         },
         onError: (err: any) => {
           toast.error(err.error);

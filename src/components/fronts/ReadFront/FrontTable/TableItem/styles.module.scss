@@ -1,0 +1,42 @@
+@import '@/helpers/styles/utils.scss';
+
+.table_data {
+  .price {
+    color: $disable;
+  }
+
+  @include isSmall {
+    &.soldier {
+      background-color: $soldier;
+      color: white;
+    }
+
+    &.reserve {
+      background-color: $reserve;
+      color: white;
+    }
+
+    &.general {
+      background-color: $general;
+      color: white;
+    }
+  }
+
+  @media print {
+    &.soldier {
+      color: $soldier;
+    }
+
+    &.reserve {
+      color: $reserve;
+    }
+
+    &.general {
+      color: $general;
+    }
+
+    &.sub_total {
+      color: $cancel;
+    }
+  }
+}

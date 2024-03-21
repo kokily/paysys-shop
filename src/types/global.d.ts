@@ -1,3 +1,4 @@
+import { SyntheticEvent } from 'react';
 import NextAuth from 'next-auth/next';
 
 declare module 'next-auth' {
@@ -32,7 +33,7 @@ declare global {
   interface ModalType {
     modal: boolean;
     onModalClick: () => void;
-    onConfirm: () => void;
+    onConfirm: (e: SyntheticEvent) => void;
     onCancel: () => void;
   }
 }

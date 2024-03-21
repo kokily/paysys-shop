@@ -1,3 +1,4 @@
+import type { SyntheticEvent } from 'react';
 import { Button } from '../Button';
 import styles from './styles.module.scss';
 
@@ -5,7 +6,7 @@ interface Props {
   visible: boolean;
   title: string;
   content: string;
-  onConfirm: () => void;
+  onConfirm: (e: SyntheticEvent) => void;
   onCancel: () => void;
 }
 

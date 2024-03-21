@@ -1,0 +1,14 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  margin-top: 1rem;
+  margin-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+
+  @include isXsmall {
+    width: 100%;
+  }
+}

@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  padding: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+
+  th,
+  td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    overflow: hidden;
+  }
+}
+
+.table_head {
+  min-width: 50px;
+  background: #1098ad;
+  color: white;
+}
+
+.table_data {
+  strong {
+    color: #0b7285;
+    transition: 0.3s;
+    overflow: hidden;
+    padding: 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+      background: #1098ad;
+      color: white;
+    }
+  }
+
+  &.link {
+    cursor: pointer;
+    color: #3d4c4f;
+    transition: 0.2s color;
+
+    &:hover {
+      color: #22b8cf;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+}

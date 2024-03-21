@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { type SyntheticEvent, useState } from 'react';
 
 interface Props {
-  onRemove: () => void;
+  onRemove: (e: SyntheticEvent) => void;
 }
 
 export function useRemoveModal({ onRemove }: Props) {
@@ -11,8 +11,8 @@ export function useRemoveModal({ onRemove }: Props) {
     setModal(true);
   };
 
-  const onConfirm = () => {
-    onRemove();
+  const onConfirm = (e: SyntheticEvent) => {
+    onRemove(e);
     setModal(false);
   };
 

@@ -99,4 +99,10 @@
   &.thin {
     width: auto;
   }
+
+  &.fullSize {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 1rem;
+  }
 }

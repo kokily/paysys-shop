@@ -1,0 +1,61 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  position: relative;
+  width: 300px;
+  margin: 36px auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+
+  @include shadow;
+}
+
+.table {
+  width: 100%;
+  padding: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+
+  th,
+  td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+
+  th {
+    color: white;
+
+    &.soldier {
+      background-color: $soldier;
+    }
+
+    &.reserve {
+      background-color: $reserve;
+    }
+
+    &.general {
+      background-color: $general;
+    }
+  }
+
+  td {
+    &.soldier {
+      color: $soldier;
+    }
+
+    &.reserve {
+      color: $reserve;
+    }
+
+    &.general {
+      color: $general;
+    }
+  }
+
+  &:hover {
+    background: rgba(140, 206, 223, 0.2);
+  }
+}

@@ -28,6 +28,7 @@ export function Button(props: Props) {
         [styles.menu]: props.$menu,
         [styles.employee]: props.$employee,
         [styles.thin]: props.$thin,
+        [styles.fullSize]: props.$fullSize,
       })}
       {...props}
       onClick={(e) => {

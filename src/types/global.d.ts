@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { Dispatch, SetStateAction, SyntheticEvent } from 'react';
 import NextAuth from 'next-auth/next';
 
 declare module 'next-auth' {
@@ -36,4 +36,6 @@ declare global {
     onConfirm: (e: SyntheticEvent) => void;
     onCancel: () => void;
   }
+
+  type TargetType = Dispatch<SetStateAction<HTMLElement | null | undefined>>;
 }

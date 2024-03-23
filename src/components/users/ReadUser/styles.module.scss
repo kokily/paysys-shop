@@ -1,0 +1,43 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  padding: 1rem;
+
+  @include isMedium {
+    padding: 0.2rem;
+  }
+}
+
+.contents {
+  text-align: center;
+  width: 80%;
+  background: #dbe4ff;
+
+  h2 {
+    font-size: 1.712rem;
+  }
+
+  @include isMedium {
+    width: 100%;
+  }
+
+  @include shadow;
+}
+
+.down_border {
+  margin-left: 5rem;
+  margin-right: 5rem;
+  margin-bottom: 1rem;
+  height: 3px;
+  background: linear-gradient(to right, #12b886, #5c7cfa);
+
+  @include isMedium {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}

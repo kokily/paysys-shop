@@ -38,4 +38,9 @@ declare global {
   }
 
   type TargetType = Dispatch<SetStateAction<HTMLElement | null | undefined>>;
+
+  interface ListUsersQueries {
+    username?: string;
+    cursor?: string;
+  }
 }

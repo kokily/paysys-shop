@@ -43,4 +43,8 @@ declare global {
     username?: string;
     cursor?: string;
   }
+
+  interface PasswordPayload {
+    password: string;
+  }
 }

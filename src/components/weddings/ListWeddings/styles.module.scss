@@ -1,0 +1,13 @@
+.container {
+  margin-bottom: 4.5rem;
+
+  h2 {
+    text-align: center;
+    color: #7048e8;
+    text-shadow: 1px 1px 4px #7048e8;
+
+    @media print {
+      text-decoration: underline;
+    }
+  }
+}

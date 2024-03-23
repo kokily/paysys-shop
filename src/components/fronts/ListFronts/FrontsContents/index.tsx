@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import styles from './styles.module.scss';
 import { useMobile } from '@/helpers/client/hooks/common/useMobile';
 import { unitOfDate } from '@/helpers/client/utils/conversionUnit';
+import { Skelton } from '@/components/common/Skelton';
 
 interface Props {
   fronts: Array<Bill>;
@@ -25,10 +26,8 @@ export function FrontsContents(props: Props) {
         <th className={styles.table_head}>작성자</th>
       </thead>
 
-      {props.fronts === null || props.fronts.length === 0 ? (
-        <tr>
-          <td colSpan={4}>작성된 전표가 없습니다.</td>
-        </tr>
+      {fronts.length < 1 ? (
+        Array.from(Array(20), (_, i) => <Skelton key={i} />)
       ) : (
         <>
           {props.fronts.map((front) => (

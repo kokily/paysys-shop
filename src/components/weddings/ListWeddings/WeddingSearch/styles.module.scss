@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 40px;
+}
+
+.select {
+  width: 100px;
+  height: 40px;
+  margin-right: 0.2rem;
+  padding: 0 2px;
+  font-size: 0.9rem;
+  border: 1px solid #d0cfce;
+  border-radius: 5px;
+  outline: none;
+  transition: 0.12s all;
+
+  &:focus {
+    border: 1px solid #008abf;
+    color: #008abf;
+
+    &::-webkit-input-placeholder {
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
+
+    &::-moz-placeholder {
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
+
+    &:-ms-placeholder {
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
+  }
+}
+
+.button {
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem 0.6rem 1rem;
+  background: white;
+  color: #db3603;
+  border: 2px solid #db3603;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.2s all;
+
+  &:hover {
+    background: #db3603;
+    color: white;
+  }
+}

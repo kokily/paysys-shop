@@ -1,5 +1,6 @@
 import { unitOfDate } from '@/helpers/client/utils/conversionUnit';
 import styles from './styles.module.scss';
+import { Skelton } from '@/components/common/Skelton';
 
 interface Props {
   users: Array<SerializedUser>;
@@ -19,23 +20,19 @@ export function UsersTable({ users, onReadUser }: Props) {
         </thead>
 
         <tbody>
-          {users.length > 0 ? (
-            users.map((user) => (
-              <tr
-                key={user.id}
-                className={styles.point}
-                onClick={() => onReadUser(user.id)}
-              >
-                <td>{user.username}</td>
-                <td>{unitOfDate(user.createdAt)}</td>
-                <td>{user.admin ? '관리자' : '일반'}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={3}>데이터가 없습니다.</td>
-            </tr>
-          )}
+          {users.length > 0
+            ? users.map((user) => (
+                <tr
+                  key={user.id}
+                  className={styles.point}
+                  onClick={() => onReadUser(user.id)}
+                >
+                  <td>{user.username}</td>
+                  <td>{unitOfDate(user.createdAt)}</td>
+                  <td>{user.admin ? '관리자' : '일반'}</td>
+                </tr>
+              ))
+            : Array.from(Array(20), (_, i) => <Skelton key={i} />)}
         </tbody>
       </table>
     </div>

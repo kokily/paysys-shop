@@ -1,4 +1,5 @@
 import type { ChangeEvent, KeyboardEvent, SyntheticEvent } from 'react';
+import clsx from 'clsx';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
   search: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSearch: (e: SyntheticEvent) => void;
+  $short?: boolean;
 }
 
 export function Search(props: Props) {
@@ -17,11 +19,17 @@ export function Search(props: Props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.contents}>
+      <div
+        className={clsx(styles.contents, {
+          [styles.short]: props.$short,
+        })}
+      >
         <input
           type="text"
           name="search"
-          className={styles.input}
+          className={clsx(styles.input, {
+            [styles.short]: props.$short,
+          })}
           value={props.search}
           onChange={props.onChange}
           onKeyDown={onKeyDown}

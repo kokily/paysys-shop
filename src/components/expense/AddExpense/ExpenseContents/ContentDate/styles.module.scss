@@ -1,0 +1,40 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  .react-datepicker-wrapper {
+    width: auto;
+  }
+
+  input {
+    width: 95px;
+    height: 25px;
+    border: 2px solid $soldier;
+    background: $logo;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    margin-right: 10px;
+  }
+
+  select {
+    width: 95px;
+    height: 25px;
+    border: 2px solid #0ca678;
+    background: #20c997;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    margin-right: 10px;
+  }
+
+  span {
+    margin-right: 0.5rem;
+  }
+}

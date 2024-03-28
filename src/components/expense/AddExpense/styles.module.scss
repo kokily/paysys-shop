@@ -1,0 +1,21 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6rem;
+  animation: 0.2s ease-out 0s 1 fadeIn;
+
+  @include shadow;
+
+  @include isMedium {
+    margin-bottom: 15rem;
+  }
+}
+
+.title {
+  font-size: 1.512rem;
+  color: $submit;
+}

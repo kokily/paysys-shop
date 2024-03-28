@@ -1,0 +1,60 @@
+.container {
+  text-align: center;
+  margin-bottom: 1.25rem;
+
+  table {
+    font-size: 0.95rem;
+
+    tr {
+      &:hover {
+        background: rgba(165, 102, 255, 0.2);
+      }
+    }
+
+    th,
+    td {
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      padding-top: 0.15rem;
+      padding-bottom: 0.15rem;
+    }
+
+    th {
+      background: #9775fa;
+      color: white;
+      width: 130px;
+
+      &.basic {
+        width: 93.3px;
+      }
+
+      &.orange {
+        background: #ffa94d;
+      }
+
+      &.cyan {
+        background: #3bc9db;
+      }
+
+      &.red {
+        background: #ff8787;
+      }
+    }
+
+    td {
+      width: 100px;
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-align: right;
+
+      &.sub {
+        color: #1864ab;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.split {
+  width: '90%';
+}

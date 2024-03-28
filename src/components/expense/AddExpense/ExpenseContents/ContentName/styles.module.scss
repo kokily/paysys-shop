@@ -1,0 +1,23 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+
+  h3 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  strong {
+    margin-right: 0.5rem;
+  }
+
+  @include isSmall {
+    flex-direction: column;
+
+    strong {
+      margin-bottom: 1rem;
+    }
+  }
+}

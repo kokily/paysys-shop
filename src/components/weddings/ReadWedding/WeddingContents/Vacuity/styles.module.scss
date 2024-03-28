@@ -1,0 +1,10 @@
+.table_header {
+  background: white;
+  color: white;
+  border-color: white;
+  height: 24px;
+
+  @media print {
+    height: 24px;
+  }
+}

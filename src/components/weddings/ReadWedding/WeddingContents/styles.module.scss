@@ -1,0 +1,97 @@
+.table {
+  font-size: 0.95rem;
+  height: 100%;
+
+  @media print {
+    margin-top: 25.78px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+  }
+
+  tr {
+    &:hover {
+      background-color: rgba(165, 102, 255, 0.2);
+    }
+  }
+
+  th {
+    background-color: #e3e0fa;
+    color: #5f3dc4;
+    width: 130px;
+
+    &.basic {
+      width: 93.3px;
+    }
+
+    &.orange {
+      background-color: #ffa94d;
+    }
+
+    &.cyan {
+      background-color: #3bc9db;
+    }
+
+    &.red {
+      background-color: white;
+      color: #d941c5;
+    }
+
+    &.white {
+      background-color: white;
+      ;
+    }
+  }
+
+  td {
+    width: 93.3px;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-align: right;
+
+    &.sub {
+      color: #5f3dc4;
+      font-weight: bold;
+    }
+
+    &.cost {
+      color: #d941c5;
+    }
+
+    &.allCost {
+      color: #d941c5;
+      font-weight: bold;
+    }
+
+    &.center {
+      text-align: center;
+    }
+
+    &.basic {
+      width: 93.3px;
+    }
+
+    &.orange {
+      background-color: #ffa94d;
+    }
+
+    &.cyan {
+      background-color: #3bc9db;
+    }
+
+    &.red {
+      background-color: white;
+      color: #d941c5;
+    }
+
+    &.white {
+      background-color: white;
+      ;
+    }
+  }
+}

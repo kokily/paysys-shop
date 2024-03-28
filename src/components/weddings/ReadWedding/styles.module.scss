@@ -1,0 +1,39 @@
+@import '@/helpers/styles/utils.scss';
+
+.title {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  animation: 0.3s ease-out 0s 1 fadeIn;
+
+  @include shadow;
+
+  @media print {
+    width: 210mm;
+    min-height: 280mm;
+    margin: 0;
+    padding: 0;
+
+    @include shadow;
+  }
+}
+
+.contents {
+  display: flex;
+  margin-bottom: 1.2rem;
+
+  @include isMedium {
+    flex-direction: column;
+
+    @media print {
+      flex-direction: row;
+    }
+  }
+}

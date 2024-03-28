@@ -12,3 +12,8 @@ export async function readWeddingAPI(id: string) {
   const response = await client.get<Wedding>(`/weddings/${id}`);
   return response.data;
 }
+
+export async function removeWeddingAPI(id: string) {
+  const response = await client.delete(`/weddings/remove/${id}`);
+  return response.data;
+}

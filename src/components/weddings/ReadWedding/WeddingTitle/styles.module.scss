@@ -1,0 +1,46 @@
+@import '@/helpers/styles/utils.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .subTitle {
+    @media print {
+      margin-bottom: -25.78px;
+    }
+  }
+}
+
+.title {
+  font-size: 1.512rem;
+  color: $submit;
+}
+
+.name {
+  text-align: center;
+
+  strong {
+    color: $restore;
+    transition: 1.2s color;
+
+    &.pink {
+      color: pink;
+    }
+  }
+
+  .select:hover {
+    cursor: pointer;
+    color: $soldier;
+  }
+}
+
+.split {
+  width: 90%;
+
+  @media print {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+}

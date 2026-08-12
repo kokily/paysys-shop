@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
+/* class="dark" 일 때만 dark: 유틸 적용 (OS 자동 다크 사용 안 함) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --member: #1098ad;
+  --associate: #68a614;
+  --general: #e47112;
+  --wedding: #7950f2;
+  --wedding-bg: #e3e0fa;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --line: #d8d9d9;
+  --error: #fa5252;
+  --warning: #fab005;
+  --success: #68a614;
+  /* 기존 associate-color에 가까운 톤 */
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.dark {
+  /* 브랜드는 라이트와 동일 — 형광 시안 금지 */
+  --member: #1098ad;
+  --associate: #68a614;
+  --general: #e47112;
+  --wedding: #7950f2;
+  --wedding-bg: #e3e0fa;
+  --bg: #18181b;
+  /* zinc-900 계열 */
+  --surface: #27272a;
+  /* zinc-800 */
+  --text: #fafafa;
+  --text-secondary: #a1a1aa;
+  --line: #3f3f46;
+  --error: #f87171;
+  --warning: #fab005;
+  --success: #84cc16;
+  /* 토스트용 */
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.45), 0 3px 6px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-member: var(--member);
+  --color-associate: var(--associate);
+  --color-general: var(--general);
+  --color-wedding: var(--wedding);
+  --color-wedding-bg: var(--wedding-bg);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-line: var(--line);
+  --color-error: var(--error);
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --color-warning: var(--warning);
+  --color-success: var(--success);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+  /* 기존 global.scss와 동일 */
+}
+
+/* 클릭 가능한 요소 → 손가락 커서 */
+button,
+[type="button"],
+[type="submit"],
+[type="reset"],
+a,
+[role="button"],
+label[for],
+select,
+summary {
+  cursor: pointer;
+}
+
+button:disabled,
+[type="submit"]:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Next 루트(목록 등)는 아예 제거 — 높이/반복 방지 */
+  body > *:not(.print-portal) {
+    display: none !important;
+  }
+
+  /* fixed 모달이 페이지마다 반복되지 않도록 static으로 */
+  .print-portal {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .print-portal > * {
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .print-front,
+  .print-wedding {
+    margin: 0 !important;
+    background: white !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
 }

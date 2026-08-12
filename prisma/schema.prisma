@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id         String    @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  username   String    @unique()
+  password   String
+  admin      Boolean   @default(false)
+  approved   Boolean   @default(false)
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  carts      Cart[]
+  sessions   Session[]
+
+  @@map("user")
+}
+
+model Session {
+  id                 String    @id @default(uuid()) @db.Uuid
+  user_id            String    @db.Uuid
+  refresh_token_hash String
+  user_agent         String?
+  ip                 String?
+  expires_at         DateTime  @db.Timestamptz(6)
+  revoked_at         DateTime? @db.Timestamptz(6)
+  created_at         DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime  @updatedAt @db.Timestamptz(6)
+  user               User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([refresh_token_hash])
+  @@map("session")
+}
+
+model Item {
+  id         String   @id @default(dbgenerated("uuid_generated_v4()")) @db.Uuid
+  num        Int
+  name       String
+  divide     String
+  native     String
+  unit       String
+  price      Int
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @updatedAt @db.Timestamptz(6)
+
+  @@map("item")
+}
+
+model Cart {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  items      Json
+  completed  Boolean  @default(false)
+  deleted    Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @updatedAt @db.Timestamptz(6)
+  user_id    String?  @db.Uuid
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([created_at])
+  @@index([user_id])
+  @@map("cart")
+}
+
+model Bill {
+  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title        String
+  hall         String
+  etc          String
+  total_amount Int
+  items        Json
+  reserve      Int?
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  cart_id      String?  @unique @db.Uuid
+  user_id      String?  @db.Uuid
+  username     String?  @db.VarChar()
+
+  @@map("bill")
+}
+
+model Wedding {
+  id                   String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  wedding_at           DateTime @db.Date
+  event_at__type__text String   @map("event_at, type: text") @db.VarChar()
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  husband_name         String
+  husband_image        String?
+  husband_hall         Int
+  husband_sword        Int
+  husband_bouquet      Int
+  husband_company      Int
+  husband_owner_woman  Int
+  husband_owner_man    Int
+  husband_frame        Int
+  husband_file         Int
+  husband_dvd          Int
+  husband_etc          Int
+  husband_meal         Int
+  husband_present      Int
+  husband_reserve      Int
+  husband_pre_deposit  Int
+  bride_name           String
+  bride_image          String?
+  bride_hall           Int
+  bride_sword          Int
+  bride_bouquet        Int
+  bride_company        Int
+  bride_owner_woman    Int
+  bride_owner_man      Int
+  bride_frame          Int
+  bride_file           Int
+  bride_dvd            Int
+  bride_etc            Int
+  bride_meal           Int
+  bride_present        Int
+  bride_reserve        Int
+  bride_pre_deposit    Int
+  meal_method          String
+  present_method       String
+  reserve_method       String
+  meal_price           Int
+  present_price        Int
+  reserve_price        Int
+
+  @@map("wedding")
+}
+
+model token {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fk_user_id String   @db.Uuid
+  token      String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model typeorm_metadata {
+  type     String  @db.VarChar
+  database String? @db.VarChar
+  schema   String? @db.VarChar
+  table    String? @db.VarChar
+  name     String? @db.VarChar
+  value    String?
+
+  @@ignore
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import ThemeProvider from "@/theme/ThemeProvider";
+import "./globals.css";
+import Toast from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://paysys.kr"),
@@ -43,8 +44,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="min-h-full font-sans antialiased">
+        <ThemeProvider>
+          {children}
+          <Toast />
+        </ThemeProvider>
       </body>
     </html>
   );

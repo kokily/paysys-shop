@@ -4,16 +4,16 @@ import PageTemplate from "@/components/template/PageTemplate";
 import HomeGrid from "@/components/home/HomeGrid";
 
 export const metadata: Metadata = {
-  title: "회원 전표작성 - 행사전표시스템",
+  title: "일반 전표작성 - 행사전표시스템",
 };
 
-/** /member - 회원 홈 */
-export default async function MemberPage() {
+/** /general - 일반 홈 */
+export default async function GeneralPage() {
   const user = await requireAuth();
 
   return (
-    <PageTemplate native="member" username={user.username} admin={user.admin}>
-      <HomeGrid native="member" />
+    <PageTemplate native="general" username={user.username} admin={user.admin}>
+      <HomeGrid native="general" />
     </PageTemplate>
   );
 }

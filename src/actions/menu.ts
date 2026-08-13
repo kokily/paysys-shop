@@ -1,8 +1,8 @@
 "use server";
 
 import { listMenuSchema } from "@/schemas/menu";
-import { checkAuthAction } from "./auth";
 import { prisma } from "@/lib/db";
+import { requireAuth } from "@/lib/auth/require-auth";
 
 export type { MenuItemRow } from "@/types/menu";
 
@@ -10,18 +10,11 @@ export async function listMenuAction(input: {
   native: string;
   divide: string;
 }) {
-  const auth = await checkAuthAction();
-
-  if (!auth.ok || !auth.user) {
-    return {
-      ok: false as const,
-      error: "로그인이 필요합니다",
-    };
-  }
+  await requireAuth();
 
   const parsed = listMenuSchema.safeParse(input);
 
-  if (parsed.error) {
+  if (!parsed.success) {
     return {
       ok: false as const,
       error: parsed.error.issues[0]?.message ?? "분류/구분을 확인하세요",

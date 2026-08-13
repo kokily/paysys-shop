@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import BillsSearch from "./BillsSearch";
 import BillsTable from "./BillsTable";
+import ReadBillModal from "../read/ReadBillModal";
 
 type Props = {
   initialBills: BillRow[];
@@ -116,12 +117,7 @@ export default function ListBills({
           {isPending ? "불러오는 중..." : ""}
         </div>
       )}
-    </div>
-  );
-}
-/*
-  return (
-    <div className="mb-24 flex w-full flex-col items-center px-2">
+
       {selectedId && (
         <ReadBillModal
           billId={selectedId}
@@ -138,4 +134,3 @@ export default function ListBills({
     </div>
   );
 }
-*/

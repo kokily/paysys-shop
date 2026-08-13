@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { listBillsAction } from "@/actions/bills";
 import { requireAuth } from "@/lib/auth/require-auth";
-import ListBills from "@/components/fronts/ListBills";
+import ListBills from "@/components/bills/list/ListBills";
 import PageTemplate from "@/components/template/PageTemplate";
 
 export const metadata: Metadata = {

@@ -1,9 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { requireAuth } from "@/lib/auth/require-auth";
+import type { CartItem } from "@/types/cart";
+import { checkAuthAction } from "@/actions/auth";
+import { toBillDetail, toBillRow } from "@/lib/bill/helper";
 import { prisma } from "@/lib/db";
-import { CartItem } from "@/types/cart";
 import {
   addBillSchema,
   addReserveSchema,
@@ -11,8 +11,11 @@ import {
   resolveItemByNativeSchema,
   updateBillSchema,
 } from "@/schemas/bill";
-import { toBillDetail, toBillRow } from "@/lib/bill/helper";
+import { revalidatePath } from "next/cache";
+import { requireAuth } from "@/lib/auth/require-auth";
 import { requireAdmin } from "@/lib/auth/require-admin";
+
+export type { BillDetail, BillRow } from "@/types/bill";
 
 const PAGE_SIZE = 30;
 
@@ -25,7 +28,6 @@ export async function addBillAction(input: {
   const user = await requireAuth();
 
   const parsed = addBillSchema.safeParse(input);
-
   if (!parsed.success) {
     return {
       ok: false as const,
@@ -46,19 +48,12 @@ export async function addBillAction(input: {
   });
 
   if (!cart) {
-    return {
-      ok: false as const,
-      error: "카트를 찾을 수 없습니다",
-    };
+    return { ok: false as const, error: "카트를 찾을 수 없습니다." };
   }
 
   const items = (cart.items as CartItem[] | null) ?? [];
-
   if (items.length === 0) {
-    return {
-      ok: false as const,
-      error: "카트에 품목이 없습니다",
-    };
+    return { ok: false as const, error: "카트에 품목이 없습니다." };
   }
 
   const totalAmount = items.reduce((sum, i) => sum + (i.amount ?? 0), 0);
@@ -91,10 +86,7 @@ export async function addBillAction(input: {
   revalidatePath("/cart");
   revalidatePath("/fronts");
 
-  return {
-    ok: true as const,
-    bill,
-  };
+  return { ok: true as const, bill };
 }
 
 /** 전표 목록 (cursor) */
@@ -104,15 +96,11 @@ export async function listBillsAction(input?: {
   userId?: string;
   cursor?: string;
 }) {
-  const user = await requireAuth();
+  await requireAuth();
 
   const parsed = listBillsSchema.safeParse(input ?? {});
-
   if (!parsed.success) {
-    return {
-      ok: false as const,
-      error: "입력값을 확인하세요",
-    };
+    return { ok: false as const, error: "입력값을 확인하세요." };
   }
 
   const title = parsed.data.title?.trim() ?? "";
@@ -152,7 +140,7 @@ export async function listBillsAction(input?: {
 
 /** 전표 상세 */
 export async function getBillAction(id: string) {
-  const user = await requireAuth();
+  await requireAuth();
 
   const bill = await prisma.bill.findUnique({
     where: { id },
@@ -174,13 +162,34 @@ export async function getBillAction(id: string) {
     return { ok: false as const, error: "전표를 찾을 수 없습니다." };
   }
 
-  return {
-    ok: true as const,
-    bill: toBillDetail(bill),
-  };
+  return { ok: true as const, bill: toBillDetail(bill) };
 }
 
-/** 전표 → 카트 복원 (작성자만) */
+/** 전표 삭제 */
+export async function deleteBillAction(id: string) {
+  const user = await requireAuth();
+
+  const bill = await prisma.bill.findUnique({
+    where: { id },
+    select: { id: true, user_id: true },
+  });
+
+  if (!bill) {
+    return { ok: false as const, error: "전표를 찾을 수 없습니다." };
+  }
+
+  if (bill.user_id !== user.user_id && !user.admin) {
+    return { ok: false as const, error: "삭제 권한이 없습니다." };
+  }
+
+  await prisma.bill.delete({ where: { id } });
+  revalidatePath("/fronts");
+  return { ok: true as const };
+}
+
+/**
+ * 전표 → 카트 복원 (작성자만)
+ */
 export async function restoreBillAction(id: string) {
   const user = await requireAuth();
 

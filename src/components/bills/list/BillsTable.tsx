@@ -5,6 +5,8 @@ type Props = {
   onSelect: (id: string) => void;
   onFilterHall: (hall: string) => void;
   onFilterUser: (userId: string) => void;
+  /** NEW 표시할 bill id 집합 (관리자/프론트만 ListBills에서 넘김) */
+  newBillIds?: Set<string>;
 };
 
 export default function BillsTable({
@@ -12,6 +14,7 @@ export default function BillsTable({
   onSelect,
   onFilterHall,
   onFilterUser,
+  newBillIds,
 }: Props) {
   return (
     <div className="mt-2 w-full overflow-hidden rounded-[0.8rem]">
@@ -56,9 +59,18 @@ export default function BillsTable({
                     type="button"
                     onClick={() => onSelect(bill.id)}
                     title={bill.title}
-                    className="text-member hover:bg-member block w-full truncate rounded-[6px] px-1 py-[0.3rem] font-bold transition hover:text-white"
+                    className="text-member hover:bg-member flex w-full items-center justify-center gap-1 truncate rounded-[6px] px-1 py-[0.3rem] font-bold transition hover:text-white"
                   >
-                    {bill.title}
+                    {/* 오늘 미확인 전표 배지 */}
+                    {newBillIds?.has(bill.id) && (
+                      <span
+                        className="text-error shrink-0 text-[0.7rem] font-extrabold"
+                        aria-label="새 전표"
+                      >
+                        NEW
+                      </span>
+                    )}
+                    <span className="truncate">{bill.title}</span>
                   </button>
                 </td>
                 <td className="text-text overflow-hidden px-2 py-4 pl-4 text-center text-sm break-keep">

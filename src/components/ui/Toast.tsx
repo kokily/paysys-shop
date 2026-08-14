@@ -12,9 +12,9 @@ export default function Toast() {
   const toast = useUiStore((s) => s.toast);
   const clearToast = useUiStore((s) => s.clearToast);
 
-  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const closingRef = useRef(false);
+  const toastId = toast?.id;
 
   function close(href?: string) {
     if (closingRef.current) return;
@@ -23,29 +23,36 @@ export default function Toast() {
 
     window.setTimeout(() => {
       clearToast();
-      setMounted(false);
       closingRef.current = false;
       if (href) router.push(href);
     }, EXIT_MS);
   }
 
   useEffect(() => {
-    if (!toast) return;
+    if (!toast) {
+      setOpen(false);
+      closingRef.current = false;
+      return;
+    }
 
     closingRef.current = false;
-    setMounted(true);
-    // 다음 프레임에 open → 등장 트랜지션
-    const enter = window.requestAnimationFrame(() => setOpen(true));
-    const timer = window.setTimeout(() => close(undefined), SHOW_MS);
+    setOpen(false);
+
+    // 레이아웃 반영 후 등장 (EventSource 등 React 외부 호출에도 안전)
+    const enter = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => setOpen(true));
+    });
+    const timer = window.setTimeout(() => close(toast.href), SHOW_MS);
 
     return () => {
       window.cancelAnimationFrame(enter);
       window.clearTimeout(timer);
     };
+    // toast.id 기준으로 매번 다시 표시
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toast]);
+  }, [toastId]);
 
-  if (!toast || !mounted) return null;
+  if (!toast) return null;
 
   const tone =
     toast.type === "success"
@@ -62,7 +69,7 @@ export default function Toast() {
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") close(toast.href);
       }}
-      className={`fixed top-16 left-1/2 z-[100] min-w-[240px] max-w-[360px] origin-top cursor-pointer rounded border bg-surface px-4 py-3 text-sm shadow-md transition-all duration-200 ${tone} ${
+      className={`fixed top-16 left-1/2 z-[200] min-w-[240px] max-w-[360px] origin-top cursor-pointer rounded border bg-surface px-4 py-3 text-sm shadow-md transition-all duration-200 ${tone} ${
         open
           ? "-translate-x-1/2 translate-y-0 scale-100 opacity-100"
           : "pointer-events-none -translate-x-1/2 -translate-y-5 scale-[0.8] opacity-0"

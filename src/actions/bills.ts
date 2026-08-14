@@ -1,7 +1,6 @@
 "use server";
 
 import type { CartItem } from "@/types/cart";
-import { checkAuthAction } from "@/actions/auth";
 import { toBillDetail, toBillRow } from "@/lib/bill/helper";
 import { prisma } from "@/lib/db";
 import {
@@ -14,6 +13,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/lib/auth/require-auth";
 import { requireAdmin } from "@/lib/auth/require-admin";
+import { publishBillEvent } from "@/lib/bill/events";
 
 export type { BillDetail, BillRow } from "@/types/bill";
 
@@ -85,6 +85,8 @@ export async function addBillAction(input: {
 
   revalidatePath("/cart");
   revalidatePath("/fronts");
+
+  publishBillEvent({ type: "created" });
 
   return { ok: true as const, bill };
 }
@@ -183,7 +185,11 @@ export async function deleteBillAction(id: string) {
   }
 
   await prisma.bill.delete({ where: { id } });
+
   revalidatePath("/fronts");
+
+  publishBillEvent({ type: "deleted" });
+
   return { ok: true as const };
 }
 
@@ -355,6 +361,8 @@ export async function updateBillAction(input: {
   });
 
   revalidatePath("/fronts");
+
+  publishBillEvent({ type: "updated" });
 
   return { ok: true as const, bill: toBillDetail(updated) };
 }

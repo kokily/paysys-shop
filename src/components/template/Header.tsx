@@ -23,20 +23,18 @@ export default function Header({ native, username, admin }: Props) {
       style={{ boxShadow: "var(--shadow-2)" }}
     >
       <div className="bg-surface flex justify-center">
-        <div className="relative flex h-[55px] w-full max-w-[1200px] items-center px-4 md:w-[992px] lg:w-[1200px]">
+        <div className="relative flex h-[55px] w-full max-w-[1200px] items-center justify-between px-4 md:w-[992px] lg:w-[1200px]">
           <Link
             href={`/${native}`}
             className={`hover:text-shadow text-[1.4rem] font-bold tracking-[2px] ${logoColor}`}
           >
             행사전표시스템
           </Link>
-        </div>
 
-        <div className="flex-grow" />
-
-        <div className="flex items-center gap-3">
-          <ThemeToggle variant="inline" />
-          <UserMenu admin={admin} />
+          <div className="flex items-center gap-3 pr-1">
+            <ThemeToggle variant="inline" />
+            <UserMenu admin={admin} />
+          </div>
         </div>
       </div>
     </header>

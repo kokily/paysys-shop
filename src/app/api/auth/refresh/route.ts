@@ -20,7 +20,7 @@ function cookieOptions(maxAge: number) {
 }
 
 /**
- * Access 재발급 (middleware 전용)
+ * Access 재발급 (proxy 전용)
  * Route Handler라서 쿠키 수정 가능
  */
 export async function POST() {

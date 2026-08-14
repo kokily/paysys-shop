@@ -29,7 +29,7 @@ export default function UserMenu({ admin }: Props) {
   }
 
   return (
-    <div ref={menuRef}>
+    <div ref={menuRef} className="relative">
       <Apeach onClick={() => setOpen((v) => !v)} />
 
       <div

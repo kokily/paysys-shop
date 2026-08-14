@@ -165,7 +165,7 @@ export async function refreshAction() {
 
 /**
  * 현재 로그인 상태 확인 (RSC - 쿠키 수정 금지)
- * Access 갱신은 middleware가 담당
+ * Access 갱신은 proxy가 담당
  */
 export async function checkAuthAction() {
   const accessToken = await getAccessToken();

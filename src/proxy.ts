@@ -9,7 +9,7 @@ import {
 } from "@/lib/auth/constants";
 
 /**
- * Access JWT 유효 여부 (Edge — jose만 사용)
+ * Access JWT 유효 여부 (jose만 사용)
  */
 async function isAccessValid(token: string) {
   try {
@@ -38,7 +38,8 @@ function cookieOpts(maxAge: number) {
   };
 }
 
-export async function middleware(request: NextRequest) {
+/** Next.js 16: middleware → proxy */
+export async function proxy(request: NextRequest) {
   // refresh API는 통과 (무한 루프 방지)
   if (request.nextUrl.pathname.startsWith("/api/auth/refresh")) {
     return NextResponse.next();

@@ -18,14 +18,16 @@ export default function CartItemsTable({
     <div className="w-full max-w-[720px] overflow-hidden rounded-[0.8rem]">
       <table className="w-full table-fixed border-collapse">
         <thead>
-          {["적용", "수량", "단가", "삭제"].map((h) => (
-            <th
-              key={h}
-              className="bg-member px-1 py-3 text-center text-sm font-semibold text-white"
-            >
-              {h}
-            </th>
-          ))}
+          <tr>
+            {["적용", "수량", "단가", "삭제"].map((h) => (
+              <th
+                key={h}
+                className="bg-member px-1 py-3 text-center text-sm font-semibold text-white"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {items.length === 0 ? (

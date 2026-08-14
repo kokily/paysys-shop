@@ -34,7 +34,11 @@ export default function WeddingButton({
       >
         삭제
       </button>
-      <button type="button" onClick={onPrint} className="wb-btn print">
+      <button
+        type="button"
+        onClick={onPrint}
+        className="wb-btn print hidden md:inline-block"
+      >
         인쇄
       </button>
     </div>

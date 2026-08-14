@@ -126,7 +126,7 @@ export default function BillButtons({
           <button
             type="button"
             onClick={onPrint}
-            className="border-success text-success hover:bg-success min-w-[80px] rounded-md border px-3 py-2 text-sm font-bold transition hover:text-white"
+            className="border-success text-success hover:bg-success hidden min-w-[80px] rounded-md border px-3 py-2 text-sm font-bold transition hover:text-white md:inline-block"
           >
             인 쇄
           </button>

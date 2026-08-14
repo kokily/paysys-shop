@@ -36,6 +36,7 @@ export default function Modal({
   const [open, setOpen] = useState(fullHeight);
   const [mounted, setMounted] = useState(false);
   const closingRef = useRef(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   function close() {
     if (closingRef.current) return;
@@ -79,14 +80,48 @@ export default function Modal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closeOnEscape]);
 
+  /**
+   * 모바일 키패드: visualViewport가 줄어들면
+   * 오버레이를 그 영역으로 맞춰 팝업이 가려지지 않게 함
+   */
+  useEffect(() => {
+    if (!mounted || fullHeight) return;
+
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    function syncToVisualViewport() {
+      const el = overlayRef.current;
+      if (!el || !vv) return;
+
+      // inset-0의 bottom/right와 충돌하지 않도록 명시
+      el.style.top = `${vv.offsetTop}px`;
+      el.style.left = `${vv.offsetLeft}px`;
+      el.style.right = "auto";
+      el.style.bottom = "auto";
+      el.style.width = `${vv.width}px`;
+      el.style.height = `${vv.height}px`;
+    }
+
+    vv.addEventListener("resize", syncToVisualViewport);
+    vv.addEventListener("scroll", syncToVisualViewport);
+    syncToVisualViewport();
+
+    return () => {
+      vv.removeEventListener("resize", syncToVisualViewport);
+      vv.removeEventListener("scroll", syncToVisualViewport);
+    };
+  }, [mounted, fullHeight]);
+
   if (!mounted || typeof document === "undefined") return null;
 
   const body = typeof children === "function" ? children({ close }) : children;
 
   return createPortal(
     <div
+      ref={overlayRef}
       className={`${printPortal ? "print-portal " : ""}fixed inset-0 z-50 flex justify-center bg-black/70 ${
-        fullHeight ? "items-stretch p-0 sm:px-4" : "items-center p-4"
+        fullHeight ? "items-stretch p-0 sm:px-4" : "items-center overflow-y-auto p-4"
       } ${
         fullHeight
           ? ""
@@ -100,7 +135,7 @@ export default function Modal({
         className={`w-full bg-surface ${maxWidthClassName} ${
           fullHeight
             ? "flex h-full flex-col rounded-none sm:rounded-[10px]"
-            : `origin-center rounded-[10px] transition-[opacity,transform] duration-[280ms] ease-out will-change-transform ${
+            : `my-auto max-h-full origin-center overflow-y-auto rounded-[10px] transition-[opacity,transform] duration-[280ms] ease-out will-change-transform ${
                 open
                   ? "scale-100 translate-y-0 opacity-100"
                   : "pointer-events-none scale-90 translate-y-2 opacity-0"

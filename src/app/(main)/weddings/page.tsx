@@ -1,6 +1,6 @@
 import { listWeddingsAction } from "@/actions/weddings";
 import PageTemplate from "@/components/template/PageTemplate";
-import ListWeddings from "@/components/weddings/ListWeddings";
+import ListWeddings from "@/components/weddings/list/ListWeddings";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { Metadata } from "next";
 

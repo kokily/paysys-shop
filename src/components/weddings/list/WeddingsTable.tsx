@@ -40,16 +40,16 @@ export default function WeddingsTable({ weddings, onSelect }: Props) {
                 onClick={() => onSelect(w.id)}
                 className="cursor-pointer"
               >
-                <td className="text-wedding hover:bg-wedding rounded-md p-[0.3rem] py-2 text-center text-base transition hover:text-white">
+                <td className="text-wedding hover:bg-wedding p-[0.3rem] py-2 text-center text-base transition hover:text-white">
                   {new Date(w.wedding_at).toLocaleDateString("ko-KR")}
                 </td>
-                <td className="text-wedding hover:bg-wedding rounded-md p-[0.3rem] py-2 text-center text-base transition hover:text-white">
+                <td className="text-wedding hover:bg-wedding p-[0.3rem] py-2 text-center text-base transition hover:text-white">
                   {w.event_at}
                 </td>
-                <td className="text-wedding hover:bg-wedding rounded-md p-[0.3rem] py-2 text-center text-base transition hover:text-white">
+                <td className="text-wedding hover:bg-wedding p-[0.3rem] py-2 text-center text-base transition hover:text-white">
                   {w.husband_name}
                 </td>
-                <td className="text-wedding hover:bg-wedding rounded-md p-[0.3rem] py-2 text-center text-base transition hover:text-white">
+                <td className="text-wedding hover:bg-wedding p-[0.3rem] py-2 text-center text-base transition hover:text-white">
                   {w.bride_name}
                 </td>
               </tr>

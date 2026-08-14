@@ -1,0 +1,624 @@
+.read-wedding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 6rem;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.read-wedding-contents {
+  display: flex;
+  margin-bottom: 1.2rem;
+}
+
+@media (max-width: 992px) {
+  .read-wedding-contents {
+    flex-direction: column;
+  }
+}
+
+/* WeddingPane
+ * Tailwind preflight가 h1~h6 size/weight를 inherit로 리셋하므로
+ * 운영(브라우저 기본) 수치를 명시 복원 */
+.wedding-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wedding-pane-title {
+  font-size: 1.512rem;
+  font-weight: bold;
+  color: #7950f2;
+  margin-block: 0.83em;
+}
+
+.wedding-pane-names {
+  font-size: 1.17em;
+  font-weight: bold;
+  text-align: center;
+  margin-block: 1em;
+}
+
+.wedding-pane-names strong {
+  color: #1098ad;
+  font-weight: bold;
+}
+
+.wedding-pane-names .select {
+  cursor: pointer;
+  transition: 0.2s color;
+}
+
+.wedding-pane-names .select:hover {
+  color: #3bc9db;
+}
+
+.wedding-pane-names .heart {
+  color: pink;
+}
+
+.wedding-pane-date {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+.wedding-pane-sub-title {
+  font-size: 1.17em;
+  font-weight: bold;
+  margin-block: 1em;
+}
+
+@media print {
+  .wedding-pane-sub-title {
+    margin-bottom: -25.78px;
+  }
+}
+
+/* SignPane — 삭제 문구는 박스 밖 (서명과의 간격 확보) */
+.sign-pane {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.sign-pane-contents {
+  display: flex;
+  gap: 1rem;
+}
+
+.sign-pane-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sign-pane-content {
+  width: 160px;
+  height: 80px;
+  border: 1px solid #d8d9d9;
+  border-radius: 4px;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: white;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.sign-pane-item:hover .sign-pane-content {
+  border-color: #f27de6;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+.sign-pane-content label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.sign-pane-content img {
+  width: 100%;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.sign-pane-item .remove-text {
+  display: block;
+  margin-top: 0.65rem;
+  font-size: 0.7rem;
+  color: #fa5252;
+  font-weight: 500;
+}
+
+@media print {
+  /* 서명 이미지 바로 아래부터 여백 (고정 height 제거해야 간격이 보임) */
+  .sign-pane {
+    margin-bottom: 2.75rem !important;
+  }
+
+  .sign-pane-content {
+    border: none;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .sign-pane-content label {
+    margin-bottom: 0.15rem;
+  }
+
+  .sign-pane-content img {
+    height: 40px;
+    display: block;
+  }
+
+  .sign-pane-item .remove-text {
+    display: none !important;
+  }
+
+  .wedding-pane-date {
+    margin-top: 0.75rem !important;
+  }
+}
+
+/* First / Second — v6: separate + 기본 spacing(2px)로 셀 간격 */
+.first-contents,
+.second-contents {
+  font-size: 0.95rem;
+  height: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+@media screen {
+  .first-contents,
+  .second-contents {
+    width: 409.9px; /* 130 + 93.3*3 — 화면만. 인쇄는 아래 @media print */
+  }
+}
+
+.first-contents th,
+.first-contents td,
+.second-contents th,
+.second-contents td {
+  border: 1px solid #d8d9d9;
+  border-radius: 8px;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.first-contents tr:hover,
+.second-contents tr:hover {
+  background: rgba(165, 102, 255, 0.2);
+}
+
+.first-contents th,
+.second-contents th {
+  background-color: #e3e0fa;
+  color: #7950f2;
+  width: 130px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap; /* 웨딩홀 사용료 / 답례품 총 비용 줄바꿈 방지 */
+}
+
+.first-contents th.basic,
+.second-contents th.basic {
+  width: 93.3px;
+}
+
+.first-contents th.white,
+.second-contents th.white {
+  background-color: white;
+}
+
+.first-contents th.result,
+.second-contents th.result {
+  color: #fa5252;
+}
+
+.first-contents td,
+.second-contents td {
+  width: 93.3px;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-align: right;
+  background: white;
+  color: #1e293b;
+}
+
+.first-contents td.result,
+.second-contents td.result {
+  color: #fa5252;
+}
+
+.first-contents td.sub-result,
+.second-contents td.sub-result {
+  color: #fa5252;
+  font-weight: bold;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.second-contents td.center {
+  text-align: center;
+}
+
+@media print {
+  .second-contents td.sub-result {
+    white-space: nowrap;
+  }
+}
+
+/* WeddingResult */
+.wedding-result {
+  font-size: 0.95rem;
+  width: 100%;
+  height: 100%;
+  min-width: 420px;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+@media (max-width: 992px) {
+  .wedding-result {
+    margin-top: 1.5rem;
+  }
+}
+
+/* 운영: h3 기본(~1.17em / bold) + margin 0.96rem
+ * 합계 박스는 항상 흰 배경 → 다크모드에서도 글자색 고정 */
+.wedding-result h3 {
+  margin: 0.96rem;
+  font-size: 1.17em;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.wedding-result h3.all-cost {
+  color: silver;
+}
+
+.wedding-result h3.all-payment {
+  color: blue;
+}
+
+.wedding-result tr {
+  text-align: center;
+  height: 165px;
+}
+
+.wedding-result tr:hover {
+  background: rgba(165, 102, 255, 0.2);
+}
+
+.wedding-result td {
+  width: 93.3px;
+  font-size: 0.9rem;
+  overflow: hidden;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  background: white;
+}
+
+/* WeddingButtons — v6 menu / edit / cancel */
+.wedding-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.wedding-buttons .wb-btn {
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  background-color: white;
+  min-width: 90px;
+}
+
+.wedding-buttons .wb-btn + .wb-btn {
+  margin-left: 1rem;
+}
+
+.wedding-buttons .wb-btn:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.wedding-buttons .wb-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.wedding-buttons .wb-btn.menu {
+  border-color: #4c6ef5;
+  color: #4c6ef5;
+}
+
+.wedding-buttons .wb-btn.menu:hover:not(:disabled) {
+  background: #4c6ef5;
+  color: white;
+  box-shadow: 0 2px 4px rgba(121, 80, 242, 0.3);
+}
+
+.wedding-buttons .wb-btn.edit {
+  border-color: #fab005;
+  color: #fab005;
+}
+
+.wedding-buttons .wb-btn.edit:hover:not(:disabled) {
+  background: #fab005;
+  color: white;
+  box-shadow: 0 2px 4px rgba(121, 80, 242, 0.3);
+}
+
+.wedding-buttons .wb-btn.cancel {
+  border-color: #fa5252;
+  color: #fa5252;
+}
+
+.wedding-buttons .wb-btn.cancel:hover:not(:disabled) {
+  background: #fa5252;
+  color: white;
+  box-shadow: 0 2px 4px rgba(121, 80, 242, 0.3);
+}
+
+.wedding-buttons .wb-btn.print {
+  border-color: #68a614;
+  color: #68a614;
+}
+
+.wedding-buttons .wb-btn.print:hover:not(:disabled) {
+  background: #68a614;
+  color: white;
+  box-shadow: 0 2px 4px rgba(121, 80, 242, 0.3);
+}
+
+/* 다크모드: 흰 박스 대신 연보라 보더 + 바탕색 내부 + 테마 글자색
+ * 인쇄는 라이트 유지 → screen 만 */
+@media screen {
+  .dark .read-wedding {
+    box-shadow: none;
+  }
+
+  .dark .wedding-pane-title {
+    color: #b197fc;
+  }
+
+  .dark .wedding-pane-names,
+  .dark .wedding-pane-date,
+  .dark .wedding-pane-sub-title {
+    color: var(--text);
+  }
+
+  .dark .wedding-pane-names strong {
+    color: #66d9e8;
+  }
+
+  .dark .sign-pane-content {
+    background: #2b2540;
+    border-color: #c0b6f2;
+  }
+
+  .dark .sign-pane-content label {
+    color: #b197fc;
+  }
+
+  /* 흑필+흰배경 → 반전 후 screen: 배경 투명, 서명선은 밝게 */
+  .dark .sign-pane-content img {
+    filter: invert(1);
+    mix-blend-mode: screen;
+  }
+
+  /* 셀: 연보라 보더 + 바탕과 같은 내부 + 테마 글자 */
+  .dark .first-contents th,
+  .dark .first-contents td,
+  .dark .second-contents th,
+  .dark .second-contents td {
+    border-color: #c0b6f2;
+    background: var(--surface);
+  }
+
+  .dark .first-contents th,
+  .dark .second-contents th {
+    background: #2b2540;
+    color: #b197fc;
+  }
+
+  .dark .first-contents th.white,
+  .dark .second-contents th.white {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .dark .first-contents th.result,
+  .dark .second-contents th.result {
+    color: var(--error);
+  }
+
+  .dark .first-contents td,
+  .dark .second-contents td {
+    color: var(--text);
+  }
+
+  .dark .first-contents td.result,
+  .dark .first-contents td.sub-result,
+  .dark .second-contents td.result,
+  .dark .second-contents td.sub-result {
+    color: var(--error);
+  }
+
+  .dark .first-contents tr:hover,
+  .dark .second-contents tr:hover,
+  .dark .wedding-result tr:hover {
+    background: rgba(177, 151, 252, 0.12);
+  }
+
+  .dark .wedding-result td {
+    background: var(--surface);
+    border-color: #c0b6f2;
+  }
+
+  .dark .wedding-result h3 {
+    color: var(--text);
+  }
+
+  .dark .wedding-result h3.all-cost {
+    color: var(--text-secondary);
+  }
+
+  .dark .wedding-result h3.all-payment {
+    color: #74c0fc;
+  }
+
+  .dark .wedding-buttons .wb-btn {
+    background: var(--surface);
+  }
+
+  .dark .wedding-buttons .wb-btn.menu:hover:not(:disabled) {
+    color: #fff;
+  }
+
+  .dark .wedding-buttons .wb-btn.edit:hover:not(:disabled) {
+    color: #18181b;
+  }
+
+  .dark .wedding-buttons .wb-btn.cancel:hover:not(:disabled),
+  .dark .wedding-buttons .wb-btn.print:hover:not(:disabled) {
+    color: #fff;
+  }
+}
+
+@media print {
+  .wedding-buttons {
+    display: none;
+  }
+
+  .read-wedding {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    margin: 0;
+    /* 운영처럼 타이틀 위 여백 */
+    padding: 10mm 0 0;
+    box-shadow: none;
+    overflow: hidden;
+    /* 인쇄 시 셀 배경색 강제 제거 */
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+
+  .wedding-pane-title {
+    margin-top: 0.6em;
+    margin-bottom: 0.4em;
+  }
+
+  .wedding-pane-names {
+    margin-block: 0.45em;
+  }
+
+  .wedding-pane-sub-title {
+    margin-block: 0.4em;
+    margin-bottom: -12px;
+  }
+
+  .read-wedding-contents {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.6rem;
+  }
+
+  .first-contents,
+  .second-contents {
+    width: 50%;
+    max-width: 50%;
+    margin-top: 12px;
+    font-size: 0.82rem;
+  }
+
+  .first-contents th:not(.basic),
+  .second-contents th:not(.basic) {
+    width: 38%;
+  }
+
+  .first-contents th.basic,
+  .first-contents td,
+  .second-contents th.basic,
+  .second-contents td {
+    width: 20.66%;
+    font-size: 0.78rem;
+  }
+
+  .first-contents th,
+  .first-contents td,
+  .second-contents th,
+  .second-contents td,
+  .wedding-result td {
+    background: transparent !important;
+    background-color: transparent !important;
+    padding-top: 0.08rem;
+    padding-bottom: 0.08rem;
+  }
+
+  .first-contents tr:hover,
+  .second-contents tr:hover,
+  .wedding-result tr:hover {
+    background: transparent !important;
+  }
+
+  .first-contents th,
+  .second-contents th {
+    color: #000;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+
+  .first-contents td.sub-result,
+  .second-contents td.sub-result {
+    white-space: nowrap;
+  }
+
+  .wedding-result {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .wedding-result tr {
+    height: auto;
+  }
+
+  .wedding-result h3 {
+    margin: 0.45rem;
+    font-size: 1em;
+  }
+
+  .wedding-result td {
+    border-color: #ced4da;
+  }
+}

@@ -105,3 +105,35 @@ export type WeddingFormInput = {
   present_price: string;
   reserve_price: string;
 };
+
+export type SignSex = "husband" | "bride";
+
+export type TitlePaneType = {
+  title: string;
+};
+
+export type SubTitlePaneType = {
+  title: string;
+  target: string | number;
+  unit?: string;
+};
+
+export type OnePaneType = {
+  title: string;
+  unit?: string;
+  target: number;
+};
+
+export type MultiPaneType = {
+  title: string;
+  unit?: string;
+  husband: number;
+  bride: number;
+};
+
+export type ResultPaneType = {
+  title: string;
+  husband: number;
+  bride: number;
+  target: number;
+};

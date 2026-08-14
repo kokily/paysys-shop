@@ -8,6 +8,7 @@ import { listWeddingsAction } from "@/actions/weddings";
 import { useObserver } from "@/hooks/useObserver";
 import WeddingDateFilter from "./WeddingDateFilter";
 import WeddingsTable from "./WeddingsTable";
+import ReadWeddingModal from "../read/ReadWeddingModal";
 
 type Props = {
   initialWeddings: WeddingRow[];
@@ -105,7 +106,16 @@ export default function ListWeddings({
         </div>
       )}
 
-      {selectedId && <div>ReadWeddingModal</div>}
+      {selectedId && (
+        <ReadWeddingModal
+          weddingId={selectedId}
+          onClose={() => setSelectedId(null)}
+          onDeleted={(id) => {
+            setWeddings((prev) => prev.filter((w) => w.id !== id));
+            setSelectedId(null);
+          }}
+        />
+      )}
     </div>
   );
 }

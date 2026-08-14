@@ -1,0 +1,205 @@
+.wedding-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 6rem;
+  padding: 0 0.5rem;
+}
+
+.wedding-form-title {
+  margin: 1rem 0 1.25rem;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #7950f2;
+  text-align: center;
+}
+
+.wedding-form-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.wedding-form-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.wedding-form-meta-item span {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.wedding-form-meta-item input[type="text"],
+.wedding-form-meta-item select {
+  min-width: 8rem;
+  border: 1px solid #d8d9d9;
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.wedding-form-section {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.wedding-form-section h3 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: bold;
+  text-align: center;
+  color: #7950f2;
+}
+
+.wedding-form-table {
+  width: 100%;
+  font-size: 0.95rem;
+  border-collapse: separate;
+  border-spacing: 2px;
+  table-layout: fixed;
+}
+
+.wedding-form-table th,
+.wedding-form-table td {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.2rem 0.25rem;
+  text-align: center;
+}
+
+.wedding-form-table th {
+  width: 130px;
+  background: #7950f2;
+  color: #fff;
+  font-weight: 600;
+}
+
+.wedding-form-table th.husband {
+  width: 93.3px;
+  background: #3bc9db;
+}
+
+.wedding-form-table th.bride {
+  width: 93.3px;
+  background: #f27de6;
+}
+
+.wedding-form-table th.total {
+  width: 93.3px;
+  background: #fa5252;
+}
+
+.wedding-form-table td {
+  background: var(--surface);
+}
+
+.wedding-form-table input,
+.wedding-form-table select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: right;
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.wedding-form-table td.sum {
+  text-align: right;
+  font-size: 0.9rem;
+  color: var(--text);
+  padding-right: 0.4rem;
+}
+
+.wedding-form-table tr:hover {
+  background: rgba(165, 102, 255, 0.12);
+}
+
+.wedding-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.wedding-form-actions .wf-btn {
+  min-width: 90px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wedding-form-actions .wf-btn.cancel {
+  border-color: #fa5252;
+  color: #fa5252;
+}
+
+.wedding-form-actions .wf-btn.cancel:hover:not(:disabled) {
+  background: #fa5252;
+  color: #fff;
+}
+
+.wedding-form-actions .wf-btn.submit {
+  border-color: #7950f2;
+  color: #7950f2;
+}
+
+.wedding-form-actions .wf-btn.submit:hover:not(:disabled) {
+  background: #7950f2;
+  color: #fff;
+}
+
+.wedding-form-actions .wf-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media screen {
+  .dark .wedding-form-title,
+  .dark .wedding-form-section h3 {
+    color: #b197fc;
+  }
+
+  .dark .wedding-form-table th,
+  .dark .wedding-form-table td {
+    border-color: #c0b6f2;
+  }
+
+  .dark .wedding-form-table th {
+    background: #2b2540;
+    color: #b197fc;
+  }
+
+  .dark .wedding-form-table th.husband {
+    background: #164e63;
+    color: #66d9e8;
+  }
+
+  .dark .wedding-form-table th.bride {
+    background: #5b2145;
+    color: #f783ac;
+  }
+
+  .dark .wedding-form-table th.total {
+    background: #4c0519;
+    color: #f87171;
+  }
+
+  .dark .wedding-form-actions .wf-btn {
+    background: var(--surface);
+  }
+}

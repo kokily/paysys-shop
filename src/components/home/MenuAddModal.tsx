@@ -121,10 +121,17 @@ export default function MenuAddModal({
                     inputMode="numeric"
                     pattern="[0-9]*"
                     enterKeyHint="next"
+                    autoFocus
                     value={price}
                     onChange={(e) =>
                       setPrice(e.target.value.replace(/[^\d]/g, ""))
                     }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        document.getElementById("menu-count")?.focus();
+                      }
+                    }}
                     className="border-line text-text box-border h-8 w-full max-w-[140px] rounded border bg-transparent px-2 text-center outline-none"
                   />
                 ) : (
@@ -158,7 +165,7 @@ export default function MenuAddModal({
             inputMode="numeric"
             pattern="[0-9]*"
             enterKeyHint="done"
-            autoFocus
+            autoFocus={!editablePrice}
             value={count}
             onChange={(e) => setCount(e.target.value.replace(/[^\d]/g, ""))}
             onKeyDown={(e) => {

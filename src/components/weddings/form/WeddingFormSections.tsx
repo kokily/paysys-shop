@@ -152,7 +152,6 @@ export default function WeddingFormSections({
               <th>식대단가</th>
               <td colSpan={3}>
                 <input
-                  inputMode="numeric"
                   value={formatDigits(form.meal_price)}
                   onChange={(e) =>
                     onChange("meal_price", digitsOnly(e.target.value))
@@ -199,7 +198,6 @@ export default function WeddingFormSections({
               <th>답례품 단가</th>
               <td colSpan={3}>
                 <input
-                  inputMode="numeric"
                   value={formatDigits(form.present_price)}
                   onChange={(e) =>
                     onChange("present_price", digitsOnly(e.target.value))
@@ -246,7 +244,6 @@ export default function WeddingFormSections({
               <th>예약금</th>
               <td colSpan={3}>
                 <input
-                  inputMode="numeric"
                   value={formatDigits(form.reserve_price)}
                   onChange={(e) =>
                     onChange("reserve_price", digitsOnly(e.target.value))

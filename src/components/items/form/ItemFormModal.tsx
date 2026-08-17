@@ -132,8 +132,7 @@ export default function ItemFormModal({ mode, item, onClose, onSaved }: Props) {
 
           <Field label="단가" error={errors.price?.message}>
             <input
-              type="number"
-              min={0}
+              type="text"
               className="border-line text-text w-full rounded border bg-transparent px-3 py-2 outline-none"
               {...register("price", { valueAsNumber: true })}
             />

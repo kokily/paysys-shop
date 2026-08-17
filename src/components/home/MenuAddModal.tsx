@@ -117,10 +117,14 @@ export default function MenuAddModal({
               <td className="text-text px-2 py-3 text-center align-middle">
                 {editablePrice ? (
                   <input
-                    type="number"
-                    min={0}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    enterKeyHint="next"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) =>
+                      setPrice(e.target.value.replace(/[^\d]/g, ""))
+                    }
                     className="border-line text-text box-border h-8 w-full max-w-[140px] rounded border bg-transparent px-2 text-center outline-none"
                   />
                 ) : (
@@ -150,11 +154,13 @@ export default function MenuAddModal({
           </label>
           <input
             id="menu-count"
-            type="number"
-            min={1}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            enterKeyHint="done"
             autoFocus
             value={count}
-            onChange={(e) => setCount(e.target.value)}
+            onChange={(e) => setCount(e.target.value.replace(/[^\d]/g, ""))}
             onKeyDown={(e) => {
               if (e.key === "Enter") onSubmit();
             }}

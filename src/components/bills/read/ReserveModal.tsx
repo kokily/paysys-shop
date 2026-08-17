@@ -50,6 +50,8 @@ export default function ReserveModal({ billId, onClose, onSaved }: Props) {
             <input
               type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
+              enterKeyHint="done"
               autoFocus
               value={reserve}
               onChange={(e) => setReserve(e.target.value.replace(/[^\d]/g, ""))}

@@ -47,14 +47,12 @@ export default function PairRow({
       <th>{title}</th>
       <td>
         <input
-          inputMode="numeric"
           value={comma ? formatDigits(husbandRaw) : husbandRaw}
           onChange={(e) => onChange(husbandName, digitsOnly(e.target.value))}
         />
       </td>
       <td>
         <input
-          inputMode="numeric"
           value={comma ? formatDigits(brideRaw) : brideRaw}
           onChange={(e) => onChange(brideName, digitsOnly(e.target.value))}
           onKeyDown={onKeyDown}

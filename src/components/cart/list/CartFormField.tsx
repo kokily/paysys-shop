@@ -16,6 +16,9 @@ export default function Field({
   return (
     <label className="relative block w-full">
       <input
+        type="text"
+        inputMode="text"
+        enterKeyHint="next"
         name={name}
         value={value}
         required={required}

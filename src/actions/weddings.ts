@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { prisma } from "@/lib/db";
 import { formToWeddingData } from "@/lib/wedding/calc";
+import { publishWeddingEvent } from "@/lib/wedding/events";
 import { toWedding, toWeddingDate } from "@/lib/wedding/map";
 import {
   addWeddingSignSchema,
@@ -147,6 +148,7 @@ export async function updateWeddingAction(input: {
   });
 
   revalidatePath("/weddings");
+  publishWeddingEvent({ type: "updated", weddingId: input.id });
 
   return {
     ok: true as const,
@@ -172,6 +174,7 @@ export async function deleteWeddingAction(id: string) {
   await prisma.wedding.delete({ where: { id } });
 
   revalidatePath("/weddings");
+  publishWeddingEvent({ type: "deleted", weddingId: id });
 
   return {
     ok: true as const,
@@ -216,6 +219,7 @@ export async function addWeddingSignAction(input: {
   });
 
   revalidatePath("/weddings");
+  publishWeddingEvent({ type: "signed", weddingId: input.weddingId });
 
   return {
     ok: true as const,
@@ -257,6 +261,7 @@ export async function removeWeddingSignAction(input: {
   });
 
   revalidatePath("/weddings");
+  publishWeddingEvent({ type: "unsigned", weddingId: input.weddingId });
 
   return {
     ok: true as const,

@@ -88,7 +88,6 @@ export default function BillItemsTable({
                   {editing ? (
                     <input
                       type="text"
-                      inputMode="numeric"
                       value={formatDigits(draft[idx]?.price ?? "")}
                       onChange={(e) =>
                         updateDraft(idx, "price", e.target.value)
@@ -104,7 +103,6 @@ export default function BillItemsTable({
                     <div className="flex items-center justify-center gap-1">
                       <input
                         type="text"
-                        inputMode="numeric"
                         value={draft[idx]?.count ?? ""}
                         onChange={(e) =>
                           updateDraft(idx, "count", e.target.value)

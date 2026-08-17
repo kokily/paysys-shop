@@ -39,6 +39,44 @@ export default function ReadWeddingModal({
     load();
   }, [load]);
 
+  /**
+   * 다른 기기/탭에서 서명 등록·삭제 시 상세 즉시 반영
+   */
+  useEffect(() => {
+    const es = new EventSource("/api/weddings/events");
+
+    es.onmessage = (msg) => {
+      try {
+        const data = JSON.parse(msg.data) as {
+          type?: string;
+          weddingId?: string;
+        };
+
+        if (data.type === "connected") return;
+        if (data.weddingId !== weddingId) return;
+
+        if (
+          data.type === "signed" ||
+          data.type === "unsigned" ||
+          data.type === "updated"
+        ) {
+          load();
+        }
+
+        if (data.type === "deleted") {
+          onDeleted(weddingId);
+          onClose();
+        }
+      } catch {
+        // ignore parse errors
+      }
+    };
+
+    return () => {
+      es.close();
+    };
+  }, [weddingId, load, onClose, onDeleted]);
+
   return (
     <Modal
       onClose={onClose}

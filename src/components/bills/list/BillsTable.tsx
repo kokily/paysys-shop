@@ -9,6 +9,11 @@ type Props = {
   newBillIds?: Set<string>;
 };
 
+function formatBillDate(value: Date | string) {
+  const d = value instanceof Date ? value : new Date(value);
+  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}.`;
+}
+
 export default function BillsTable({
   bills,
   onSelect,
@@ -31,7 +36,7 @@ export default function BillsTable({
             {["날짜", "구분", "행사명", "장소", "작성자"].map((h) => (
               <th
                 key={h}
-                className="bg-member px-2 py-4 text-center font-semibold text-white"
+                className="bg-member px-1 py-3 text-center text-sm font-semibold whitespace-nowrap text-white sm:px-2 sm:py-4 sm:text-base"
               >
                 {h}
               </th>
@@ -48,8 +53,8 @@ export default function BillsTable({
           ) : (
             bills.map((bill) => (
               <tr key={bill.id} className="hover:bg-black/10">
-                <td className="text-text overflow-hidden px-2 py-4 text-center text-sm whitespace-nowrap">
-                  {new Date(bill.created_at).toLocaleDateString("ko-KR")}
+                <td className="text-text px-1 py-4 text-center text-sm whitespace-nowrap">
+                  {formatBillDate(bill.created_at)}
                 </td>
                 <td className="text-text overflow-hidden px-2 py-4 text-center text-sm whitespace-nowrap">
                   {bill.native}

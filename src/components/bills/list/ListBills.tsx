@@ -212,13 +212,15 @@ export default function ListBills({
         </button>
       )}
 
-      <BillsTable
-        bills={bills}
-        newBillIds={newBillIds}
-        onSelect={openBill}
-        onFilterHall={(h) => pushFilter({ hall: h })}
-        onFilterUser={(uid) => pushFilter({ userId: uid })}
-      />
+      <div className="w-full max-sm:-mx-6">
+        <BillsTable
+          bills={bills}
+          newBillIds={newBillIds}
+          onSelect={openBill}
+          onFilterHall={(h) => pushFilter({ hall: h })}
+          onFilterUser={(uid) => pushFilter({ userId: uid })}
+        />
+      </div>
 
       {hasMore && (
         <div ref={setTarget} className="text-text-secondary py-6 text-sm">

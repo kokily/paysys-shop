@@ -69,25 +69,25 @@ export default function LoginForm() {
   }
 
   return (
-    <>
+    <main>
       <ThemeToggle />
 
       <div
-        className="fixed top-1/2 left-1/2 w-[320px] max-h-full -translate-x-1/2 -translate-y-1/2 overflow-y-auto animate-[fadeIn_0.3s_ease-in-out_forwards]"
+        className="fixed top-1/2 left-1/2 max-h-full w-[320px] -translate-x-1/2 -translate-y-1/2 animate-[fadeIn_0.3s_ease-in-out_forwards] overflow-y-auto"
         style={{ boxShadow: "var(--shadow-2)" }}
       >
-        <div className="flex h-20 items-center justify-center bg-member">
+        <div className="bg-member flex h-20 items-center justify-center">
           <span className="text-[2.4rem] font-extrabold tracking-[5px] text-white">
             {mode === "login" ? "로그인" : "회원가입"}
           </span>
         </div>
         <div className="bg-surface p-8">
-          <div className="mb-6 flex border-b border-line">
+          <div className="border-line mb-6 flex border-b">
             <button
               type="button"
               className={`flex-1 pb-2 text-sm font-semibold ${
                 mode === "login"
-                  ? "border-b-2 border-member text-member"
+                  ? "border-member text-member border-b-2"
                   : "text-text-secondary"
               }`}
               onClick={() => setMode("login")}
@@ -98,7 +98,7 @@ export default function LoginForm() {
               type="button"
               className={`flex-1 pb-2 text-sm font-semibold ${
                 mode === "register"
-                  ? "border-b-2 border-member text-member"
+                  ? "border-member text-member border-b-2"
                   : "text-text-secondary"
               }`}
               onClick={() => setMode("register")}
@@ -108,7 +108,7 @@ export default function LoginForm() {
           </div>
           {/* 서버 Action 실패 메시지 (setError("root")로 넣은 값) */}
           {errors.root?.message && (
-            <p className="mb-4 text-sm text-error">{errors.root.message}</p>
+            <p className="text-error mb-4 text-sm">{errors.root.message}</p>
           )}
           <form onSubmit={handleSubmit(onValid)} noValidate>
             <div className="relative mb-[30px] w-full">
@@ -117,18 +117,18 @@ export default function LoginForm() {
                 type="text"
                 required
                 autoComplete="username"
-                className="peer block w-[92%] border-0 border-b border-member bg-transparent p-[10px] text-text outline-none"
+                className="peer border-member text-text block w-[92%] border-0 border-b bg-transparent p-[10px] outline-none"
                 {...register("username")}
               />
-              <span className="relative block w-full before:absolute before:right-1/2 before:bottom-0 before:left-1/2 before:h-[3px] before:bg-member before:transition-all before:duration-200 peer-focus:before:right-0 peer-focus:before:left-0" />
+              <span className="before:bg-member relative block w-full before:absolute before:right-1/2 before:bottom-0 before:left-1/2 before:h-[3px] before:transition-all before:duration-200 peer-focus:before:right-0 peer-focus:before:left-0" />
               <label
                 htmlFor="username"
-                className="pointer-events-none absolute top-3 left-0 text-text transition-all duration-200 peer-valid:top-[-10px] peer-valid:text-[14px] peer-valid:text-member peer-focus:top-[-10px] peer-focus:text-[14px] peer-focus:text-member"
+                className="text-text peer-valid:text-member peer-focus:text-member pointer-events-none absolute top-3 left-0 transition-all duration-200 peer-valid:top-[-10px] peer-valid:text-[14px] peer-focus:top-[-10px] peer-focus:text-[14px]"
               >
                 사용자 이름
               </label>
               {errors.username?.message && (
-                <p className="mt-1 text-xs text-error">
+                <p className="text-error mt-1 text-xs">
                   {errors.username.message}
                 </p>
               )}
@@ -142,18 +142,18 @@ export default function LoginForm() {
                 autoComplete={
                   mode === "login" ? "current-password" : "new-password"
                 }
-                className="peer block w-[92%] border-0 border-b border-member bg-transparent p-[10px] text-text outline-none"
+                className="peer border-member text-text block w-[92%] border-0 border-b bg-transparent p-[10px] outline-none"
                 {...register("password")}
               />
-              <span className="relative block w-full before:absolute before:right-1/2 before:bottom-0 before:left-1/2 before:h-[3px] before:bg-member before:transition-all before:duration-200 peer-focus:before:right-0 peer-focus:before:left-0" />
+              <span className="before:bg-member relative block w-full before:absolute before:right-1/2 before:bottom-0 before:left-1/2 before:h-[3px] before:transition-all before:duration-200 peer-focus:before:right-0 peer-focus:before:left-0" />
               <label
                 htmlFor="password"
-                className="pointer-events-none absolute top-3 left-0 text-text transition-all duration-200 peer-valid:top-[-10px] peer-valid:text-[14px] peer-valid:text-member peer-focus:top-[-10px] peer-focus:text-[14px] peer-focus:text-member"
+                className="text-text peer-valid:text-member peer-focus:text-member pointer-events-none absolute top-3 left-0 transition-all duration-200 peer-valid:top-[-10px] peer-valid:text-[14px] peer-focus:top-[-10px] peer-focus:text-[14px]"
               >
                 비밀번호
               </label>
               {errors.password?.message && (
-                <p className="mt-1 text-xs text-error">
+                <p className="text-error mt-1 text-xs">
                   {errors.password.message}
                 </p>
               )}
@@ -161,9 +161,9 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group relative mt-4 block w-full overflow-hidden rounded border border-member bg-transparent pt-[0.6rem] pb-[0.5rem] text-[1.25rem] font-semibold text-member outline-none transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-60"
+              className="group border-member text-member relative mt-4 block w-full overflow-hidden rounded border bg-transparent pt-[0.6rem] pb-[0.5rem] text-[1.25rem] font-semibold transition-all duration-500 outline-none disabled:cursor-not-allowed disabled:opacity-60"
             >
-              <div className="absolute top-[-70px] left-0 w-full bg-member py-[10px] text-white transition-all duration-400 group-hover:top-0 group-disabled:top-[-70px]">
+              <div className="bg-member absolute top-[-70px] left-0 w-full py-[10px] text-white transition-all duration-400 group-hover:top-0 group-disabled:top-[-70px]">
                 {isSubmitting
                   ? "처리중..."
                   : mode === "login"
@@ -179,6 +179,6 @@ export default function LoginForm() {
           </form>
         </div>
       </div>
-    </>
+    </main>
   );
 }

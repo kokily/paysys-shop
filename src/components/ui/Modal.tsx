@@ -5,6 +5,12 @@ import { createPortal } from "react-dom";
 
 const EXIT_MS = 280;
 
+/**
+ * 안드로이드/브라우저 뒤로가기로 모달만 닫기 위한 히스토리 더미 엔트리.
+ * 안쪽 모달을 X로 닫을 때 history.back()이 바깥 모달 popstate로 새지 않게 한다.
+ */
+let ignoreModalPop = 0;
+
 export type ModalApi = {
   close: () => void;
 };
@@ -84,6 +90,37 @@ export default function Modal({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closeOnEscape]);
+
+  /**
+   * 안드로이드 백 버튼은 히스토리 back이라 모달이 URL을 안 바꾸면
+   * /weddings → / (로그인) 으로 나간다. 더미 state를 넣어 모달부터 닫는다.
+   */
+  useEffect(() => {
+    if (!mounted) return;
+
+    window.history.pushState({ paysysModal: true }, "");
+    let closedByPop = false;
+
+    function onPopState() {
+      if (ignoreModalPop > 0) {
+        ignoreModalPop -= 1;
+        return;
+      }
+      closedByPop = true;
+      close();
+    }
+
+    window.addEventListener("popstate", onPopState);
+
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      if (!closedByPop) {
+        ignoreModalPop += 1;
+        window.history.back();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]);
 
   /**
    * 모바일 키패드가 올라오면 visualViewport가 줄어든다.

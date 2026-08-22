@@ -53,8 +53,7 @@ export default function LoginForm() {
         showToast({ type: "success", message: "로그인 되었습니다." });
       }
 
-      router.push("/member");
-      router.refresh();
+      router.replace("/member");
       return;
     }
 

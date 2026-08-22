@@ -7,7 +7,6 @@ import { useUiStore } from "@/store/ui";
 import { weddingAllCost } from "@/lib/wedding/calc";
 import {
   deleteWeddingAction,
-  getWeddingAction,
   removeWeddingSignAction,
 } from "@/actions/weddings";
 import "./wedding-read.css";
@@ -23,6 +22,8 @@ type Props = {
   onClose?: () => void;
   onDeleted?: (id: string) => void;
   onWeddingChange?: (wedding: Wedding) => void;
+  /** true: 서명 저장 시작, false: 실패로 취소 */
+  onSignSaving?: (saving: boolean) => void;
 };
 
 export default function ReadWedding({
@@ -30,6 +31,7 @@ export default function ReadWedding({
   onClose,
   onDeleted,
   onWeddingChange,
+  onSignSaving,
 }: Props) {
   const router = useRouter();
   const showToast = useUiStore((s) => s.showToast);
@@ -46,19 +48,10 @@ export default function ReadWedding({
     else router.push("/weddings");
   }
 
-  async function reloadWedding() {
-    const result = await getWeddingAction(wedding.id);
-
-    if (!result.ok) {
-      showToast({ type: "error", message: result.error });
-      return;
-    }
-    onWeddingChange?.(result.wedding);
-    router.refresh();
-  }
-
   function onRemoveSign() {
     if (!removeSex) return;
+
+    onSignSaving?.(true);
 
     startTransition(async () => {
       const result = await removeWeddingSignAction({
@@ -67,6 +60,7 @@ export default function ReadWedding({
       });
 
       if (!result.ok) {
+        onSignSaving?.(false);
         showToast({ type: "error", message: result.error });
         setRemoveSex(null);
         return;
@@ -78,8 +72,7 @@ export default function ReadWedding({
       });
 
       setRemoveSex(null);
-
-      await reloadWedding();
+      onWeddingChange?.(result.wedding);
     });
   }
 
@@ -144,7 +137,8 @@ export default function ReadWedding({
           weddingId={wedding.id}
           sex={signSex}
           onClose={() => setSignSex(null)}
-          onSaved={reloadWedding}
+          onSaved={(next) => onWeddingChange?.(next)}
+          onSaving={onSignSaving}
         />
       )}
 

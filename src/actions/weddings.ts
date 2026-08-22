@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { getAdminUser } from "@/lib/auth/require-admin";
 import { prisma } from "@/lib/db";
 import { formToWeddingData } from "@/lib/wedding/calc";
 import { publishWeddingEvent } from "@/lib/wedding/events";
@@ -21,7 +21,9 @@ export async function listWeddingsAction(input?: {
   cursor?: string;
   date?: string;
 }) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const cursor = input?.cursor;
   const date = input?.date?.trim();
@@ -62,7 +64,9 @@ export async function listWeddingsAction(input?: {
 
 /** 웨딩 상세 */
 export async function getWeddingAction(id: string) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const row = await prisma.wedding.findUnique({ where: { id } });
 
@@ -81,7 +85,9 @@ export async function getWeddingAction(id: string) {
 
 /** 웨딩 생성 */
 export async function createWeddingAction(form: WeddingFormInput) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const parsed = weddingFormSchema.safeParse(form);
 
@@ -112,7 +118,9 @@ export async function updateWeddingAction(input: {
   id: string;
   form: WeddingFormInput;
 }) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const parsed = weddingFormSchema.safeParse(input.form);
 
@@ -157,7 +165,9 @@ export async function updateWeddingAction(input: {
 
 /** 웨딩 삭제 */
 export async function deleteWeddingAction(id: string) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const existing = await prisma.wedding.findUnique({
     where: { id },
@@ -187,7 +197,9 @@ export async function addWeddingSignAction(input: {
   sex: WeddingSignSex;
   image: string;
 }) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const parsed = addWeddingSignSchema.safeParse(input);
 
@@ -210,7 +222,7 @@ export async function addWeddingSignAction(input: {
     };
   }
 
-  await prisma.wedding.update({
+  const row = await prisma.wedding.update({
     where: { id: input.weddingId },
     data:
       input.sex === "husband"
@@ -218,11 +230,11 @@ export async function addWeddingSignAction(input: {
         : { bride_image: input.image },
   });
 
-  revalidatePath("/weddings");
   publishWeddingEvent({ type: "signed", weddingId: input.weddingId });
 
   return {
     ok: true as const,
+    wedding: toWedding(row),
   };
 }
 
@@ -231,7 +243,9 @@ export async function removeWeddingSignAction(input: {
   weddingId: string;
   sex: WeddingSignSex;
 }) {
-  await requireAdmin();
+  const admin = await getAdminUser();
+
+  if (!admin.ok) return admin;
 
   const parsed = removeWeddingSignSchema.safeParse(input);
 
@@ -254,16 +268,16 @@ export async function removeWeddingSignAction(input: {
     };
   }
 
-  await prisma.wedding.update({
+  const row = await prisma.wedding.update({
     where: { id: input.weddingId },
     data:
       input.sex === "husband" ? { husband_image: null } : { bride_image: null },
   });
 
-  revalidatePath("/weddings");
   publishWeddingEvent({ type: "unsigned", weddingId: input.weddingId });
 
   return {
     ok: true as const,
+    wedding: toWedding(row),
   };
 }

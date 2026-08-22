@@ -7,6 +7,45 @@ import {
 import { REFRESH_TTL_DAYS } from "./constants";
 import { prisma } from "../db";
 
+/** 직전 refresh 재사용 허용 (동시 요청 로테이션 경쟁 완화) */
+const REFRESH_REUSE_MS = 15_000;
+
+type ReuseEntry = {
+  prevHash: string;
+  accessToken: string;
+  refreshToken: string;
+  at: number;
+};
+
+const recentRotations = new Map<string, ReuseEntry>();
+
+function rememberRotation(
+  sessionId: string,
+  prevHash: string,
+  accessToken: string,
+  refreshToken: string,
+) {
+  recentRotations.set(sessionId, {
+    prevHash,
+    accessToken,
+    refreshToken,
+    at: Date.now(),
+  });
+}
+
+function reuseRecentRotation(sessionId: string, presentedHash: string) {
+  const entry = recentRotations.get(sessionId);
+
+  if (!entry) return null;
+  if (Date.now() - entry.at > REFRESH_REUSE_MS) {
+    recentRotations.delete(sessionId);
+    return null;
+  }
+  if (entry.prevHash !== presentedHash) return null;
+
+  return entry;
+}
+
 /**
  * Refresh Token 원문 해시 (DB는 해시만 저장)
  * @param token Refresh Token 원문
@@ -89,8 +128,29 @@ export async function rotateRefreshToken(refreshToken: string) {
     },
   });
 
-  if (!session || session.refresh_token_hash !== hashToken(refreshToken)) {
+  if (!session) {
     throw new Error("INVAILD_REFRESH_TOKEN");
+  }
+
+  const presentedHash = hashToken(refreshToken);
+
+  if (session.refresh_token_hash !== presentedHash) {
+    const reused = reuseRecentRotation(payload.session_id, presentedHash);
+
+    if (!reused) {
+      throw new Error("INVAILD_REFRESH_TOKEN");
+    }
+
+    return {
+      accessToken: reused.accessToken,
+      refreshToken: reused.refreshToken,
+      sessionId: payload.session_id,
+      user: {
+        user_id: payload.user_id,
+        username: payload.username,
+        admin: payload.admin,
+      },
+    };
   }
 
   const newRefreshToken = await signRefreshToken({
@@ -111,6 +171,13 @@ export async function rotateRefreshToken(refreshToken: string) {
     where: { id: session.id },
     data: { refresh_token_hash: hashToken(newRefreshToken) },
   });
+
+  rememberRotation(
+    session.id,
+    presentedHash,
+    newAccessToken,
+    newRefreshToken,
+  );
 
   return {
     accessToken: newAccessToken,

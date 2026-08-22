@@ -1,6 +1,6 @@
 "use client";
 
-import type { SignSex } from "@/types/wedding";
+import type { SignSex, Wedding } from "@/types/wedding";
 import { useState, useTransition } from "react";
 import { addWeddingSignAction } from "@/actions/weddings";
 import { useUiStore } from "@/store/ui";
@@ -12,10 +12,18 @@ type Props = {
   weddingId: string;
   sex: SignSex;
   onClose: () => void;
-  onSaved: () => void;
+  onSaved: (wedding: Wedding) => void;
+  /** true: 저장 시작, false: 저장 실패 */
+  onSaving?: (saving: boolean) => void;
 };
 
-export default function SignModal({ weddingId, sex, onClose, onSaved }: Props) {
+export default function SignModal({
+  weddingId,
+  sex,
+  onClose,
+  onSaved,
+  onSaving,
+}: Props) {
   const showToast = useUiStore((s) => s.showToast);
   const [image, setImage] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -28,6 +36,8 @@ export default function SignModal({ weddingId, sex, onClose, onSaved }: Props) {
       return;
     }
 
+    onSaving?.(true);
+
     startTransition(async () => {
       const result = await addWeddingSignAction({
         weddingId,
@@ -36,12 +46,13 @@ export default function SignModal({ weddingId, sex, onClose, onSaved }: Props) {
       });
 
       if (!result.ok) {
+        onSaving?.(false);
         showToast({ type: "error", message: result.error });
         return;
       }
 
       showToast({ type: "success", message: `${title}이 등록되었습니다` });
-      onSaved();
+      onSaved(result.wedding);
       onClose();
     });
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import type { Wedding } from "@/types/wedding";
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { getWeddingAction } from "@/actions/weddings";
 import ReadWedding from "./ReadWedding";
 import Modal from "@/components/ui/Modal";
@@ -21,6 +21,8 @@ export default function ReadWeddingModal({
   const [wedding, setWedding] = useState<Wedding | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  /** 이 탭에서 방금 저장한 서명 SSE는 재조회하지 않음 */
+  const skipSignedReloadRef = useRef(false);
 
   const load = useCallback(() => {
     startTransition(async () => {
@@ -60,6 +62,10 @@ export default function ReadWeddingModal({
           data.type === "unsigned" ||
           data.type === "updated"
         ) {
+          if (skipSignedReloadRef.current) {
+            skipSignedReloadRef.current = false;
+            return;
+          }
           load();
         }
 
@@ -106,7 +112,13 @@ export default function ReadWeddingModal({
                   onDeleted(id);
                   close();
                 }}
-                onWeddingChange={setWedding}
+                onSignSaving={(saving) => {
+                  skipSignedReloadRef.current = saving;
+                }}
+                onWeddingChange={(next) => {
+                  skipSignedReloadRef.current = true;
+                  setWedding(next);
+                }}
               />
             )}
           </div>

@@ -115,7 +115,6 @@ export default function ReadWedding({
         busy={isPending}
         onList={goList}
         onEdit={() => {
-          if (onClose) onClose();
           router.push(`/wedding/update/${wedding.id}`);
         }}
         onDelete={() => setConfirmOpen(true)}

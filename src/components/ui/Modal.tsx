@@ -7,9 +7,17 @@ const EXIT_MS = 280;
 
 /**
  * 안드로이드/브라우저 뒤로가기로 모달만 닫기 위한 히스토리 더미 엔트리.
- * 안쪽 모달을 X로 닫을 때 history.back()이 바깥 모달 popstate로 새지 않게 한다.
+ * Next.js가 들고 있는 history.state를 덮어쓰면 안 된다.
  */
 let ignoreModalPop = 0;
+
+function isModalHistoryState(state: unknown): boolean {
+  return (
+    !!state &&
+    typeof state === "object" &&
+    (state as { paysysModal?: boolean }).paysysModal === true
+  );
+}
 
 export type ModalApi = {
   close: () => void;
@@ -92,13 +100,21 @@ export default function Modal({
   }, [closeOnEscape]);
 
   /**
-   * 안드로이드 백 버튼은 히스토리 back이라 모달이 URL을 안 바꾸면
-   * /weddings → / (로그인) 으로 나간다. 더미 state를 넣어 모달부터 닫는다.
+   * 뒤로가기 = 모달 닫기.
+   * X/확인/페이지 이동으로 닫을 때는 history.back()을 함부로 호출하지 않는다.
+   * (안드로이드에서 앱이 내려가거나, 수정 이동이 목록으로 되돌아가는 원인)
    */
   useEffect(() => {
     if (!mounted) return;
 
-    window.history.pushState({ paysysModal: true }, "");
+    const openedHref = window.location.pathname + window.location.search;
+    const prevState =
+      window.history.state && typeof window.history.state === "object"
+        ? window.history.state
+        : {};
+
+    window.history.pushState({ ...prevState, paysysModal: true }, "");
+
     let closedByPop = false;
 
     function onPopState() {
@@ -114,10 +130,16 @@ export default function Modal({
 
     return () => {
       window.removeEventListener("popstate", onPopState);
-      if (!closedByPop) {
-        ignoreModalPop += 1;
-        window.history.back();
-      }
+      if (closedByPop) return;
+
+      const stillSamePage =
+        window.location.pathname + window.location.search === openedHref;
+
+      if (!stillSamePage) return;
+      if (!isModalHistoryState(window.history.state)) return;
+
+      ignoreModalPop += 1;
+      window.history.back();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted]);

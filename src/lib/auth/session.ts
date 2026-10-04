@@ -7,7 +7,12 @@ import {
 import { REFRESH_TTL_DAYS } from "./constants";
 import { prisma } from "../db";
 
-/** 직전 refresh 재사용 허용 (동시 요청 로테이션 경쟁 완화) */
+/**
+ * 직전 refresh 재사용 허용
+ * - 15초 이내: 동시 요청 경쟁 → 방금 발급한 토큰을 그대로 반환
+ * - 15초 이후: 로테이션 응답을 못 받은 기기 → 새로 발급
+ * 새 토큰이 한 번이라도 사용되면 prevHash가 바뀌어 옛 토큰은 무효
+ */
 const REFRESH_REUSE_MS = 15_000;
 
 type ReuseEntry = {
@@ -31,19 +36,6 @@ function rememberRotation(
     refreshToken,
     at: Date.now(),
   });
-}
-
-function reuseRecentRotation(sessionId: string, presentedHash: string) {
-  const entry = recentRotations.get(sessionId);
-
-  if (!entry) return null;
-  if (Date.now() - entry.at > REFRESH_REUSE_MS) {
-    recentRotations.delete(sessionId);
-    return null;
-  }
-  if (entry.prevHash !== presentedHash) return null;
-
-  return entry;
 }
 
 /**
@@ -135,22 +127,24 @@ export async function rotateRefreshToken(refreshToken: string) {
   const presentedHash = hashToken(refreshToken);
 
   if (session.refresh_token_hash !== presentedHash) {
-    const reused = reuseRecentRotation(payload.session_id, presentedHash);
+    const entry = recentRotations.get(payload.session_id);
 
-    if (!reused) {
+    if (!entry || entry.prevHash !== presentedHash) {
       throw new Error("INVAILD_REFRESH_TOKEN");
     }
 
-    return {
-      accessToken: reused.accessToken,
-      refreshToken: reused.refreshToken,
-      sessionId: payload.session_id,
-      user: {
-        user_id: payload.user_id,
-        username: payload.username,
-        admin: payload.admin,
-      },
-    };
+    if (Date.now() - entry.at <= REFRESH_REUSE_MS) {
+      return {
+        accessToken: entry.accessToken,
+        refreshToken: entry.refreshToken,
+        sessionId: payload.session_id,
+        user: {
+          user_id: payload.user_id,
+          username: payload.username,
+          admin: payload.admin,
+        },
+      };
+    }
   }
 
   const newRefreshToken = await signRefreshToken({

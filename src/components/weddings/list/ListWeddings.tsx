@@ -48,13 +48,17 @@ export default function ListWeddings({
         date: date ?? undefined,
       });
 
-      if (!result.ok) return;
+      if (!result.ok) {
+        setHasMore(false);
+        showToast({ type: "error", message: result.error });
+        return;
+      }
 
       setWeddings((prev) => [...prev, ...result.weddings]);
       setCursor(result.nextCursor);
       setHasMore(result.hasMore);
     });
-  }, [cursor, hasMore, isPending, date]);
+  }, [cursor, hasMore, isPending, date, showToast]);
 
   const onIntersect: IntersectionObserverCallback = useCallback(
     ([entry]) => {

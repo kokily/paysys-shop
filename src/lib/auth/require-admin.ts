@@ -21,7 +21,14 @@ export async function requireAdmin() {
 export async function getAdminUser() {
   const auth = await checkAuthAction();
 
-  if (!auth.ok || !auth.user?.admin) {
+  if (!auth.ok || !auth.user) {
+    return {
+      ok: false as const,
+      error: "로그인이 만료되었습니다. 새로고침 후 다시 로그인해주세요.",
+    };
+  }
+
+  if (!auth.user.admin) {
     return {
       ok: false as const,
       error: "관리자 권한이 필요합니다.",

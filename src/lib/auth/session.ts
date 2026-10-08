@@ -105,6 +105,7 @@ export async function revokeSession(sessionId: string) {
 
 /**
  * Refresh Token 검증 후 Access/Refresh 재발급 (rotation)
+ * 세션 만료일도 함께 연장 (마지막 사용 기준 30일)
  * @param refreshToken 쿠키의 Refresh Token
  * @returns 새 토큰 + 사용자 정보
  */
@@ -161,9 +162,15 @@ export async function rotateRefreshToken(refreshToken: string) {
     session_id: payload.session_id,
   });
 
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + REFRESH_TTL_DAYS);
+
   await prisma.session.update({
     where: { id: session.id },
-    data: { refresh_token_hash: hashToken(newRefreshToken) },
+    data: {
+      refresh_token_hash: hashToken(newRefreshToken),
+      expires_at: expiresAt,
+    },
   });
 
   rememberRotation(

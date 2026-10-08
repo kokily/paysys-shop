@@ -28,6 +28,7 @@ const billItemPatchSchema = z.object({
 /** 전표 품목 수정 */
 export const updateBillSchema = z.object({
   id: z.string().min(1),
+  title: z.string().trim().min(1, "행사명을 입력하세요").optional(),
   items: z.array(billItemPatchSchema).min(1, "품목은 1개 이상 있어야 합니다"),
 });
 

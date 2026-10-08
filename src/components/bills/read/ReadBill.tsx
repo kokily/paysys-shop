@@ -47,6 +47,7 @@ export default function ReadBill({
   const [confirmKind, setConfirmKind] = useState<BillConfirmKind>(null);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [titleDraft, setTitleDraft] = useState(bill.title);
   const [draft, setDraft] = useState<BillDraftItem[]>(() =>
     toDraft(bill.items),
   );
@@ -84,11 +85,13 @@ export default function ReadBill({
   }
 
   function startEdit() {
+    setTitleDraft(bill.title);
     setDraft(toDraft(bill.items));
     setEditing(true);
   }
 
   function cancelEdit() {
+    setTitleDraft(bill.title);
     setDraft(toDraft(bill.items));
     setEditing(false);
     setNativePendingIndex(null);
@@ -167,9 +170,17 @@ export default function ReadBill({
         : "bg-member";
 
   function onSave() {
+    const title = titleDraft.trim();
+
+    if (!title) {
+      showToast({ type: "error", message: "행사명을 입력하세요" });
+      return;
+    }
+
     startTransition(async () => {
       const result = await updateBillAction({
         id: bill.id,
+        title,
         items: draft.map((row) => ({
           id: row.id,
           native: row.native,
@@ -260,9 +271,20 @@ export default function ReadBill({
         <h2 className="text-text text-xl font-bold print:text-black">
           전표세부내역
           <br />
-          <small className="text-success text-base font-semibold">
-            [ {bill.title} ]
-          </small>
+          {editing ? (
+            <input
+              type="text"
+              aria-label="행사명"
+              value={titleDraft}
+              disabled={isPending}
+              onChange={(e) => setTitleDraft(e.target.value)}
+              className="border-member text-success mt-2 w-full max-w-[320px] rounded-md border bg-white px-3 py-1.5 text-center text-base font-semibold outline-none disabled:opacity-60"
+            />
+          ) : (
+            <small className="text-success text-base font-semibold">
+              [ {bill.title} ]
+            </small>
+          )}
         </h2>
       </div>
 

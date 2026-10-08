@@ -239,9 +239,10 @@ export async function restoreBillAction(id: string) {
   return { ok: true as const };
 }
 
-/** 전표 품목 수정 (관리자만) */
+/** 전표 행사명/품목 수정 (관리자만) */
 export async function updateBillAction(input: {
   id: string;
+  title?: string;
   items: {
     id: string;
     native: string;
@@ -343,6 +344,7 @@ export async function updateBillAction(input: {
   const updated = await prisma.bill.update({
     where: { id: bill.id },
     data: {
+      ...(parsed.data.title ? { title: parsed.data.title } : {}),
       items: nextItems,
       total_amount: totalAmount,
     },

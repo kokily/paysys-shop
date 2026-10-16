@@ -14,6 +14,7 @@ import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/lib/auth/require-auth";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { publishBillEvent } from "@/lib/bill/events";
+import { sendBillCreatedMail } from "@/lib/mail/bill-notify";
 
 export type { BillDetail, BillRow } from "@/types/bill";
 
@@ -72,7 +73,16 @@ export async function addBillAction(input: {
         user_id: user.user_id,
         username: user.username,
       },
-      select: { id: true, title: true },
+      select: {
+        id: true,
+        title: true,
+        hall: true,
+        etc: true,
+        total_amount: true,
+        username: true,
+        created_at: true,
+        items: true,
+      },
     });
 
     await tx.cart.update({
@@ -87,6 +97,16 @@ export async function addBillAction(input: {
   revalidatePath("/fronts");
 
   publishBillEvent({ type: "created" });
+
+  void sendBillCreatedMail({
+    title: bill.title,
+    hall: bill.hall,
+    etc: bill.etc,
+    username: bill.username ?? user.username,
+    totalAmount: bill.total_amount,
+    items: (bill.items as CartItem[] | null) ?? items,
+    createdAt: bill.created_at,
+  });
 
   return { ok: true as const, bill };
 }

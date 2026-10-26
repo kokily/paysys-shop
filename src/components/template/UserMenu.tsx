@@ -60,6 +60,9 @@ export default function UserMenu({ admin }: Props) {
                   <MenuItem href="/items" onClick={close}>
                     품목 리스트
                   </MenuItem>
+                  <MenuItem href="/stats" onClick={close}>
+                    품목 통계
+                  </MenuItem>
                   <MenuItem href="/users" onClick={close}>
                     사용자 리스트
                   </MenuItem>

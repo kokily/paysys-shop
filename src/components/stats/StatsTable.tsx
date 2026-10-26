@@ -1,6 +1,10 @@
 "use client";
 
 import type { ItemStatsRow } from "@/types/stats";
+import { useState } from "react";
+import { useUiStore } from "@/store/ui";
+import { monthLabel, shortDate } from "@/lib/stats/label";
+import { downloadStatsXlsx } from "@/lib/stats/xlsx";
 
 type Props = {
   rows: ItemStatsRow[];
@@ -8,18 +12,6 @@ type Props = {
   from: string;
   to: string;
 };
-
-/** "2025-01-01" → "25. 1. 1." */
-function shortDate(date: string) {
-  const [y, m, d] = date.split("-");
-  return `${y!.slice(2)}. ${Number(m)}. ${Number(d)}.`;
-}
-
-/** "2025-01" → "25년 1월" */
-function monthLabel(month: string) {
-  const [y, m] = month.split("-");
-  return `${y!.slice(2)}년 ${Number(m)}월`;
-}
 
 function num(value: number) {
   return value.toLocaleString("ko-KR");
@@ -31,10 +23,32 @@ const td = "text-text px-2 py-3 whitespace-nowrap";
 
 /** 품목 통계 표 (시작/종료일자, 품류, 분류, 품목, 단위, 단가, 월별 수량, 합계) */
 export default function StatsTable({ rows, months, from, to }: Props) {
+  const showToast = useUiStore((s) => s.showToast);
+  const [downloading, setDownloading] = useState(false);
   const totalAmount = rows.reduce((sum, r) => sum + r.totalAmount, 0);
 
+  async function onDownload() {
+    setDownloading(true);
+    try {
+      await downloadStatsXlsx({ rows, months, from, to });
+    } catch {
+      showToast({ type: "error", message: "엑셀 파일을 만들지 못했습니다." });
+    } finally {
+      setDownloading(false);
+    }
+  }
+
   return (
-    <div className="mt-2 w-full">
+    <div className="mt-2 flex w-full flex-col items-end gap-2">
+      <button
+        type="button"
+        onClick={onDownload}
+        disabled={rows.length === 0 || downloading}
+        className="border-line text-text-secondary hover:text-text rounded border px-3 py-1.5 text-sm disabled:opacity-40"
+      >
+        {downloading ? "만드는 중..." : "엑셀 다운로드"}
+      </button>
+
       <div className="w-full overflow-x-auto rounded-[0.8rem]">
         <table className="w-full border-collapse text-sm">
           <thead>

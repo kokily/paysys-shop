@@ -21,7 +21,6 @@ function PersonCard({ side, badge, total, deduct, payment }: CardProps) {
     <div className={`settle-card ${side}`}>
       <div className="settle-card-head">
         <h4>{who}님 결제 내역</h4>
-        <span>{badge}</span>
       </div>
       <div className="settle-row">
         <span>· {who} 총 발생 비용</span>

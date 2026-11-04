@@ -55,25 +55,33 @@ export default function UserMenu({ admin, permissions }: Props) {
               </MenuItem>
 
               {hasExtra && (
-                <>
-                  <div className="from-member to-success mx-4 h-[2px] bg-gradient-to-r" />
+                <div className="from-member to-success mx-4 h-[2px] bg-gradient-to-r" />
+              )}
 
-                  <MenuItem href="/approvals" onClick={close}>
-                    가입승인
-                  </MenuItem>
-                  <MenuItem href="/weddings" onClick={close}>
-                    웨딩빌지
-                  </MenuItem>
-                  <MenuItem href="/items" onClick={close}>
-                    품목 리스트
-                  </MenuItem>
-                  <MenuItem href="/stats" onClick={close}>
-                    품목 통계
-                  </MenuItem>
-                  <MenuItem href="/users" onClick={close}>
-                    사용자 리스트
-                  </MenuItem>
-                </>
+              {admin && (
+                <MenuItem href="/approvals" onClick={close}>
+                  가입승인
+                </MenuItem>
+              )}
+              {canWeddings && (
+                <MenuItem href="/weddings" onClick={close}>
+                  웨딩빌지
+                </MenuItem>
+              )}
+              {admin && (
+                <MenuItem href="/items" onClick={close}>
+                  품목 리스트
+                </MenuItem>
+              )}
+              {canStats && (
+                <MenuItem href="/stats" onClick={close}>
+                  품목 통계
+                </MenuItem>
+              )}
+              {admin && (
+                <MenuItem href="/users" onClick={close}>
+                  사용자 리스트
+                </MenuItem>
               )}
 
               <div className="from-member to-success mx-4 h-[2px] bg-gradient-to-r" />

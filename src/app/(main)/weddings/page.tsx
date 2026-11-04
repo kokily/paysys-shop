@@ -1,7 +1,7 @@
 import { listWeddingsAction } from "@/actions/weddings";
 import PageTemplate from "@/components/template/PageTemplate";
 import ListWeddings from "@/components/weddings/list/ListWeddings";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { requirePermission } from "@/lib/auth/require-admin";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 /** /weddings - 웨딩빌지 목록 (관리자) */
 export default async function WeddingsPage() {
-  const admin = await requireAdmin();
+  const admin = await requirePermission("weddings");
   const result = await listWeddingsAction();
 
   return (

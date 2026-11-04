@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { itemStatsAction } from "@/actions/stats";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { requirePermission } from "@/lib/auth/require-admin";
 import { toKstDate } from "@/lib/stats/period";
 import PageTemplate from "@/components/template/PageTemplate";
 import ItemStats from "@/components/stats/ItemStats";
@@ -19,7 +19,7 @@ type Props = {
 
 /** /stats - 품류별 월간 판매 통계 (관리자) */
 export default async function StatsPage({ searchParams }: Props) {
-  const admin = await requireAdmin();
+  const admin = await requirePermission("stats");
   const sp = await searchParams;
 
   const today = toKstDate(new Date());

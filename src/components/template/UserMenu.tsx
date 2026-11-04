@@ -7,18 +7,25 @@ import { useUiStore } from "@/store/ui";
 import { logoutAction } from "@/actions/auth";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import MenuItem from "./MenuItem";
+import { hasPermission } from "@/lib/auth/permissions";
 
 type Props = {
   admin: boolean;
+  permissions: string[];
 };
 
-export default function UserMenu({ admin }: Props) {
+export default function UserMenu({ admin, permissions }: Props) {
   const router = useRouter();
   const showToast = useUiStore((s) => s.showToast);
   const [open, setOpen] = useState(false);
 
   const close = useCallback(() => setOpen(false), []);
   const menuRef = useOutsideClick<HTMLDivElement>(close);
+
+  const me = { admin, permissions };
+  const canWeddings = hasPermission(me, "weddings");
+  const canStats = hasPermission(me, "stats");
+  const hasExtra = admin || canWeddings || canStats;
 
   async function onLogout() {
     close();
@@ -47,7 +54,7 @@ export default function UserMenu({ admin }: Props) {
                 비밀번호 변경
               </MenuItem>
 
-              {admin && (
+              {hasExtra && (
                 <>
                   <div className="from-member to-success mx-4 h-[2px] bg-gradient-to-r" />
 

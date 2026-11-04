@@ -2,7 +2,7 @@
 
 import type { CartItem } from "@/types/cart";
 import type { ItemStatsRow } from "@/types/stats";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { requirePermission } from "@/lib/auth/require-admin";
 import { prisma } from "@/lib/db";
 import { ITEM_DIVIDES, ITEM_NATIVES } from "@/lib/data/item";
 import {
@@ -26,7 +26,7 @@ export async function itemStatsAction(input: {
   from: string;
   to: string;
 }) {
-  await requireAdmin();
+  await requirePermission("stats");
 
   const parsed = itemStatsSchema.safeParse(input);
   if (!parsed.success) {

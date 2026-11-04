@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getWeddingAction } from "@/actions/weddings";
 import PageTemplate from "@/components/template/PageTemplate";
 import WeddingForm from "@/components/weddings/form/WeddingForm";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { requirePermission } from "@/lib/auth/require-admin";
 import { weddingToForm } from "@/lib/wedding/constants";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ type Props = {
 
 /** /wedding/update/[id] */
 export default async function UpdateWeddingPage({ params }: Props) {
-  const user = await requireAdmin();
+  const user = await requirePermission("weddings");
   const { id } = await params;
   const result = await getWeddingAction(id);
 

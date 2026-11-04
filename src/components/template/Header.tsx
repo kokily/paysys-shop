@@ -2,6 +2,7 @@ import { NativeType } from "@/lib/data/native";
 import Link from "next/link";
 import ThemeToggle from "../theme/ThemeToggle";
 import UserMenu from "./UserMenu";
+import { checkAuthAction } from "@/actions/auth";
 
 type Props = {
   native: NativeType;
@@ -9,7 +10,10 @@ type Props = {
   admin: boolean;
 };
 
-export default function Header({ native, username, admin }: Props) {
+export default async function Header({ native, username, admin }: Props) {
+  const auth = await checkAuthAction();
+  const permissions = auth.user?.permissions ?? [];
+
   const logoColor =
     native === "member"
       ? "text-member"
@@ -38,7 +42,7 @@ export default function Header({ native, username, admin }: Props) {
 
           <div className="flex items-center gap-3 pr-1">
             <ThemeToggle variant="inline" />
-            <UserMenu admin={admin} />
+            <UserMenu admin={admin} permissions={permissions} />
           </div>
         </div>
       </div>

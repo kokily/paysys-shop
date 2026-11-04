@@ -181,7 +181,7 @@ export async function checkAuthAction() {
     const payload = await verifyAccessToken(accessToken);
     const user = await prisma.user.findUnique({
       where: { id: payload.user_id },
-      select: { id: true, username: true, admin: true },
+      select: { id: true, username: true, admin: true, permissions: true },
     });
 
     if (!user) {
@@ -197,6 +197,7 @@ export async function checkAuthAction() {
         user_id: user.id,
         username: user.username,
         admin: user.admin,
+        permissions: user.permissions,
       },
     };
   } catch {

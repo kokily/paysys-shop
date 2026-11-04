@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getAdminUser } from "@/lib/auth/require-admin";
+import { getPermittedUser } from "@/lib/auth/require-admin";
 import { prisma } from "@/lib/db";
 import { formToWeddingData } from "@/lib/wedding/calc";
 import { publishWeddingEvent } from "@/lib/wedding/events";
@@ -21,7 +21,7 @@ export async function listWeddingsAction(input?: {
   cursor?: string;
   date?: string;
 }) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -64,7 +64,7 @@ export async function listWeddingsAction(input?: {
 
 /** 웨딩 상세 */
 export async function getWeddingAction(id: string) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -85,7 +85,7 @@ export async function getWeddingAction(id: string) {
 
 /** 웨딩 생성 */
 export async function createWeddingAction(form: WeddingFormInput) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -118,7 +118,7 @@ export async function updateWeddingAction(input: {
   id: string;
   form: WeddingFormInput;
 }) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -165,7 +165,7 @@ export async function updateWeddingAction(input: {
 
 /** 웨딩 삭제 */
 export async function deleteWeddingAction(id: string) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -197,7 +197,7 @@ export async function addWeddingSignAction(input: {
   sex: WeddingSignSex;
   image: string;
 }) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 
@@ -243,7 +243,7 @@ export async function removeWeddingSignAction(input: {
   weddingId: string;
   sex: WeddingSignSex;
 }) {
-  const admin = await getAdminUser();
+  const admin = await getPermittedUser("weddings");
 
   if (!admin.ok) return admin;
 

@@ -19,6 +19,7 @@ export default async function WeddingsPage() {
         initialWeddings={result.ok ? result.weddings : []}
         initialCursor={result.ok ? result.nextCursor : null}
         initialHasMore={result.ok ? result.hasMore : false}
+        canManager={admin.admin}
       />
     </PageTemplate>
   );

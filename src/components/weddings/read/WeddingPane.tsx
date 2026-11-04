@@ -2,6 +2,7 @@ import type { Wedding } from "@/types/wedding";
 
 type Props = {
   wedding: Wedding;
+  canSign: boolean;
   onSignHusband: () => void;
   onSignBride: () => void;
   onRemoveHusband: () => void;
@@ -10,6 +11,7 @@ type Props = {
 
 export default function WeddingPane({
   wedding,
+  canSign,
   onSignHusband,
   onSignBride,
   onRemoveHusband,
@@ -24,18 +26,18 @@ export default function WeddingPane({
       <h3 className="wedding-pane-names">
         신랑님:{" "}
         <strong
-          className={wedding.husband_image ? undefined : "select"}
+          className={canSign && wedding.husband_image ? undefined : "select"}
           onClick={() => {
-            if (!wedding.husband_image) onSignHusband();
+            if (canSign && !wedding.husband_image) onSignHusband();
           }}
         >
           {wedding.husband_name}
         </strong>{" "}
         <strong className="heart">♡</strong> 신부님:{" "}
         <strong
-          className={wedding.bride_image ? "bride" : "select bride"}
+          className={canSign && wedding.bride_image ? "bride" : "select bride"}
           onClick={() => {
-            if (!wedding.bride_image) onSignBride();
+            if (canSign && !wedding.bride_image) onSignBride();
           }}
         >
           {wedding.bride_name}
@@ -48,7 +50,7 @@ export default function WeddingPane({
             <div
               className="sign-pane-item"
               onClick={() => {
-                if (wedding.husband_image) onRemoveHusband();
+                if (canSign && wedding.husband_image) onRemoveHusband();
               }}
             >
               <div className="sign-pane-content">
@@ -58,14 +60,14 @@ export default function WeddingPane({
                   <img src={wedding.husband_image} alt="신랑 서명" />
                 )}
               </div>
-              {wedding.husband_image && (
+              {canSign && wedding.husband_image && (
                 <span className="remove-text">클릭하여 삭제</span>
               )}
             </div>
             <div
               className="sign-pane-item"
               onClick={() => {
-                if (wedding.bride_image) onRemoveBride();
+                if (canSign && wedding.bride_image) onRemoveBride();
               }}
             >
               <div className="sign-pane-content">
@@ -75,7 +77,7 @@ export default function WeddingPane({
                   <img src={wedding.bride_image} alt="신부 서명" />
                 )}
               </div>
-              {wedding.bride_image && (
+              {canSign && wedding.bride_image && (
                 <span className="remove-text">클릭하여 삭제</span>
               )}
             </div>

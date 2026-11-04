@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/template/PageTemplate";
 import WeddingForm from "@/components/weddings/form/WeddingForm";
-import { requirePermission } from "@/lib/auth/require-admin";
+import { requireAdmin } from "@/lib/auth/require-admin";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 /** /wedding/add */
 export default async function AddWeddingPage() {
-  const user = await requirePermission("weddings");
+  const user = await requireAdmin();
 
   return (
     <PageTemplate native="member" username={user.username} admin={user.admin}>

@@ -1,5 +1,6 @@
 type Props = {
   busy: boolean;
+  canManager: boolean;
   onList: () => void;
   onEdit: () => void;
   onDelete: () => void;
@@ -8,6 +9,7 @@ type Props = {
 
 export default function WeddingButton({
   busy,
+  canManager,
   onList,
   onEdit,
   onDelete,
@@ -18,22 +20,26 @@ export default function WeddingButton({
       <button type="button" onClick={onList} className="wb-btn menu">
         목록
       </button>
-      <button
-        type="button"
-        disabled={busy}
-        onClick={onEdit}
-        className="wb-btn edit"
-      >
-        수정
-      </button>
-      <button
-        type="button"
-        disabled={busy}
-        onClick={onDelete}
-        className="wb-btn cancel"
-      >
-        삭제
-      </button>
+      {canManager && (
+        <>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={onEdit}
+            className="wb-btn edit"
+          >
+            수정
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={onDelete}
+            className="wb-btn cancel"
+          >
+            삭제
+          </button>
+        </>
+      )}
       <button
         type="button"
         onClick={onPrint}

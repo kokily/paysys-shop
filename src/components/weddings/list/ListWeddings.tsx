@@ -14,6 +14,7 @@ type Props = {
   initialWeddings: WeddingRow[];
   initialCursor: string | null;
   initialHasMore: boolean;
+  canManager: boolean;
 };
 
 /** 웨딩 리스트 + 일자 필터 + 인피니트 스크롤 + 상세 팝업 */
@@ -21,6 +22,7 @@ export default function ListWeddings({
   initialWeddings,
   initialCursor,
   initialHasMore,
+  canManager,
 }: Props) {
   const router = useRouter();
   const showToast = useUiStore((s) => s.showToast);
@@ -90,13 +92,15 @@ export default function ListWeddings({
         웨딩 빌지 리스트
       </h2>
 
-      <button
-        type="button"
-        onClick={() => router.push("/wedding/add")}
-        className="border-error text-error hover:bg-error mt-3 min-w-[90px] rounded-md border px-2 py-2 text-base font-bold transition hover:text-white"
-      >
-        웨딩 추가
-      </button>
+      {canManager && (
+        <button
+          type="button"
+          onClick={() => router.push("/wedding/add")}
+          className="border-error text-error hover:bg-error mt-3 min-w-[90px] rounded-md border px-2 py-2 text-base font-bold transition hover:text-white"
+        >
+          웨딩 추가
+        </button>
+      )}
 
       <div className="mt-4 w-full max-w-[600px]">
         <WeddingDateFilter value={date} onChange={onDateChange} />
@@ -113,6 +117,7 @@ export default function ListWeddings({
       {selectedId && (
         <ReadWeddingModal
           weddingId={selectedId}
+          canManager={canManager}
           onClose={() => setSelectedId(null)}
           onDeleted={(id) => {
             setWeddings((prev) => prev.filter((w) => w.id !== id));

@@ -19,6 +19,7 @@ import SignModal from "../sign/SignModal";
 
 type Props = {
   wedding: Wedding;
+  canManager?: boolean;
   onClose?: () => void;
   onDeleted?: (id: string) => void;
   onWeddingChange?: (wedding: Wedding) => void;
@@ -28,6 +29,7 @@ type Props = {
 
 export default function ReadWedding({
   wedding,
+  canManager = false,
   onClose,
   onDeleted,
   onWeddingChange,
@@ -101,6 +103,7 @@ export default function ReadWedding({
     <div className="read-wedding print-wedding">
       <WeddingPane
         wedding={wedding}
+        canSign={canManager}
         onSignHusband={() => setSignSex("husband")}
         onSignBride={() => setSignSex("bride")}
         onRemoveHusband={() => setRemoveSex("husband")}
@@ -113,6 +116,7 @@ export default function ReadWedding({
 
       <WeddingButton
         busy={isPending}
+        canManager={canManager}
         onList={goList}
         onEdit={() => {
           router.push(`/wedding/update/${wedding.id}`);

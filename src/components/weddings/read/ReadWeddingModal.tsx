@@ -8,6 +8,7 @@ import Modal from "@/components/ui/Modal";
 
 type Props = {
   weddingId: string;
+  canManager: boolean;
   onClose: () => void;
   onDeleted: (id: string) => void;
 };
@@ -15,6 +16,7 @@ type Props = {
 /** 웨딩 상세 팝업 */
 export default function ReadWeddingModal({
   weddingId,
+  canManager,
   onClose,
   onDeleted,
 }: Props) {
@@ -107,6 +109,7 @@ export default function ReadWeddingModal({
             {wedding && (
               <ReadWedding
                 wedding={wedding}
+                canManager={canManager}
                 onClose={close}
                 onDeleted={(id) => {
                   onDeleted(id);

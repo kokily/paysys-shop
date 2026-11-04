@@ -90,7 +90,7 @@ export default function ReadWeddingModal({
       printPortal
       closeOnEscape={false}
       maxWidthClassName="max-w-[960px]"
-      headerClassName="bg-wedding no-print"
+      headerClassName="bg-[#212529] no-print"
       title="웨딩 정산내역"
     >
       {({ close }) => (

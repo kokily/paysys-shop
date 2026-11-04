@@ -33,7 +33,7 @@ export default function WeddingCostTables({ wedding }: Props) {
   function SubTitlePane({ title, target, unit }: SubTitlePaneType) {
     return (
       <tr>
-        <th>{title}</th>
+        <th className="label">{title}</th>
         <td className="center" colSpan={3}>
           {typeof target === "string"
             ? target
@@ -46,7 +46,7 @@ export default function WeddingCostTables({ wedding }: Props) {
   function OnePane({ title, unit, target }: OnePaneType) {
     return (
       <tr>
-        <th>{title}</th>
+        <th className="label">{title}</th>
         <td className="center" colSpan={3}>
           {formatAmount(target, unit && `${unit}`)}
         </td>
@@ -57,11 +57,11 @@ export default function WeddingCostTables({ wedding }: Props) {
   function MultiPane({ title, unit, husband, bride }: MultiPaneType) {
     return (
       <tr>
-        <th>{title}</th>
-        <td className={unit && "center"}>
+        <th className="label">{title}</th>
+        <td className={unit ? "center husband" : "husband"}>
           {formatAmount(husband, unit && `${unit}`)}
         </td>
-        <td className={unit && "center"}>
+        <td className={unit ? "center bride" : "bride"}>
           {formatAmount(bride, unit && `${unit}`)}
         </td>
         <td className={unit && "center"}>
@@ -75,8 +75,8 @@ export default function WeddingCostTables({ wedding }: Props) {
     return (
       <tr>
         <th className="white result">{title}</th>
-        <td className="result">{formatAmount(target * husband)}</td>
-        <td className="result">{formatAmount(target * bride)}</td>
+        <td className="result husband">{formatAmount(target * husband)}</td>
+        <td className="result bride">{formatAmount(target * bride)}</td>
         <td className="sub-result">
           {formatAmount(target * (husband + bride))}
         </td>
@@ -93,9 +93,9 @@ export default function WeddingCostTables({ wedding }: Props) {
         <tbody>
           <tr>
             <th>구 분</th>
-            <th className="basic whnite">신랑</th>
-            <th className="basic whnite">신부</th>
-            <th className="basic whnite">계</th>
+            <th className="basic husband">신랑</th>
+            <th className="basic bride">신부</th>
+            <th className="basic">계</th>
           </tr>
           <MultiPane
             title="웨딩홀 사용료"
@@ -165,9 +165,9 @@ export default function WeddingCostTables({ wedding }: Props) {
         <tbody>
           <tr>
             <th>구 분</th>
-            <th className="basic white">신랑</th>
-            <th className="basic white">신부</th>
-            <th className="basic white">계</th>
+            <th className="basic husband">신랑</th>
+            <th className="basic bride">신부</th>
+            <th className="basic">계</th>
           </tr>
 
           <SubTitlePane title="식대분할" target={labels.meal_method} />

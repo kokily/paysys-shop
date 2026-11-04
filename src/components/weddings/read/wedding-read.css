@@ -1,9 +1,18 @@
+/* =========================================================
+ * ReadWedding
+ * 1. 레이아웃  2. WeddingPane  3. SignPane  4. 비용 테이블
+ * 5. 정산 박스  6. 버튼  7. 다크모드  8. 인쇄
+ * ========================================================= */
+
+/* ===== 1. 레이아웃 ===== */
 .read-wedding {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 6rem;
+  background: white; /* 추가: 다크모드에서도 라이트 고정 */
+  color: #1e293b; /* 추가 */
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.24);
@@ -22,7 +31,7 @@
   }
 }
 
-/* WeddingPane
+/* ===== 2. WeddingPane =====
  * Tailwind preflight가 h1~h6 size/weight를 inherit로 리셋하므로
  * 운영(브라우저 기본) 수치를 명시 복원 */
 .wedding-pane {
@@ -35,7 +44,7 @@
 .wedding-pane-title {
   font-size: 1.512rem;
   font-weight: bold;
-  color: #7950f2;
+  color: #000000;
   margin-block: 0.83em;
 }
 
@@ -60,6 +69,14 @@
   color: #3bc9db;
 }
 
+.wedding-pane-names strong.bride {
+  color: #f783ac;
+}
+
+.wedding-pane-names .select.bride:hover {
+  color: #f98ab1;
+}
+
 .wedding-pane-names .heart {
   color: pink;
 }
@@ -77,13 +94,7 @@
   margin-block: 1em;
 }
 
-@media print {
-  .wedding-pane-sub-title {
-    margin-bottom: -25.78px;
-  }
-}
-
-/* SignPane — 삭제 문구는 박스 밖 (서명과의 간격 확보) */
+/* ===== 3. SignPane — 삭제 문구는 박스 밖 (서명과의 간격 확보) ===== */
 .sign-pane {
   display: flex;
   justify-content: center;
@@ -103,15 +114,15 @@
 }
 
 .sign-pane-content {
+  position: relative;
   width: 160px;
   height: 80px;
+  padding: 0.5rem;
   border: 1px solid #d8d9d9;
   border-radius: 4px;
-  padding: 0.5rem;
-  text-align: center;
   background-color: white;
+  text-align: center;
   transition: all 0.2s ease;
-  position: relative;
 }
 
 .sign-pane-item:hover .sign-pane-content {
@@ -121,9 +132,9 @@
 
 .sign-pane-content label {
   display: block;
+  margin-bottom: 0.25rem;
   font-size: 0.75rem;
   color: #666;
-  margin-bottom: 0.25rem;
 }
 
 .sign-pane-content img {
@@ -137,42 +148,12 @@
   display: block;
   margin-top: 0.65rem;
   font-size: 0.7rem;
-  color: #fa5252;
   font-weight: 500;
+  color: #fa5252;
 }
 
-@media print {
-  /* 서명 이미지 바로 아래부터 여백 (고정 height 제거해야 간격이 보임) */
-  .sign-pane {
-    margin-bottom: 2.75rem !important;
-  }
-
-  .sign-pane-content {
-    border: none;
-    height: auto;
-    min-height: 0;
-    padding: 0;
-  }
-
-  .sign-pane-content label {
-    margin-bottom: 0.15rem;
-  }
-
-  .sign-pane-content img {
-    height: 40px;
-    display: block;
-  }
-
-  .sign-pane-item .remove-text {
-    display: none !important;
-  }
-
-  .wedding-pane-date {
-    margin-top: 0.75rem !important;
-  }
-}
-
-/* First / Second — v6: separate + 기본 spacing(2px)로 셀 간격 */
+/* ===== 4. 비용 테이블 (First / Second) =====
+ * separate + spacing 2px로 셀 간격 */
 .first-contents,
 .second-contents {
   font-size: 0.95rem;
@@ -185,7 +166,7 @@
 @media screen {
   .first-contents,
   .second-contents {
-    width: 409.9px; /* 130 + 93.3*3 — 화면만. 인쇄는 아래 @media print */
+    width: 409.9px; /* 130 + 93.3*3 — 화면만. 인쇄는 아래 print */
   }
 }
 
@@ -195,22 +176,20 @@
 .second-contents td {
   border: 1px solid #d8d9d9;
   border-radius: 8px;
-  padding-top: 0.15rem;
-  padding-bottom: 0.15rem;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0.15rem 0;
 }
 
 .first-contents tr:hover,
 .second-contents tr:hover {
-  background: rgba(165, 102, 255, 0.2);
+  background: rgba(0, 0, 0, 0.04);
 }
 
+/* 헤더 셀: 연회색 + 검정 */
 .first-contents th,
 .second-contents th {
-  background-color: #e3e0fa;
-  color: #7950f2;
   width: 130px;
+  background-color: #e4e4e4;
+  color: #212529;
   font-weight: 600;
   text-align: center;
   white-space: nowrap; /* 웨딩홀 사용료 / 답례품 총 비용 줄바꿈 방지 */
@@ -226,19 +205,26 @@
   background-color: white;
 }
 
+/* 행 이름(웨딩홀 사용료 등): 바탕 없음 */
+.first-contents th.label,
+.second-contents th.label {
+  background-color: white;
+}
+
 .first-contents th.result,
 .second-contents th.result {
   color: #fa5252;
 }
 
+/* 값 셀 */
 .first-contents td,
 .second-contents td {
   width: 93.3px;
-  font-size: 0.9rem;
   overflow: hidden;
-  text-align: right;
   background: white;
   color: #1e293b;
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 .first-contents td.result,
@@ -248,76 +234,204 @@
 
 .first-contents td.sub-result,
 .second-contents td.sub-result {
-  color: #fa5252;
-  font-weight: bold;
   padding-left: 0;
   padding-right: 0;
+  color: #fa5252;
+  font-weight: bold;
 }
 
 .second-contents td.center {
   text-align: center;
 }
 
-@media print {
-  .second-contents td.sub-result {
-    white-space: nowrap;
-  }
+/* 신랑/신부 — 헤더: 배경+글자, 값: 테두리+글자(합계는 빨강 유지) */
+.first-contents th.husband,
+.second-contents th.husband {
+  background-color: #eaf1fb;
+  border-color: #d8d9d9;
+  color: #6094db;
 }
 
-/* WeddingResult */
-.wedding-result {
-  font-size: 0.95rem;
+.first-contents th.bride,
+.second-contents th.bride {
+  background-color: #ffecf5;
+  border-color: #d8d9d9;
+  color: #ff97cb;
+}
+
+.first-contents td.husband,
+.second-contents td.husband {
+  border-color: #d8d9d9;
+}
+
+.first-contents td.bride,
+.second-contents td.bride {
+  border-color: #d8d9d9;
+}
+
+.first-contents td.husband:not(.result),
+.second-contents td.husband:not(.result) {
+  color: #6094db;
+}
+
+.first-contents td.bride:not(.result),
+.second-contents td.bride:not(.result) {
+  color: #ff97cb;
+}
+
+/* ===== 5. 정산 박스 (WeddingResult) ===== */
+.settle {
   width: 100%;
-  height: 100%;
-  min-width: 420px;
-  border-collapse: separate;
-  border-spacing: 2px;
-}
-
-@media (max-width: 992px) {
-  .wedding-result {
-    margin-top: 1.5rem;
-  }
-}
-
-/* 운영: h3 기본(~1.17em / bold) + margin 0.96rem
- * 합계 박스는 항상 흰 배경 → 다크모드에서도 글자색 고정 */
-.wedding-result h3 {
-  margin: 0.96rem;
-  font-size: 1.17em;
-  font-weight: bold;
+  max-width: 820px; /* 위 두 테이블 합친 폭 */
+  margin-top: 1.3rem;
+  margin-bottom: 1.2rem;
+  padding: 1.25rem;
+  border: 1px solid #ced4da;
+  border-radius: 12px;
+  background: white;
   color: #1e293b;
 }
 
-.wedding-result h3.all-cost {
-  color: silver;
-}
-
-.wedding-result h3.all-payment {
-  color: blue;
-}
-
-.wedding-result tr {
+.settle-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #ced4da;
   text-align: center;
-  height: 165px;
 }
 
-.wedding-result tr:hover {
-  background: rgba(165, 102, 255, 0.2);
+.settle-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.wedding-result td {
-  width: 93.3px;
-  font-size: 0.9rem;
-  overflow: hidden;
-  border: 1px solid #ced4da;
+.settle-label {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.settle-item strong {
+  font-size: 1.25rem;
+}
+
+.settle-item strong.deduct {
+  color: #fa5252;
+}
+
+.settle-item strong.final {
+  font-size: 1.4rem;
+  color: #1c7ed6;
+}
+
+.settle-op {
+  font-size: 1.25rem;
+  color: #adb5bd;
+}
+
+.settle-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.settle-card {
+  padding: 1rem;
+  border: 1px solid;
   border-radius: 8px;
-  padding-top: 0.15rem;
-  padding-bottom: 0.15rem;
-  background: white;
 }
 
-/* WeddingButtons — v6 menu / edit / cancel */
+.settle-card.husband {
+  --accent: #15aabf;
+  background: #f8fbfe;
+  border-color: #99e9f2;
+}
+
+.settle-card.bride {
+  --accent: #f06595;
+  background: #fff9fc;
+  border-color: #fcc2d7;
+}
+
+.settle-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.settle-card-head h4 {
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.settle-card-head span {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.settle-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+  font-size: 0.85rem;
+}
+
+.settle-row.deduct {
+  color: #fa5252;
+}
+
+.settle-final {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.settle-final strong {
+  font-size: 1.2rem;
+}
+
+.settle-notice {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #d8d9d9;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #5c4a00;
+  text-align: left;
+}
+
+.settle-notice-label {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.settle-notice-body p {
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .settle-summary {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .settle-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 6. 버튼 (WeddingButtons) ===== */
 .wedding-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -327,15 +441,15 @@
 }
 
 .wedding-buttons .wb-btn {
+  min-width: 90px;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: white;
   font-size: 1rem;
   font-weight: bold;
-  border-radius: 6px;
-  padding: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid transparent;
-  background-color: white;
-  min-width: 90px;
 }
 
 .wedding-buttons .wb-btn + .wb-btn {
@@ -396,121 +510,7 @@
   box-shadow: 0 2px 4px rgba(121, 80, 242, 0.3);
 }
 
-/* 다크모드: 흰 박스 대신 연보라 보더 + 바탕색 내부 + 테마 글자색
- * 인쇄는 라이트 유지 → screen 만 */
-@media screen {
-  .dark .read-wedding {
-    box-shadow: none;
-  }
-
-  .dark .wedding-pane-title {
-    color: #b197fc;
-  }
-
-  .dark .wedding-pane-names,
-  .dark .wedding-pane-date,
-  .dark .wedding-pane-sub-title {
-    color: var(--text);
-  }
-
-  .dark .wedding-pane-names strong {
-    color: #66d9e8;
-  }
-
-  .dark .sign-pane-content {
-    background: #2b2540;
-    border-color: #c0b6f2;
-  }
-
-  .dark .sign-pane-content label {
-    color: #b197fc;
-  }
-
-  /* 흑필+흰배경 → 반전 후 screen: 배경 투명, 서명선은 밝게 */
-  .dark .sign-pane-content img {
-    filter: invert(1);
-    mix-blend-mode: screen;
-  }
-
-  /* 셀: 연보라 보더 + 바탕과 같은 내부 + 테마 글자 */
-  .dark .first-contents th,
-  .dark .first-contents td,
-  .dark .second-contents th,
-  .dark .second-contents td {
-    border-color: #c0b6f2;
-    background: var(--surface);
-  }
-
-  .dark .first-contents th,
-  .dark .second-contents th {
-    background: #2b2540;
-    color: #b197fc;
-  }
-
-  .dark .first-contents th.white,
-  .dark .second-contents th.white {
-    background: var(--surface);
-    color: var(--text);
-  }
-
-  .dark .first-contents th.result,
-  .dark .second-contents th.result {
-    color: var(--error);
-  }
-
-  .dark .first-contents td,
-  .dark .second-contents td {
-    color: var(--text);
-  }
-
-  .dark .first-contents td.result,
-  .dark .first-contents td.sub-result,
-  .dark .second-contents td.result,
-  .dark .second-contents td.sub-result {
-    color: var(--error);
-  }
-
-  .dark .first-contents tr:hover,
-  .dark .second-contents tr:hover,
-  .dark .wedding-result tr:hover {
-    background: rgba(177, 151, 252, 0.12);
-  }
-
-  .dark .wedding-result td {
-    background: var(--surface);
-    border-color: #c0b6f2;
-  }
-
-  .dark .wedding-result h3 {
-    color: var(--text);
-  }
-
-  .dark .wedding-result h3.all-cost {
-    color: var(--text-secondary);
-  }
-
-  .dark .wedding-result h3.all-payment {
-    color: #74c0fc;
-  }
-
-  .dark .wedding-buttons .wb-btn {
-    background: var(--surface);
-  }
-
-  .dark .wedding-buttons .wb-btn.menu:hover:not(:disabled) {
-    color: #fff;
-  }
-
-  .dark .wedding-buttons .wb-btn.edit:hover:not(:disabled) {
-    color: #18181b;
-  }
-
-  .dark .wedding-buttons .wb-btn.cancel:hover:not(:disabled),
-  .dark .wedding-buttons .wb-btn.print:hover:not(:disabled) {
-    color: #fff;
-  }
-}
-
+/* ===== 8. 인쇄 — A4 1장 ===== */
 @media print {
   .wedding-buttons {
     display: none;
@@ -521,15 +521,12 @@
     max-width: 100%;
     min-height: 0;
     margin: 0;
-    /* 운영처럼 타이틀 위 여백 */
-    padding: 10mm 0 0;
+    padding: 4mm 0 0;
     box-shadow: none;
     overflow: hidden;
-    /* 화면 색상 그대로 인쇄 */
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 
+  /* 상단 */
   .wedding-pane-title {
     margin-top: 0.6em;
     margin-bottom: 0.4em;
@@ -539,17 +536,51 @@
     margin-block: 0.45em;
   }
 
-  .wedding-pane-sub-title {
-    margin-block: 0.4em;
-    margin-bottom: -12px;
+  .wedding-pane-date {
+    margin-top: 0.75rem;
   }
 
+  .wedding-pane hr {
+    margin-bottom: 0.3rem;
+  }
+
+  /* "웨딩 비용" 소제목 숨김 */
+  .wedding-pane-sub-title {
+    display: none;
+  }
+
+  /* 서명: 이미지 바로 아래부터 여백 (고정 height 제거해야 간격이 보임) */
+  .sign-pane {
+    margin-bottom: 1rem;
+  }
+
+  .sign-pane-content {
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .sign-pane-content label {
+    margin-bottom: 0.15rem;
+  }
+
+  .sign-pane-content img {
+    display: block;
+    height: 40px;
+  }
+
+  .sign-pane-item .remove-text {
+    display: none;
+  }
+
+  /* 테이블 */
   .read-wedding-contents {
     flex-direction: row;
     justify-content: center;
     width: 100%;
     max-width: 100%;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
   }
 
   .first-contents,
@@ -563,6 +594,9 @@
   .first-contents th:not(.basic),
   .second-contents th:not(.basic) {
     width: 38%;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
 
   .first-contents th.basic,
@@ -576,23 +610,14 @@
   .first-contents th,
   .first-contents td,
   .second-contents th,
-  .second-contents td,
-  .wedding-result td {
-    padding-top: 0.08rem;
-    padding-bottom: 0.08rem;
+  .second-contents td {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
   }
 
   .first-contents tr:hover,
-  .second-contents tr:hover,
-  .wedding-result tr:hover {
-    background: transparent !important;
-  }
-
-  .first-contents th,
-  .second-contents th {
-    white-space: nowrap;
-    word-break: keep-all;
-    overflow-wrap: normal;
+  .second-contents tr:hover {
+    background: transparent;
   }
 
   .first-contents td.sub-result,
@@ -600,22 +625,75 @@
     white-space: nowrap;
   }
 
-  .wedding-result {
-    min-width: 0;
-    width: 100%;
+  /* 정산 박스 */
+  .settle {
     max-width: 100%;
+    margin-bottom: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    break-inside: avoid;
   }
 
-  .wedding-result tr {
-    height: auto;
+  .settle-summary {
+    flex-direction: row;
+    padding-bottom: 0.4rem;
   }
 
-  .wedding-result h3 {
-    margin: 0.45rem;
-    font-size: 1em;
+  .settle-label {
+    font-size: 0.68rem;
   }
 
-  .wedding-result td {
-    border-color: #ced4da;
+  .settle-item strong {
+    font-size: 1rem;
+  }
+
+  .settle-item strong.final {
+    font-size: 1.1rem;
+  }
+
+  .settle-op {
+    font-size: 1rem;
+  }
+
+  .settle-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .settle-card {
+    padding: 0.45rem 0.7rem;
+  }
+
+  .settle-card-head {
+    margin-bottom: 0.25rem;
+  }
+
+  .settle-card-head h4 {
+    font-size: 0.85rem;
+  }
+
+  .settle-card-head span {
+    font-size: 0.65rem;
+  }
+
+  .settle-row {
+    padding: 0.05rem 0;
+    font-size: 0.75rem;
+  }
+
+  .settle-final {
+    margin-top: 0.3rem;
+    padding-top: 0.3rem;
+  }
+
+  .settle-final strong {
+    font-size: 1rem;
+  }
+
+  .settle-notice {
+    margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.68rem;
   }
 }

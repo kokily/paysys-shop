@@ -109,7 +109,7 @@ export default function ReadWedding({
 
       <WeddingCostTables wedding={wedding} />
 
-      <WeddingResult totals={totals} />
+      <WeddingResult wedding={wedding} totals={totals} />
 
       <WeddingButton
         busy={isPending}

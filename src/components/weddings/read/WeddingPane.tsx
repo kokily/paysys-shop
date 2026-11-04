@@ -33,7 +33,7 @@ export default function WeddingPane({
         </strong>{" "}
         <strong className="heart">♡</strong> 신부님:{" "}
         <strong
-          className={wedding.bride_image ? undefined : "select"}
+          className={wedding.bride_image ? "bride" : "select bride"}
           onClick={() => {
             if (!wedding.bride_image) onSignBride();
           }}

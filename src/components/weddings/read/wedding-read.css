@@ -525,9 +525,9 @@
     padding: 10mm 0 0;
     box-shadow: none;
     overflow: hidden;
-    /* 인쇄 시 셀 배경색 강제 제거 */
-    -webkit-print-color-adjust: economy;
-    print-color-adjust: economy;
+    /* 화면 색상 그대로 인쇄 */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .wedding-pane-title {
@@ -578,8 +578,6 @@
   .second-contents th,
   .second-contents td,
   .wedding-result td {
-    background: transparent !important;
-    background-color: transparent !important;
     padding-top: 0.08rem;
     padding-bottom: 0.08rem;
   }
@@ -592,7 +590,6 @@
 
   .first-contents th,
   .second-contents th {
-    color: #000;
     white-space: nowrap;
     word-break: keep-all;
     overflow-wrap: normal;

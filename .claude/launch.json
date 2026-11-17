@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "paysys-dev",
+      "runtimeExecutable": "wsl.exe",
+      "runtimeArgs": [
+        "-d",
+        "Ubuntu-24.04",
+        "--cd",
+        "/home/kokily/workspace/paysys-shop",
+        "--",
+        "bash",
+        "-lc",
+        "export PATH=/home/kokily/.nvm/versions/node/v22.16.0/bin:/usr/bin:/bin; exec npx next dev -p 3000"
+      ],
+      "port": 3000
+    }
+  ]
+}

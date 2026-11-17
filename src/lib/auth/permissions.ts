@@ -2,6 +2,7 @@
 export const PERMISSIONS = {
   weddings: "웨딩빌지",
   stats: "품목 통계",
+  schedule: "행사 일정 관리",
 } as const;
 
 export type Permission = keyof typeof PERMISSIONS;

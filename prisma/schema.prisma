@@ -132,6 +132,15 @@ model Wedding {
   @@map("wedding")
 }
 
+/// 행사 일정 (날짜당 1건, date = "YYYY-MM-DD")
+model Schedule {
+  date       String   @id @db.VarChar(10)
+  content    String
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("schedule")
+}
+
 model token {
   id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   fk_user_id String   @db.Uuid

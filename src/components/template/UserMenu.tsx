@@ -25,7 +25,8 @@ export default function UserMenu({ admin, permissions }: Props) {
   const me = { admin, permissions };
   const canWeddings = hasPermission(me, "weddings");
   const canStats = hasPermission(me, "stats");
-  const hasExtra = admin || canWeddings || canStats;
+  const canSchedule = hasPermission(me, "schedule");
+  const hasExtra = admin || canWeddings || canStats || canSchedule;
 
   async function onLogout() {
     close();
@@ -76,6 +77,11 @@ export default function UserMenu({ admin, permissions }: Props) {
               {canStats && (
                 <MenuItem href="/stats" onClick={close}>
                   품목 통계
+                </MenuItem>
+              )}
+              {canSchedule && (
+                <MenuItem href="/schedule/edit" onClick={close}>
+                  일정 관리
                 </MenuItem>
               )}
               {admin && (

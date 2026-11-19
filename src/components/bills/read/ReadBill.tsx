@@ -20,7 +20,7 @@ import {
   restoreBillAction,
   updateBillAction,
 } from "@/actions/bills";
-import { digitsOnly, toDraft } from "@/lib/bill/helper";
+import { digitsOnly, nativeClass, toDraft } from "@/lib/bill/helper";
 
 type Props = {
   bill: BillDetail;
@@ -158,6 +158,9 @@ export default function ReadBill({
       })
     : bill.items;
 
+  // 제목 색: 첫 품목의 구분(회원/준회원/일반) 색
+  const titleColor = nativeClass(displayItems[0]?.native ?? "");
+
   const displayTotal = displayItems.reduce((sum, i) => sum + i.amount, 0);
   const payable =
     displayTotal - (bill.reserve && bill.reserve > 0 ? bill.reserve : 0);
@@ -278,10 +281,10 @@ export default function ReadBill({
               value={titleDraft}
               disabled={isPending}
               onChange={(e) => setTitleDraft(e.target.value)}
-              className="border-member text-success mt-2 w-full max-w-[320px] rounded-md border bg-white px-3 py-1.5 text-center text-base font-semibold outline-none disabled:opacity-60"
+              className={`border-member ${titleColor} mt-2 w-full max-w-[320px] rounded-md border bg-white px-3 py-1.5 text-center text-base font-semibold outline-none disabled:opacity-60`}
             />
           ) : (
-            <small className="text-success text-base font-semibold">
+            <small className={`${titleColor} text-base font-semibold`}>
               [ {bill.title} ]
             </small>
           )}

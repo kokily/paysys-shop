@@ -1,8 +1,8 @@
 "use client";
 
+import type { BillDetail } from "@/types/bill";
 import { useEffect, useState, useTransition } from "react";
 import { getBillAction } from "@/actions/bills";
-import type { BillDetail } from "@/types/bill";
 import Modal from "@/components/ui/Modal";
 import ReadBill from "@/components/bills/read/ReadBill";
 

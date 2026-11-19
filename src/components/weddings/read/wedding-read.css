@@ -56,7 +56,7 @@
 }
 
 .wedding-pane-names strong {
-  color: #1098ad;
+  color: #030066;
   font-weight: bold;
 }
 
@@ -247,16 +247,16 @@
 /* 신랑/신부 — 헤더: 배경+글자, 값: 테두리+글자(합계는 빨강 유지) */
 .first-contents th.husband,
 .second-contents th.husband {
-  background-color: #eaf1fb;
+  background-color: #ecebff;
   border-color: #d8d9d9;
-  color: #6094db;
+  color: #030066;
 }
 
 .first-contents th.bride,
 .second-contents th.bride {
-  background-color: #ffecf5;
+  background-color: #fff5ff;
   border-color: #d8d9d9;
-  color: #ff97cb;
+  color: #c72f7a;
 }
 
 .first-contents td.husband,
@@ -271,12 +271,12 @@
 
 .first-contents td.husband:not(.result),
 .second-contents td.husband:not(.result) {
-  color: #6094db;
+  color: #030066;
 }
 
 .first-contents td.bride:not(.result),
 .second-contents td.bride:not(.result) {
-  color: #ff97cb;
+  color: #c72f7a;
 }
 
 /* ===== 5. 정산 박스 (WeddingResult) ===== */
@@ -344,14 +344,14 @@
 }
 
 .settle-card.husband {
-  --accent: #15aabf;
-  background: #f8fbfe;
+  --accent: #030066;
+  background: #ecebff;
   border-color: #99e9f2;
 }
 
 .settle-card.bride {
-  --accent: #f06595;
-  background: #fff9fc;
+  --accent: #c72f7a;
+  background: #fff5ff;
   border-color: #fcc2d7;
 }
 
@@ -377,10 +377,6 @@
   justify-content: space-between;
   padding: 0.2rem 0;
   font-size: 0.85rem;
-}
-
-.settle-row.deduct {
-  color: #fa5252;
 }
 
 .settle-final {

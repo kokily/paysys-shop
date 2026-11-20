@@ -31,24 +31,33 @@ export default function MonthCalendar({
 
   return (
     <section className="w-full">
-      <div className="mb-6 flex items-center justify-center gap-6">
+      <div className="mb-6 grid grid-cols-[1fr_auto_1fr] items-center">
         <Link
-          href={`${basePath}?month=${shiftMonth(month, -1)}`}
-          aria-label="이전 달"
-          className="hover:text-member px-3 py-1 text-2xl"
+          href={`${basePath}?month=${today.slice(0, 7)}`}
+          className="border-line hover:border-member hover:text-member justify-self-start rounded border px-3 py-1 text-sm lg:px-6 lg:text-base"
         >
-          ‹
+          오늘
         </Link>
-        <h2 className="text-2xl font-bold lg:text-4xl">
-          {year}년 {mon}월
-        </h2>
-        <Link
-          href={`${basePath}?month=${shiftMonth(month, 1)}`}
-          aria-label="다음 달"
-          className="hover:text-member px-3 py-1 text-2xl"
-        >
-          ›
-        </Link>
+
+        <div className="flex items-center gap-2 sm:gap-6">
+          <Link
+            href={`${basePath}?month=${shiftMonth(month, -1)}`}
+            aria-label="이전 달"
+            className="hover:text-member px-3 py-1 text-2xl"
+          >
+            ‹
+          </Link>
+          <h2 className="text-2xl font-bold lg:text-4xl">
+            {year}년 {mon}월
+          </h2>
+          <Link
+            href={`${basePath}?month=${shiftMonth(month, 1)}`}
+            aria-label="다음 달"
+            className="hover:text-member px-3 py-1 text-2xl"
+          >
+            ›
+          </Link>
+        </div>
       </div>
 
       <div
